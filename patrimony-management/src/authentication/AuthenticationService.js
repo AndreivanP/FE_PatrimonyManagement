@@ -1,13 +1,20 @@
 import axios from "axios";
 import { API_URL } from "../Properties"
 
-const USER_NAME_SESSION_ATTRIBUTE = 'authenticatedUser'; 
-const PASSWORD_SESSION_ATTRIBUTE = 'passwordUser'; 
-const TOKEN_SESSION_ATTRIBUTE = 'tokenUser';
+const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'; 
+const passProperty = 'passwordUser';
 
 class AuthenticationService {   
 
- 
+    createBasicAuthToken(username, password) {
+        return 'Basic ' + window.btoa(username + ":" + password);
+    }
+    
+    executeBasicAuthenticationService(username, password) {
+        return axios.get(`${API_URL}/basicauth`, 
+            {headers: {authorization: this.createBasicAuthToken(username, password)}});
+    }
+
     executeJwtAuthenticationService(username, password) {
         return axios.post(`${API_URL}/authenticate`, {
             username,
@@ -16,8 +23,7 @@ class AuthenticationService {
     }
 
     registerSuccessfulLoginJwt(username, token) {
-        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE, username);                
-        sessionStorage.setItem(TOKEN_SESSION_ATTRIBUTE, token);
+        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
         this.setupAxiosInterceptors(this.createJwtToken(token));
     }
 
@@ -26,13 +32,12 @@ class AuthenticationService {
     }
 
     logout() {
-        sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE);
-        sessionStorage.removeItem(PASSWORD_SESSION_ATTRIBUTE);
-        sessionStorage.removeItem(TOKEN_SESSION_ATTRIBUTE);
+        sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem(passProperty);
     }
 
     isUserLoggedIn() {        
-        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE);        
+        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME);        
         if(user === null) {
             return false
         } else {
@@ -41,7 +46,7 @@ class AuthenticationService {
     }
 
     getLoggedInUserName() {        
-        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE);        
+        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME);        
         if(user === null) {
             return ""
         } else {
@@ -49,12 +54,12 @@ class AuthenticationService {
         }        
     }
 
-    getLoggedInToken() {        
-        let token = sessionStorage.getItem(TOKEN_SESSION_ATTRIBUTE);        
-        if(token === null) {
+    getLoggedInPassword() {        
+        let password = sessionStorage.getItem(passProperty);        
+        if(password === null) {
             return ""
         } else {
-            return token
+            return password
         }        
     }
 

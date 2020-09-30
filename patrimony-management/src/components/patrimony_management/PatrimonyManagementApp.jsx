@@ -2,10 +2,7 @@ import LoginComponent from "./LoginComponent";
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import HeaderComponent from './HeaderComponent'
-import FooterComponent from './FooterComponent';
-import LogoutComponent from './LogoutComponent'
-import AuthenticatedRoute from './AuthenticateRoute'
-import ListAssetComponent from './ListAssetComponent'
+import FooterComponent from "./FooterComponent";
 
 class PatrimonyManagementApp extends Component {
     render() {
@@ -16,9 +13,7 @@ class PatrimonyManagementApp extends Component {
                     <HeaderComponent/>
                         <Switch>
                             <Route path="/" exact component={LoginComponent}/>
-                            <Route path="/login" component={LoginComponent}/>
-                            <AuthenticatedRoute path="/assets/" component={ListAssetComponent}/>
-                            <AuthenticatedRoute path="/logout/" component={LogoutComponent}/>    
+                            <Route path="/" component={LoginComponent}/>
                         </Switch>
                     <FooterComponent/>    
                 </>
