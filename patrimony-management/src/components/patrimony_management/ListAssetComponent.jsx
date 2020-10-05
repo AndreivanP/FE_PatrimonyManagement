@@ -63,7 +63,7 @@ class ListAssetComponent extends Component {
                         </tbody>
                     </table>
                     <div className="text-center">
-                        {/* <button className="btn btn-success" onClick={this.addTodoClicked}>Add New Todo</button> */}
+                        <button className="btn btn-success" onClick={this.addTodoClicked}>Add New Todo</button>
                     </div>
                 </div>
             </div>
