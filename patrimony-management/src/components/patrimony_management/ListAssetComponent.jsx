@@ -10,7 +10,8 @@ class ListAssetComponent extends Component {
             message: null,
             assetControl: null,            
         }
-        this.loadAssets = this.loadAssets.bind(this);       
+        this.loadAssets = this.loadAssets.bind(this);
+        this.addAsset = this.addAsset.bind(this);       
     }
 
     componentDidMount() {
@@ -28,6 +29,10 @@ class ListAssetComponent extends Component {
                     )
                 }
             )                
+    }
+
+    addAsset(id) {
+        this.props.history.push(`/assets/new`);
     }
 
     render() {        
@@ -63,7 +68,7 @@ class ListAssetComponent extends Component {
                         </tbody>
                     </table>
                     <div className="text-center">
-                        <button className="btn btn-success" onClick={this.addTodoClicked}>Add New Todo</button>
+                        <button className="btn btn-success" onClick={this.addAsset}>Add New Todo</button>
                     </div>
                 </div>
             </div>

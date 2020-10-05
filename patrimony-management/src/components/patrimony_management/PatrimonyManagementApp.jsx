@@ -6,6 +6,7 @@ import FooterComponent from './FooterComponent';
 import LogoutComponent from './LogoutComponent'
 import AuthenticatedRoute from './AuthenticateRoute'
 import ListAssetComponent from './ListAssetComponent'
+import AssetFormComponent from './AssetFormComponent'
 
 class PatrimonyManagementApp extends Component {
     render() {
@@ -17,6 +18,7 @@ class PatrimonyManagementApp extends Component {
                         <Switch>
                             <Route path="/" exact component={LoginComponent}/>
                             <Route path="/login" component={LoginComponent}/>
+                            <AuthenticatedRoute path="/assets/:new" component={AssetFormComponent}/>
                             <AuthenticatedRoute path="/assets/" component={ListAssetComponent}/>
                             <AuthenticatedRoute path="/logout/" component={LogoutComponent}/>    
                         </Switch>
