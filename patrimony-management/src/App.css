@@ -25,3 +25,16 @@
   left: 50%;  
   margin-left: -300px;
 }
+
+.checkbox {
+  display: inline-block;
+  float: left;
+}
+
+.fieldCategA{
+  width: 160px;
+}
+
+.fieldCategB{
+  width: 50px;
+}

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import AuthenticationService from "../../authentication/AuthenticationService"
+import AssetDataService from "../../api/AssetDataService"
 
 class AssetFormComponent extends Component {
   constructor(props) {
@@ -15,7 +17,9 @@ class AssetFormComponent extends Component {
       currentValue: '',
       is_variable_income: '',
       
-    };
+    }
+    this.onSubmit = this.onSubmit.bind(this);
+
   }
 
   componentDidMount() {
@@ -23,6 +27,30 @@ class AssetFormComponent extends Component {
       return;
     }
   }
+
+  onSubmit(values) {       
+    let username = AuthenticationService.getLoggedInUserName();  
+    let asset = {
+        id: this.state.id,
+        name: values.name,
+        date: values.date,
+        initialValue: values.initialValue,
+        company: values.company,
+        interest_rate: values.interest_rate,
+        is_active: values.is_active,
+        currentValue: values.currentValue,
+        is_variable_income: values.is_variable_income
+    }
+
+    if(this.state.id === "new") {            
+        AssetDataService.createAsset(username, asset)
+            .then(() => this.props.history.push('/assets'));
+
+    } else {                  
+      // AssetDataService.updateAsset(username, this.state.id, asset)
+      //       .then(() => this.props.history.push('/assets'));
+    }
+}
 
   onCancel() {
     window.history.back();
@@ -46,29 +74,29 @@ class AssetFormComponent extends Component {
             {(props) => (
               <Form>
                 <fieldset className="form-group">
-                  <label>Name</label>
+                  <label>Name:</label>
                   <Field className="form-control" type="text" name="name" />
                 </fieldset>
                 <fieldset className="form-group">
-                  <label>Date</label>
+                  <label>Date:</label>
                   <Field
-                    className="form-control"
+                    className="fieldCategA"
                     type="date"
                     name="date"
                   />
                 </fieldset>
                 <fieldset className="form-group">
-                  <label>Initial Value</label>
+                  <label>Initial Value:</label>
                   <Field
-                    className="form-control"
+                    className="fieldCategA"
                     type="text"
                     name="initialValue"
                   />
                 </fieldset>
                 <fieldset className="form-group">
-                  <label>Interest Rate</label>
+                  <label>Interest Rate:</label>
                   <Field
-                    className="form-control"
+                    className="fieldCategB"
                     type="text"
                     name="interestRate"
                   />
@@ -76,29 +104,29 @@ class AssetFormComponent extends Component {
                 <fieldset className="form-group">
                   <label>Is Active?</label>
                   <Field
-                    className="form-control"
-                    type="text"
+                    className="checkbox"
+                    type="checkbox"
                     name="isActive"
                   />
                 </fieldset>
                 <fieldset className="form-group">
                   <label>Is Variable Income?</label>
                   <Field
-                    className="form-control"
-                    type="text"
+                    className="checkbox"
+                    type="checkbox"
                     name="isVariableIncome"
                   />
                 </fieldset>
                 <fieldset className="form-group">
-                  <label>Current Value</label>
+                  <label>Current Value:</label>
                   <Field
-                    className="form-control"
+                    className="fieldCategA"
                     type="text"
                     name="currentValue"
                   />
                 </fieldset>
                 <fieldset className="form-group">
-                  <label>Company</label>
+                  <label>Company:</label>
                   <Field className="form-control" type="text" name="company" />
                 </fieldset>
                 <button className="btn btn-success" type="submit">
