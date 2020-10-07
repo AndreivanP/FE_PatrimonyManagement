@@ -28,10 +28,9 @@ class AssetFormComponent extends Component {
     }
   }
 
-  onSubmit(values) {       
+  onSubmit(values) {      
     let username = AuthenticationService.getLoggedInUserName();  
     let asset = {
-        id: this.state.id,
         name: values.name,
         date: values.date,
         initialValue: values.initialValue,
@@ -42,8 +41,9 @@ class AssetFormComponent extends Component {
         is_variable_income: values.is_variable_income
     }
 
-    if(this.state.id === "new") {            
-        AssetDataService.createAsset(username, asset)
+    if(this.state.id === "new") { 
+      let token = AuthenticationService.getLoggedInToken();        
+      AssetDataService.createAsset(username, asset, token)
             .then(() => this.props.history.push('/assets'));
 
     } else {                  
@@ -98,7 +98,7 @@ class AssetFormComponent extends Component {
                   <Field
                     className="fieldCategB"
                     type="text"
-                    name="interestRate"
+                    name="interest_rate"
                   />
                 </fieldset>
                 <fieldset className="form-group">
@@ -106,7 +106,7 @@ class AssetFormComponent extends Component {
                   <Field
                     className="checkbox"
                     type="checkbox"
-                    name="isActive"
+                    name="is_active"
                   />
                 </fieldset>
                 <fieldset className="form-group">
@@ -114,7 +114,7 @@ class AssetFormComponent extends Component {
                   <Field
                     className="checkbox"
                     type="checkbox"
-                    name="isVariableIncome"
+                    name="is_variable_income"
                   />
                 </fieldset>
                 <fieldset className="form-group">
@@ -132,7 +132,7 @@ class AssetFormComponent extends Component {
                 <button className="btn btn-success" type="submit">
                   Save
                 </button>
-                <button className="btn btn-warning" onClick={this.onCancel}>
+                <button className="btn btn-warning" onClick={this.onCancel} type="button">
                   Cancel
                 </button>
               </Form>

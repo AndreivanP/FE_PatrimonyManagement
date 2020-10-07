@@ -8,8 +8,9 @@ class AssetDataService {
             {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
 
-    createTodo(username, asset) {
-        return axios.post(`${API_URL}/users/${username}/assets`, asset);
+    createAsset(username, asset, token) {
+        return axios.post(`${API_URL}/users/${username}/assets`, asset,
+        {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
  
 }
