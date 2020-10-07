@@ -10,11 +10,11 @@ class AssetFormComponent extends Component {
       id: this.props.match.params.id,
       name: '',
       date: '',
-      initialValue: '',
+      initial_value: '',
       company: '',
       interest_rate: '',
       is_active: '',
-      currentValue: '',
+      current_value: '',
       is_variable_income: '',
       
     }
@@ -33,11 +33,11 @@ class AssetFormComponent extends Component {
     let asset = {
         name: values.name,
         date: values.date,
-        initialValue: values.initialValue,
+        initial_value: values.initial_value,
         company: values.company,
         interest_rate: values.interest_rate,
         is_active: values.is_active,
-        currentValue: values.currentValue,
+        current_value: values.current_value,
         is_variable_income: values.is_variable_income
     }
 
@@ -57,14 +57,14 @@ class AssetFormComponent extends Component {
   }
 
   render() {
-    let {name, date, initialValue, company, interest_rate, is_active, currentValue, is_variable_income} = this.state;
+    let {name, date, initial_value, company, interest_rate, is_active, current_value, is_variable_income} = this.state;
 
     return (
       <div className="text-center">
         <h1>Asset</h1>
         <div className="asset">
           <Formik
-            initialValues={{name, date, initialValue, company, interest_rate, is_active, currentValue, is_variable_income}}
+            initialValues={{name, date, initial_value, company, interest_rate, is_active, current_value, is_variable_income}}
             onSubmit={this.onSubmit}
             validateOnChange={false}
             validateOnBlur={false}
@@ -90,7 +90,7 @@ class AssetFormComponent extends Component {
                   <Field
                     className="fieldCategA"
                     type="text"
-                    name="initialValue"
+                    name="initial_value"
                   />
                 </fieldset>
                 <fieldset className="form-group">
@@ -122,7 +122,7 @@ class AssetFormComponent extends Component {
                   <Field
                     className="fieldCategA"
                     type="text"
-                    name="currentValue"
+                    name="current_value"
                   />
                 </fieldset>
                 <fieldset className="form-group">

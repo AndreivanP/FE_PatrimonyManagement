@@ -38,8 +38,12 @@ class ListAssetComponent extends Component {
     render() {        
         return (        
             <div className="text-center">
-                <h1>List Assets</h1>
-                {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
+                <h1>Your Assets
+                    <div className="text-right">
+                        <button className="btn btn-success" onClick={this.addAsset}>Add New Asset</button>
+                    </div>
+                </h1>
+                    {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
                 <div >
                     <table className="table">
                         <thead>
@@ -67,9 +71,6 @@ class ListAssetComponent extends Component {
                             }                            
                         </tbody>
                     </table>
-                    <div className="text-center">
-                        <button className="btn btn-success" onClick={this.addAsset}>Add New Todo</button>
-                    </div>
                 </div>
             </div>
         )
