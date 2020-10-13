@@ -26,10 +26,16 @@ class AssetFormComponent extends Component {
     if (this.state.id === "new") {
       return;
     }
+    let token = AuthenticationService.getLoggedInToken();
+    AssetDataService.retrieveAsset(this.state.id, token)
+      .then(
+        response => this.setState({
+            name: response.data[0].name
+          }));
   }
 
   onSubmit(values) {      
-    let username = AuthenticationService.getLoggedInUserName();  
+    let username = AuthenticationService.getLoggedInUserName();
     let asset = {
         name: values.name,
         date: values.date,
@@ -40,15 +46,13 @@ class AssetFormComponent extends Component {
         current_value: values.current_value,
         is_variable_income: values.is_variable_income
     }
-
+    let token = AuthenticationService.getLoggedInToken();
     if(this.state.id === "new") { 
-      let token = AuthenticationService.getLoggedInToken();        
       AssetDataService.createAsset(username, asset, token)
             .then(() => this.props.history.push('/assets'));
-
-    } else {                  
-      // AssetDataService.updateAsset(username, this.state.id, asset)
-      //       .then(() => this.props.history.push('/assets'));
+    } else {              
+      AssetDataService.updateAsset(this.state.id, asset, token)
+            .then(() => this.props.history.push('/assets'));
     }
 }
 
