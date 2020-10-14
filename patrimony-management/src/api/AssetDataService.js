@@ -24,8 +24,8 @@ class AssetDataService {
     }
 
     updateAsset(id, asset, token) {
-        return axios.put(`${API_URL}/assets/${id}`, asset),
-        {headers: {authorization: AuthenticationService.createJwtToken(token)}};
+        return axios.put(`${API_URL}/assets/${id}`, asset,
+        {headers: {authorization: AuthenticationService.createJwtToken(token)}});
         
     }
  

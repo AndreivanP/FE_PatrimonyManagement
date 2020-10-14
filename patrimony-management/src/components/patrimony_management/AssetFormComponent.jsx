@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetDataService from "../../api/AssetDataService"
+import moment from 'moment'
 
 class AssetFormComponent extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class AssetFormComponent extends Component {
     this.state = {
       id: this.props.match.params.id,
       name: '',
-      date: '',
+      date: moment(new Date()).format('YYYY-MM-DD'),
       initial_value: '',
       company: '',
       interest_rate: '',
@@ -28,15 +29,22 @@ class AssetFormComponent extends Component {
     }
     let token = AuthenticationService.getLoggedInToken();
     AssetDataService.retrieveAsset(this.state.id, token)
-      .then(
-        response => this.setState({
-            name: response.data[0].name
+      .then(response => this.setState({
+            name: response.data.name,
+            date: moment(response.data.date).format('YYYY-MM-DD'),
+            initial_value: response.data.initial_value,
+            company: response.data.company,
+            interest_rate: response.data.interest_rate,
+            is_active: response.data.is_active,
+            current_value: response.data.current_value,
+            is_variable_income: response.data.is_variable_income
           }));
   }
 
   onSubmit(values) {      
     let username = AuthenticationService.getLoggedInUserName();
     let asset = {
+        id: this.state.id,
         name: values.name,
         date: values.date,
         initial_value: values.initial_value,
