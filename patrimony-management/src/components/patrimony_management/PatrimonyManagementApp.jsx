@@ -18,7 +18,7 @@ class PatrimonyManagementApp extends Component {
                         <Switch>
                             <Route path="/" exact component={LoginComponent}/>
                             <Route path="/login" component={LoginComponent}/>
-                            <AuthenticatedRoute path="/assets/:id" component={AssetFormComponent}/>
+                            <AuthenticatedRoute path="/users/:username/assets/:id" component={AssetFormComponent}/>
                             <AuthenticatedRoute path="/assets/" component={ListAssetComponent}/>
                             <AuthenticatedRoute path="/logout/" component={LogoutComponent}/>    
                         </Switch>

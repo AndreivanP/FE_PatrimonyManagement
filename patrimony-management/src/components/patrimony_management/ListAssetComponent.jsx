@@ -34,12 +34,14 @@ class ListAssetComponent extends Component {
     }
 
     addAsset() {
-        this.props.history.push(`/assets/new`);
+        let username = AuthenticationService.getLoggedInUserName();
+        this.props.history.push(`/users/${username}/assets/new`);
     }
 
     updateAsset(id) {
+        let username = AuthenticationService.getLoggedInUserName();
         let token = AuthenticationService.getLoggedInToken();        
-        this.props.history.push(`/assets/${id}`);
+        this.props.history.push(`/users/${username}/assets/${id}`);
     }
 
     deleteAsset(id) {

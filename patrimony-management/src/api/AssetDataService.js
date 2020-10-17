@@ -8,8 +8,8 @@ class AssetDataService {
             {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
 
-    retrieveAsset(id, token) {        
-        return axios.get(`${API_URL}/assets/${id}`, 
+    retrieveAsset(username, id, token) {        
+        return axios.get(`${API_URL}/users/${username}/assets/${id}`, 
             {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
 
@@ -18,13 +18,13 @@ class AssetDataService {
         {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
 
-    deleteAsset(id, token) {
-        return axios.delete(`${API_URL}/assets/${id}`,
+    deleteAsset(username, id, token) {
+        return axios.delete(`${API_URL}/users/${username}/assets/${id}`,
          {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
 
-    updateAsset(id, asset, token) {
-        return axios.put(`${API_URL}/assets/${id}`, asset,
+    updateAsset(username, id, asset, token) {
+        return axios.put(`${API_URL}/users/${username}/assets/${id}`, asset,
         {headers: {authorization: AuthenticationService.createJwtToken(token)}});
         
     }
