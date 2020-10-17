@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import AuthenticationService from '../../authentication/AuthenticationService'
 import AssetDataService from '../../api/AssetDataService'
 
+let username = AuthenticationService.getLoggedInUserName();        
+let token = AuthenticationService.getLoggedInToken(); 
+
 class ListAssetComponent extends Component {
     constructor(props) {
         super(props)
@@ -21,9 +24,7 @@ class ListAssetComponent extends Component {
     }
 
     loadAssets() {
-        let username = AuthenticationService.getLoggedInUserName();        
-        let token = AuthenticationService.getLoggedInToken();        
-        AssetDataService.retrieveAllAssets(username, token)
+               AssetDataService.retrieveAllAssets(username, token)
             .then(
                 response => {
                     this.setState(
@@ -34,19 +35,14 @@ class ListAssetComponent extends Component {
     }
 
     addAsset() {
-        let username = AuthenticationService.getLoggedInUserName();
         this.props.history.push(`/users/${username}/assets/new`);
     }
 
     updateAsset(id) {
-        let username = AuthenticationService.getLoggedInUserName();
-        let token = AuthenticationService.getLoggedInToken();        
         this.props.history.push(`/users/${username}/assets/${id}`);
     }
 
     deleteAsset(id) {
-        let username = AuthenticationService.getLoggedInUserName();
-        let token = AuthenticationService.getLoggedInToken();        
         AssetDataService.deleteAsset(username, id, token)
         .then(
             response => {
