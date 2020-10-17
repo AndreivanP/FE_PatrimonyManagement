@@ -4,6 +4,9 @@ import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetDataService from "../../api/AssetDataService"
 import moment from 'moment'
 
+let username = AuthenticationService.getLoggedInUserName();
+let token = AuthenticationService.getLoggedInToken();
+
 class AssetFormComponent extends Component {
   constructor(props) {
     super(props);
@@ -20,15 +23,12 @@ class AssetFormComponent extends Component {
       
     }
     this.onSubmit = this.onSubmit.bind(this);
-
   }
 
   componentDidMount() {
     if (this.state.id === "new") {
       return;
     }
-    let token = AuthenticationService.getLoggedInToken();
-    let username = AuthenticationService.getLoggedInUserName();
     AssetDataService.retrieveAsset(username, this.state.id, token)
       .then(response => this.setState({
             name: response.data.name,
@@ -43,7 +43,6 @@ class AssetFormComponent extends Component {
   }
 
   onSubmit(values) {      
-    let username = AuthenticationService.getLoggedInUserName();
     let asset = {
         name: values.name,
         date: values.date,
@@ -54,7 +53,6 @@ class AssetFormComponent extends Component {
         current_value: values.current_value,
         is_variable_income: values.is_variable_income
     }
-    let token = AuthenticationService.getLoggedInToken();
     if(this.state.id === "new") { 
       AssetDataService.createAsset(username, asset, token)
             .then(() => this.props.history.push('/assets'));
