@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetDataService from "../../api/AssetDataService"
+import moment from 'moment'
 
 class AssetFormComponent extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class AssetFormComponent extends Component {
     this.state = {
       id: this.props.match.params.id,
       name: '',
-      date: '',
+      date: moment(new Date()).format('YYYY-MM-DD'),
       initial_value: '',
       company: '',
       interest_rate: '',
@@ -26,10 +27,23 @@ class AssetFormComponent extends Component {
     if (this.state.id === "new") {
       return;
     }
+    let token = AuthenticationService.getLoggedInToken();
+    let username = AuthenticationService.getLoggedInUserName();
+    AssetDataService.retrieveAsset(username, this.state.id, token)
+      .then(response => this.setState({
+            name: response.data.name,
+            date: moment(response.data.date).format('YYYY-MM-DD'),
+            initial_value: response.data.initial_value,
+            company: response.data.company,
+            interest_rate: response.data.interest_rate,
+            is_active: response.data.is_active,
+            current_value: response.data.current_value,
+            is_variable_income: response.data.is_variable_income
+          }));
   }
 
   onSubmit(values) {      
-    let username = AuthenticationService.getLoggedInUserName();  
+    let username = AuthenticationService.getLoggedInUserName();
     let asset = {
         name: values.name,
         date: values.date,
@@ -40,15 +54,14 @@ class AssetFormComponent extends Component {
         current_value: values.current_value,
         is_variable_income: values.is_variable_income
     }
-
+    let token = AuthenticationService.getLoggedInToken();
     if(this.state.id === "new") { 
-      let token = AuthenticationService.getLoggedInToken();        
       AssetDataService.createAsset(username, asset, token)
             .then(() => this.props.history.push('/assets'));
-
-    } else {                  
-      // AssetDataService.updateAsset(username, this.state.id, asset)
-      //       .then(() => this.props.history.push('/assets'));
+    } else {
+      asset.id = this.state.id              
+      AssetDataService.updateAsset(username, this.state.id, asset, token)
+            .then(() => this.props.history.push('/assets'));
     }
 }
 

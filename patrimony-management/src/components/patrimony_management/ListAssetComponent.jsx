@@ -12,6 +12,8 @@ class ListAssetComponent extends Component {
         }
         this.loadAssets = this.loadAssets.bind(this);
         this.addAsset = this.addAsset.bind(this);       
+        this.updateAsset = this.updateAsset.bind(this);     
+        this.deleteAsset = this.deleteAsset.bind(this);      
     }
 
     componentDidMount() {
@@ -31,8 +33,27 @@ class ListAssetComponent extends Component {
             )                
     }
 
-    addAsset(id) {
-        this.props.history.push(`/assets/new`);
+    addAsset() {
+        let username = AuthenticationService.getLoggedInUserName();
+        this.props.history.push(`/users/${username}/assets/new`);
+    }
+
+    updateAsset(id) {
+        let username = AuthenticationService.getLoggedInUserName();
+        let token = AuthenticationService.getLoggedInToken();        
+        this.props.history.push(`/users/${username}/assets/${id}`);
+    }
+
+    deleteAsset(id) {
+        let username = AuthenticationService.getLoggedInUserName();
+        let token = AuthenticationService.getLoggedInToken();        
+        AssetDataService.deleteAsset(username, id, token)
+        .then(
+            response => {
+                this.setState({message : `Delete of asset ${id} successful.`});
+                this.loadAssets();
+            }
+        )
     }
 
     render() {        
@@ -63,9 +84,8 @@ class ListAssetComponent extends Component {
                                             <td>{asset.initial_value}</td>
                                             <td>{asset.current_value}</td>
                                             <td>{asset.company}</td>
-                                            {/* <td>{moment(todo.targetDate).format('YYYY-MM-DD')}</td>
-                                            <td><button className="brn btn-success" onClick={() => this.updateTodoClicked(todo.id)}>Update</button></td>
-                                            <td><button className="brn btn-warning" onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td> */}
+                                            <td><button className="brn btn-warning" onClick={() => this.updateAsset(asset.id)}>Update</button></td>
+                                            <td><button className="brn btn-danger" onClick={() => this.deleteAsset(asset.id)}>Delete</button></td>
                                         </tr>                                        
                                 )
                             }                            
