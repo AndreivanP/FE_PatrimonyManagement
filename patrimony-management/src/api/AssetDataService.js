@@ -28,6 +28,11 @@ class AssetDataService {
         {headers: {authorization: AuthenticationService.createJwtToken(token)}});
         
     }
+
+    getCurrentTotal(username, token) {
+        return axios.get(`${API_URL}/users/${username}/assets/current-total`, 
+        {headers: {authorization: AuthenticationService.createJwtToken(token)}});
+    }
  
 }
 
