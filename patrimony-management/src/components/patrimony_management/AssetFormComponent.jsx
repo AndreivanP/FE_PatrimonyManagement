@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import AuthenticationService from "../../authentication/AuthenticationService"
+import AssetControlDataService from "../../api/AssetControlDataService"
 import AssetDataService from "../../api/AssetDataService"
 import moment from 'moment'
 
@@ -53,13 +54,21 @@ class AssetFormComponent extends Component {
         current_value: values.current_value,
         is_variable_income: values.is_variable_income
     }
-    if(this.state.id === "new") { 
+    if(this.state.id === "new") {
       AssetDataService.createAsset(username, asset, token)
+            .then(() => AssetControlDataService.createAssetCurrentValue(username, token), 
+              this.props.history.push('/assets'));
+      } else {
+      asset.id = this.state.id 
+      if(asset.current_value != this.state.current_value) {
+        AssetDataService.updateAsset(username, this.state.id, asset, token)
+            .then(() => AssetControlDataService.createAssetCurrentValue(username, token),
+              this.props.history.push('/assets'));
+      } else {
+        AssetDataService.updateAsset(username, this.state.id, asset, token)
             .then(() => this.props.history.push('/assets'));
-    } else {
-      asset.id = this.state.id              
-      AssetDataService.updateAsset(username, this.state.id, asset, token)
-            .then(() => this.props.history.push('/assets'));
+      }            
+      
     }
 }
 

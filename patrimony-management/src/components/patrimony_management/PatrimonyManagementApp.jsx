@@ -24,7 +24,7 @@ class PatrimonyManagementApp extends Component {
                             <AuthenticatedRoute path="/assets/" component={ListAssetComponent}/>
                             <AuthenticatedRoute path="/logout/" component={LogoutComponent}/>    
                         </Switch>
-                    <FooterComponent/>    
+                    {/* <FooterComponent/>     */}
                 </>
                 </Router>
             </div>

@@ -3,9 +3,9 @@ import AuthenticationService from "../authentication/AuthenticationService";
 import { API_URL } from "../Properties"
 
 class AssetControlService {
-    retrieveAssetControlByAsset(username, password, asset_id) {        
-        return axios.get(`${API_URL}/assets-control/asset/${asset_id}`, 
-            {headers: {authorization: AuthenticationService.createBasicAuthToken(username, password)}});
+    createAssetCurrentValue(username, token) {
+        return axios.post(`${API_URL}/users/${username}/assets-control`, "",
+        {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
  
 }

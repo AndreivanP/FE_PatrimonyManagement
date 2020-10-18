@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AuthenticationService from '../../authentication/AuthenticationService'
 import AssetDataService from '../../api/AssetDataService'
+import AssetControlDataService from "../../api/AssetControlDataService"
 
 let username = AuthenticationService.getLoggedInUserName();        
 let token = AuthenticationService.getLoggedInToken(); 
@@ -46,10 +47,12 @@ class ListAssetComponent extends Component {
         AssetDataService.deleteAsset(username, id, token)
         .then(
             response => {
-                this.setState({message : `Delete of asset ${id} successful.`});
+                AssetControlDataService.createAssetCurrentValue(username, token);
+                this.setState({message : `Successfully deleted asset id ${id}`});
                 this.loadAssets();
             }
         )
+        
     }
 
     render() {        
