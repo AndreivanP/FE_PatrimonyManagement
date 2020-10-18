@@ -26,15 +26,26 @@
   margin-left: -300px;
 }
 
+.dashboard {
+  background-color: #294d2f;
+  color: aliceblue;
+  justify-content: center;
+  display: flex;
+}
+
 .checkbox {
   display: inline-block;
   float: left;
 }
 
-.fieldCategA{
-  width: 160px;
+.fieldCategA{ 
+  width: 200px;
+  border: 1px solid #000; 
+  padding: 5px;
 }
 
-.fieldCategB{
-  width: 50px;
+.fieldCategB{ 
+  width: 40px;
+  border: 1px solid #000; 
+  padding: 5px;
 }

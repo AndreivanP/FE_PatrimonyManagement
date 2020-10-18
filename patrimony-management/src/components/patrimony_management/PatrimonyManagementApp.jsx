@@ -7,6 +7,7 @@ import LogoutComponent from './LogoutComponent'
 import AuthenticatedRoute from './AuthenticateRoute'
 import ListAssetComponent from './ListAssetComponent'
 import AssetFormComponent from './AssetFormComponent'
+import DashboardComponent from "./DashboardComponent";
 
 class PatrimonyManagementApp extends Component {
     render() {
@@ -19,10 +20,11 @@ class PatrimonyManagementApp extends Component {
                             <Route path="/" exact component={LoginComponent}/>
                             <Route path="/login" component={LoginComponent}/>
                             <AuthenticatedRoute path="/users/:username/assets/:id" component={AssetFormComponent}/>
+                            <AuthenticatedRoute path="/dashboard/" component={DashboardComponent}/>
                             <AuthenticatedRoute path="/assets/" component={ListAssetComponent}/>
                             <AuthenticatedRoute path="/logout/" component={LogoutComponent}/>    
                         </Switch>
-                    <FooterComponent/>    
+                    {/* <FooterComponent/>     */}
                 </>
                 </Router>
             </div>
