@@ -56,8 +56,9 @@ class AssetFormComponent extends Component {
     }
     if(this.state.id === "new") {
       AssetDataService.createAsset(username, asset, token)
-            .then(() => AssetControlDataService.createAssetCurrentValue(username, token), 
-              this.props.history.push('/assets'));
+            .then(() => AssetControlDataService.createAssetCurrentValue(username, token)
+                            .then( this.props.history.push('/assets')) ) 
+              
       } else {
       asset.id = this.state.id 
       if(asset.current_value != this.state.current_value) {
