@@ -25,7 +25,7 @@ class ListAssetComponent extends Component {
     }
 
     loadAssets() {
-               AssetDataService.retrieveAllAssets(username, token)
+        AssetDataService.retrieveAllAssets(username, token)
             .then(
                 response => {
                     this.setState(
