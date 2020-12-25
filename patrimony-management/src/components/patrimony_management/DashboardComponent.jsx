@@ -17,7 +17,7 @@ class DashboardComponent extends Component {
     componentDidMount() {        
         AssetDataService.getCurrentTotal(username, token)
             .then(response => this.setState({
-                total : response.data
+                total : response.data.current_total
             }));           
     }
 
