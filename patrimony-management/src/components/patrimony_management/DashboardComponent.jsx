@@ -9,7 +9,9 @@ class DashboardComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            total : ''
+            total : '',
+            variableIncomeTotal : '',
+            variableIncomePercentage: ''
         }
 
     }
@@ -17,7 +19,9 @@ class DashboardComponent extends Component {
     componentDidMount() {        
         AssetDataService.getCurrentTotal(username, token)
             .then(response => this.setState({
-                total : response.data.current_total
+                total : response.data.current_total,
+                variableIncomeTotal : response.data.variable_income_total,
+                variableIncomePercentage : response.data.variable_income_percent
             }));           
     }
 
@@ -28,11 +32,20 @@ class DashboardComponent extends Component {
             minimumFractionDigits: 2
           })
         let {total} = this.state;
-        total = formatter.format(total)
+        let {variableIncomeTotal} = this.state;
+        let {variableIncomePercentage} = this.state;
+        total = formatter.format(total);
+        variableIncomeTotal = formatter.format(variableIncomeTotal);
         return (
             <h1>
-                <div className="dashboard" >
+                <div className="total" >
                    Your Total Patrimony is {total}
+                </div>
+                <div className="variableIncTotal" >
+                   Your Variable Income Total is {variableIncomeTotal}
+                </div>
+                <div className="percentageIncTotal" >
+                   Your Variable Income Percentage is {variableIncomePercentage} %
                 </div>
             </h1>
         )
