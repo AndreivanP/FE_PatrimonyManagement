@@ -57,8 +57,7 @@ class AssetFormComponent extends Component {
     if(this.state.id === "new") {
       AssetDataService.createAsset(username, asset, token)
             .then(() => AssetControlDataService.createAssetCurrentValue(username, token)
-                            .then( this.props.history.push('/assets')) ) 
-              
+                            .then( this.props.history.push('/assets')))
       } else {
       asset.id = this.state.id 
       if(asset.current_value != this.state.current_value) {
@@ -68,8 +67,7 @@ class AssetFormComponent extends Component {
       } else {
         AssetDataService.updateAsset(username, this.state.id, asset, token)
             .then(() => this.props.history.push('/assets'));
-      }            
-      
+      }
     }
 }
 
@@ -96,7 +94,7 @@ class AssetFormComponent extends Component {
               <Form>
                 <fieldset className="form-group">
                   <label>Name:</label>
-                  <Field className="form-control" type="text" name="name" />
+                  <Field className="fieldCategA" type="text" name="name" />
                 </fieldset>
                 <fieldset className="form-group">
                   <label>Date:</label>
@@ -117,7 +115,7 @@ class AssetFormComponent extends Component {
                 <fieldset className="form-group">
                   <label>Interest Rate:</label>
                   <Field
-                    className="fieldCategB"
+                    className="fieldCategA"
                     type="text"
                     name="interest_rate"
                   />
@@ -148,7 +146,7 @@ class AssetFormComponent extends Component {
                 </fieldset>
                 <fieldset className="form-group">
                   <label>Company:</label>
-                  <Field className="form-control" type="text" name="company" />
+                  <Field className="fieldCategA" type="text" name="company" />
                 </fieldset>
                 <button className="btn btn-success" type="submit">
                   Save
