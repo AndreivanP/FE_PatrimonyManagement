@@ -32,11 +32,11 @@ class ListAssetComponent extends Component {
         if (typeof(value) == 'undefined'  || value == "") {
             return 0;
         } else {
-            if(value < idealVariableInc && this.state.variableIncomeTotal < idealVariableInc) {
-                return value
+            if((value + parseFloat(this.state.variableIncomeTotal)) < parseFloat(idealVariableInc)){
+                return value;
             } else {
                 return parseFloat(idealVariableInc) - parseFloat(this.state.variableIncomeTotal);
-              } 
+            } 
         } 
     }
 
