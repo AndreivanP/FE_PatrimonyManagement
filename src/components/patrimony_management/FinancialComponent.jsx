@@ -28,7 +28,7 @@ class ListAssetComponent extends Component {
     }
 
     calcVariableIncome(value) {
-        let idealVariableInc = (this.state.total + parseFloat(value)) / 100 * 25;
+        let idealVariableInc = (this.state.total + parseFloat(value)) / 100 * 20;
         if (typeof(value) == 'undefined'  || value == "") {
             return 0;
         } else {
