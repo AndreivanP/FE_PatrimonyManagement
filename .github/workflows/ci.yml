@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+       - name: Clone BE repo
+         uses: actions/checkout@master
+         with:
+          repository: AndreivanP/BE_PatrimonyManagement
+       - name: Generate jar artifact
+         run: cd BE_PatrimonyManagement && mvn install -DskipTests
+       - name: Build docker image
+         run: cd BE_PatrimonyManagement && docker-compose -f docker-compose-be.yml build
+       - name: Deploy docker containers for API and Database
+         run: cd BE_PatrimonyManagement && docker-compose -f docker-compose-be.yml up -d
