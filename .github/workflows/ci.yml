@@ -40,6 +40,6 @@ jobs:
        - name: Create docker container for FE app
          run: docker-compose -f docker-compose-fe.yml up -d
        - name: Run e2e tests
-         run: cd e2e && npm run cy:regression
+         run: cd e2e && docker-compose -f docker-compose-fe.yml exec -T APPUI npm run cy:regression
          
 
