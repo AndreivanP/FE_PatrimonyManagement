@@ -25,7 +25,7 @@ jobs:
        - name: Create docker containers for API and Database
          run: docker-compose -f docker-compose-be.yml up -d
 
-  build-fe:
+  build-fe-e2e:
     runs-on: ubuntu-latest
     steps:
        - uses: actions/checkout@v2
@@ -39,3 +39,7 @@ jobs:
           docker-compose -f docker-compose-fe.yml build
        - name: Create docker container for FE app
          run: docker-compose -f docker-compose-fe.yml up -d
+       - name: Run e2e tests
+         run: cd e2e && npm run cy:regression
+         
+
