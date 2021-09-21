@@ -20,7 +20,7 @@ jobs:
          run: |
           pwd
           ls -ll -a
-          cd BE_PatrimonyManagement && mvn install -DskipTests
+          mvn install -DskipTests
        - name: Build docker image
          run: cd BE_PatrimonyManagement && docker-compose -f docker-compose-be.yml build
        - name: Deploy docker containers for API and Database
