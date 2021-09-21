@@ -9,7 +9,6 @@ on:
 jobs:
   build-be:
     runs-on: ubuntu-latest
-
     steps:
        - name: Clone BE repo
          uses: actions/checkout@master
@@ -23,5 +22,14 @@ jobs:
           mvn install -DskipTests
        - name: Build docker image
          run: docker-compose -f docker-compose-be.yml build
-       - name: Deploy docker containers for API and Database
+       - name: Create docker containers for API and Database
          run: docker-compose -f docker-compose-be.yml up -d
+
+  build-fe:
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v2
+       - name: Build docker image
+         run: docker-compose -f docker-compose-fe.yml build
+       - name: Create docker container for FE app
+         run: docker-compose -f docker-compose-fe.yml up -d
