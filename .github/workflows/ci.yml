@@ -29,7 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - uses: actions/checkout@v2
+         with:
+          ref: ${{ github.event.pull_request.head.sha }}
        - name: Build docker image
-         run: docker-compose -f docker-compose-fe.yml build
+         run: |
+          pwd
+          ls -ll -a
+          docker-compose -f docker-compose-fe.yml build
        - name: Create docker container for FE app
          run: docker-compose -f docker-compose-fe.yml up -d
