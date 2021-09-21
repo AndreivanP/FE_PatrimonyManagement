@@ -34,6 +34,7 @@ jobs:
        - name: Build docker image
          run: |
           pwd
+          git status
           ls -ll -a
           docker-compose -f docker-compose-fe.yml build
        - name: Create docker container for FE app
