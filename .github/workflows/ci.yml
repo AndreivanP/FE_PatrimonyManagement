@@ -15,7 +15,7 @@ jobs:
          uses: actions/checkout@master
          with:
           repository: AndreivanP/BE_PatrimonyManagement
-          token: ${{ secrets.gha_pta }}
+          token: ${{ secrets.gha_pta || github.token }}
        - name: Generate jar artifact
          run: cd BE_PatrimonyManagement && mvn install -DskipTests
        - name: Build docker image
