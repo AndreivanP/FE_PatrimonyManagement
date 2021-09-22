@@ -17,14 +17,14 @@ jobs:
           token: ${{ secrets.gha_pta || github.token }}
        - name: Generate jar artifact
          run: mvn install -DskipTests
-       - name: Build docker image
+       - name: Build back end docker images
          run: docker-compose -f docker-compose-be.yml build
        - name: Create docker containers for API and Database
          run: docker-compose -f docker-compose-be.yml up -d
        - uses: actions/checkout@v2
          with:
           ref: ${{ github.event.pull_request.head.sha }}
-       - name: Build docker image
+       - name: Build front end related docker images
          run: |
           git status
           docker-compose -f docker-compose-fe.yml build
