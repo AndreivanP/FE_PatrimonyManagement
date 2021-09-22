@@ -1,0 +1,22 @@
+version: "3.1"
+
+services:
+  APPUI:
+    container_name: fe-asset-management
+    image: react-asset-management
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+    stdin_open: true
+
+  e2e-runner:
+    image: cypresstests
+    container_name: e2e-cypress-runner
+    build:
+      context: .
+      dockerfile: e2e/Dockerfile
+    ports:
+      - "8081:8081"
+    stdin_open: true  

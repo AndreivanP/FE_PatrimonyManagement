@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-deploy-run-e2e:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Clone BE repo
+         uses: actions/checkout@master
+         with:
+          repository: AndreivanP/BE_PatrimonyManagement
+          token: ${{ secrets.gha_pta || github.token }}
+       - name: Generate jar artifact
+         run: mvn install -DskipTests
+       - name: Build docker image
+         run: docker-compose -f docker-compose-be.yml build
+       - name: Create docker containers for API and Database
+         run: docker-compose -f docker-compose-be.yml up -d
+       - uses: actions/checkout@v2
+         with:
+          ref: ${{ github.event.pull_request.head.sha }}
+       - name: Build docker image
+         run: |
+          git status
+          docker-compose -f docker-compose-fe.yml build
+       - name: Create docker containers for FE app and Cypress runner
+         run: docker-compose -f docker-compose-fe.yml up -d
+       - name: Run e2e tests within cypress container
+         run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
+     

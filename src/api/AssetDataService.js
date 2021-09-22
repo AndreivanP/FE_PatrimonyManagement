@@ -30,7 +30,8 @@ class AssetDataService {
     }
 
     getCurrentTotal(username, token) {
-        return axios.get(`${API_URL}/users/${username}/assets/current-total`, 
+        let user = sessionStorage.getItem('authenticatedUser');
+        return axios.get(`${API_URL}/users/${user}/assets/current-total`, 
         {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
  
