@@ -23,9 +23,11 @@ jobs:
          run: docker-compose -f docker-compose-be.yml up -d
        - uses: actions/checkout@v2
          with:
-          ref: e2e-cypress #${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
        - name: Build docker image
-         run: docker-compose -f docker-compose-fe.yml build
+         run: |
+          git status
+          docker-compose -f docker-compose-fe.yml build
        - name: Create docker containers for FE app and Cypress runner
          run: docker-compose -f docker-compose-fe.yml up -d
        - name: Run e2e tests within cypress container
