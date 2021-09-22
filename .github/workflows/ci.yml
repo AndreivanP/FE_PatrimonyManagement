@@ -16,10 +16,7 @@ jobs:
           repository: AndreivanP/BE_PatrimonyManagement
           token: ${{ secrets.gha_pta || github.token }}
        - name: Generate jar artifact
-         run: |
-          pwd
-          ls -ll -a
-          mvn install -DskipTests
+         run: mvn install -DskipTests
        - name: Build docker image
          run: docker-compose -f docker-compose-be.yml build
        - name: Create docker containers for API and Database
@@ -32,14 +29,10 @@ jobs:
          with:
           ref: e2e-cypress #${{ github.event.pull_request.head.sha }}
        - name: Build docker image
-         run: |
-          pwd
-          git status
-          ls -ll -a
-          docker-compose -f docker-compose-fe.yml build
-       - name: Create docker container for FE app
+         run: docker-compose -f docker-compose-fe.yml build
+       - name: Create docker containers for FE app and Cypress runner
          run: docker-compose -f docker-compose-fe.yml up -d
-       - name: Run e2e tests
-         run: cd e2e && docker-compose -f docker-compose-fe.yml exec -T APPUI npm run cy:regression
+       - name: Run e2e tests within cypress container
+         run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
          
 
