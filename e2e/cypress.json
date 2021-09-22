@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://localhost:4200/",
+    "baseUrl": "http://fe-asset-management:4200/",
     "video": false,
     "defaultCommandTimeout": 10000,
     "viewportWidth": 1440,
@@ -19,7 +19,7 @@
         "json": true
      },
     "env": {
-            "auth_url": "http://localhost:8080/authenticate",
+            "auth_url": "http://asset-management:8080/authenticate",
             "auth_username": "Andreivan",
             "auth_password": "asd123",
             "scope": "openid",
