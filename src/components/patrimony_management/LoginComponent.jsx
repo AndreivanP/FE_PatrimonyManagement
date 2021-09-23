@@ -36,7 +36,7 @@ class LoginComponent extends Component {
     render() {
         return (
             <div className="text-center">
-                <h1 >Login</h1>
+                <h1 >Login TEST</h1>
                 <div >
                     {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}></ShowInvalidCredentials>
                     <ShowLoginSuccesMessage showSuccesMessage={this.state.showSuccesMessage}></ShowLoginSuccesMessage> */}
