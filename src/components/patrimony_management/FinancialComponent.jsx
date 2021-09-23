@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import AuthenticationService from '../../authentication/AuthenticationService'
 import AssetDataService from '../../api/AssetDataService'
-import AssetControlDataService from "../../api/AssetControlDataService"
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 
 let username = AuthenticationService.getLoggedInUserName();        
 let token = AuthenticationService.getLoggedInToken(); 
@@ -29,7 +28,7 @@ class ListAssetComponent extends Component {
 
     calcVariableIncome(value) {
         let idealVariableInc = (this.state.total + parseFloat(value)) / 100 * 20;
-        if (typeof(value) == 'undefined'  || value == "") {
+        if (typeof(value) == 'undefined'  || value === "") {
             return 0;
         } else {
             if((value + parseFloat(this.state.variableIncomeTotal)) < parseFloat(idealVariableInc)){
@@ -41,7 +40,7 @@ class ListAssetComponent extends Component {
     }
 
     calcFixedIncome(value) {
-        if (typeof(value) == 'undefined' || value == "") {
+        if (typeof(value) == 'undefined' || value === "") {
             return 0;
         } else {
             return value - this.calcVariableIncome(value);

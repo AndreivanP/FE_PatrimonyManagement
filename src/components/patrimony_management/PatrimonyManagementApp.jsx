@@ -2,7 +2,6 @@ import LoginComponent from "./LoginComponent";
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import HeaderComponent from './HeaderComponent'
-import FooterComponent from './FooterComponent';
 import LogoutComponent from './LogoutComponent'
 import AuthenticatedRoute from './AuthenticateRoute'
 import ListAssetComponent from './ListAssetComponent'
