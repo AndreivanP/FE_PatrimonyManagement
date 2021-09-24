@@ -12,7 +12,6 @@ function getCurrentDate() {
 class HeaderComponent extends Component {
      
     render() {
-        let juca = getCurrentDate(); 
         let isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         return (
             <header>
