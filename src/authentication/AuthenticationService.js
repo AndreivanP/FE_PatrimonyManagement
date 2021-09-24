@@ -7,7 +7,6 @@ const TOKEN_SESSION_ATTRIBUTE = 'tokenUser';
 
 class AuthenticationService {   
 
- 
     executeJwtAuthenticationService(username, password) {
         return axios.post(`${API_URL}/authenticate`, {
             username,
@@ -16,8 +15,8 @@ class AuthenticationService {
     }
 
     registerSuccessfulLoginJwt(username, token) {
-        sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE, username);                
-        sessionStorage.setItem(TOKEN_SESSION_ATTRIBUTE, token);
+        localStorage.setItem(USER_NAME_SESSION_ATTRIBUTE, username);                
+        localStorage.setItem(TOKEN_SESSION_ATTRIBUTE, token);
         this.setupAxiosInterceptors(this.createJwtToken(token));
     }
 
@@ -26,13 +25,13 @@ class AuthenticationService {
     }
 
     logout() {
-        sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE);
-        sessionStorage.removeItem(PASSWORD_SESSION_ATTRIBUTE);
-        sessionStorage.removeItem(TOKEN_SESSION_ATTRIBUTE);
+        localStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE);
+        localStorage.removeItem(PASSWORD_SESSION_ATTRIBUTE);
+        localStorage.removeItem(TOKEN_SESSION_ATTRIBUTE);
     }
 
     isUserLoggedIn() {        
-        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE);        
+        let user = localStorage.getItem(USER_NAME_SESSION_ATTRIBUTE);        
         if(user === null) {
             return false
         } else {
@@ -41,7 +40,7 @@ class AuthenticationService {
     }
 
     getLoggedInUserName() {        
-        let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE);        
+        let user = localStorage.getItem(USER_NAME_SESSION_ATTRIBUTE);        
         if(user === null) {
             return ""
         } else {
@@ -50,7 +49,7 @@ class AuthenticationService {
     }
 
     getLoggedInToken() {        
-        let token = sessionStorage.getItem(TOKEN_SESSION_ATTRIBUTE);        
+        let token = localStorage.getItem(TOKEN_SESSION_ATTRIBUTE);        
         if(token === null) {
             return ""
         } else {

@@ -7,7 +7,6 @@ class AssetControlService {
         return axios.post(`${API_URL}/users/${username}/assets-control`, "",
         {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
- 
 }
 
 export default new AssetControlService();
