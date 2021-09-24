@@ -46,8 +46,8 @@ export function auth0Login(endpoint = ''): void {
   cy.request(options).then((resp: any) => resp.body).then((body: any) => {
     const access_token = body.token;
 
-    window.sessionStorage.setItem('tokenUser', access_token);
-    window.sessionStorage.setItem('authenticatedUser', Cypress.env('auth_username'));
+    window.localStorage.setItem('tokenUser', access_token);
+    window.localStorage.setItem('authenticatedUser', Cypress.env('auth_username'));
   });
 
   cy.visit(`/${endpoint}`);
