@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Formik, Form, Field } from "formik";
-import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetControlDataService from "../../api/AssetControlDataService"
 import AssetDataService from "../../api/AssetDataService"
+import AuthenticationService from '../../authentication/AuthenticationService'
 import moment from 'moment'
-
-let username = AuthenticationService.getLoggedInUserName();
-let token = AuthenticationService.getLoggedInToken();
 
 class AssetFormComponent extends Component {
   constructor(props) {
@@ -21,7 +18,8 @@ class AssetFormComponent extends Component {
       is_active: '',
       current_value: '',
       is_variable_income: '',
-      
+      username: AuthenticationService.getLoggedInUserName(),
+      token: AuthenticationService.getLoggedInToken()
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -30,60 +28,60 @@ class AssetFormComponent extends Component {
     if (this.state.id === "new") {
       return;
     }
-    AssetDataService.retrieveAsset(username, this.state.id, token)
+    AssetDataService.retrieveAsset(this.state.username, this.state.id, this.state.token)
       .then(response => this.setState({
-            name: response.data.name,
-            date: moment(response.data.date).format('YYYY-MM-DD'),
-            initial_value: response.data.initial_value,
-            company: response.data.company,
-            interest_rate: response.data.interest_rate,
-            is_active: response.data.is_active,
-            current_value: response.data.current_value,
-            is_variable_income: response.data.is_variable_income
-          }));
+        name: response.data.name,
+        date: moment(response.data.date).format('YYYY-MM-DD'),
+        initial_value: response.data.initial_value,
+        company: response.data.company,
+        interest_rate: response.data.interest_rate,
+        is_active: response.data.is_active,
+        current_value: response.data.current_value,
+        is_variable_income: response.data.is_variable_income
+      }));
   }
 
-  onSubmit(values) {      
+  onSubmit(values) {
     let asset = {
-        name: values.name,
-        date: values.date,
-        initial_value: values.initial_value,
-        company: values.company,
-        interest_rate: values.interest_rate,
-        is_active: values.is_active,
-        current_value: values.current_value,
-        is_variable_income: values.is_variable_income
+      name: values.name,
+      date: values.date,
+      initial_value: values.initial_value,
+      company: values.company,
+      interest_rate: values.interest_rate,
+      is_active: values.is_active,
+      current_value: values.current_value,
+      is_variable_income: values.is_variable_income
     }
-    if(this.state.id === "new") {
-      AssetDataService.createAsset(username, asset, token)
-            .then(() => AssetControlDataService.createAssetCurrentValue(username, token)
-                            .then( this.props.history.push('/assets')))
+    if (this.state.id === "new") {
+      AssetDataService.createAsset(this.state.username, asset, this.state.token)
+        .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token)
+          .then(this.props.history.push('/assets')))
+    } else {
+      asset.id = this.state.id
+      if (asset.current_value !== this.state.current_value) {
+        AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
+          .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token),
+            this.props.history.push('/assets'));
       } else {
-      asset.id = this.state.id 
-      if(asset.current_value !== this.state.current_value) {
-        AssetDataService.updateAsset(username, this.state.id, asset, token)
-            .then(() => AssetControlDataService.createAssetCurrentValue(username, token),
-              this.props.history.push('/assets'));
-      } else {
-        AssetDataService.updateAsset(username, this.state.id, asset, token)
-            .then(() => this.props.history.push('/assets'));
+        AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
+          .then(() => this.props.history.push('/assets'));
       }
     }
-}
+  }
 
   onCancel() {
     window.history.back();
   }
 
   render() {
-    let {name, date, initial_value, company, interest_rate, is_active, current_value, is_variable_income} = this.state;
+    let { name, date, initial_value, company, interest_rate, is_active, current_value, is_variable_income } = this.state;
 
     return (
       <div className="text-center">
         <h1>Asset</h1>
         <div className="asset">
           <Formik
-            initialValues={{name, date, initial_value, company, interest_rate, is_active, current_value, is_variable_income}}
+            initialValues={{ name, date, initial_value, company, interest_rate, is_active, current_value, is_variable_income }}
             onSubmit={this.onSubmit}
             validateOnChange={false}
             validateOnBlur={false}

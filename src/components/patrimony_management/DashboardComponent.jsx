@@ -2,22 +2,21 @@ import React, { Component } from "react";
 import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetDataService from "../../api/AssetDataService"
 
-let username = AuthenticationService.getLoggedInUserName();
-let token = AuthenticationService.getLoggedInToken();
-
 class DashboardComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
             total : '',
             variableIncomeTotal : '',
-            variableIncomePercentage: ''
+            variableIncomePercentage: '',
+            username: AuthenticationService.getLoggedInUserName(),
+            token: AuthenticationService.getLoggedInToken()
         }
 
     }
 
     componentDidMount() {        
-        AssetDataService.getCurrentTotal(username, token)
+        AssetDataService.getCurrentTotal(this.state.username, this.state.token)
             .then(response => this.setState({
                 total : response.data.current_total,
                 variableIncomeTotal : response.data.variable_income_total,

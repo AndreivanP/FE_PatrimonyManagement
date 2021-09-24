@@ -3,16 +3,15 @@ import AuthenticationService from '../../authentication/AuthenticationService'
 import AssetDataService from '../../api/AssetDataService'
 import AssetControlDataService from "../../api/AssetControlDataService"
 
-let username = AuthenticationService.getLoggedInUserName();        
-let token = AuthenticationService.getLoggedInToken(); 
-
 class ListAssetComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
             assets: [],
             message: null,
-            assetControl: null,            
+            assetControl: null,
+            username: AuthenticationService.getLoggedInUserName(),
+            token: AuthenticationService.getLoggedInToken()
         }
         this.loadAssets = this.loadAssets.bind(this);
         this.addAsset = this.addAsset.bind(this);       
@@ -25,7 +24,7 @@ class ListAssetComponent extends Component {
     }
 
     loadAssets() {
-        AssetDataService.retrieveAllAssets(username, token)
+        AssetDataService.retrieveAllAssets(this.state.username, this.state.token)
             .then(
                 response => {
                     this.setState(
@@ -36,23 +35,22 @@ class ListAssetComponent extends Component {
     }
 
     addAsset() {
-        this.props.history.push(`/users/${username}/assets/new`);
+        this.props.history.push(`/users/${this.state.username}/assets/new`);
     }
 
     updateAsset(id) {
-        this.props.history.push(`/users/${username}/assets/${id}`);
+        this.props.history.push(`/users/${this.state.username}/assets/${id}`);
     }
 
     deleteAsset(id) {
-        AssetDataService.deleteAsset(username, id, token)
+        AssetDataService.deleteAsset(this.state.username, id, this.state.token)
         .then(
             response => {
-                AssetControlDataService.createAssetCurrentValue(username, token);
+                AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token);
                 this.setState({message : `Successfully deleted asset id ${id}`});
                 this.loadAssets();
             }
-        )
-        
+        )  
     }
 
     render() {        

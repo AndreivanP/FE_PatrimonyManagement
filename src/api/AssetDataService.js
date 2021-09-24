@@ -4,8 +4,7 @@ import { API_URL } from "../Properties"
 
 class AssetDataService {
     retrieveAllAssets(username, token) {
-        let user = sessionStorage.getItem('authenticatedUser');      
-        return axios.get(`${API_URL}/users/${user}/assets`, 
+        return axios.get(`${API_URL}/users/${username}/assets`, 
             {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
 
@@ -31,8 +30,7 @@ class AssetDataService {
     }
 
     getCurrentTotal(username, token) {
-        let user = sessionStorage.getItem('authenticatedUser');
-        return axios.get(`${API_URL}/users/${user}/assets/current-total`, 
+        return axios.get(`${API_URL}/users/${username}/assets/current-total`, 
         {headers: {authorization: AuthenticationService.createJwtToken(token)}});
     }
  
