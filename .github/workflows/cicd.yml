@@ -1,8 +1,6 @@
-name: CI/CD Flow
+name: CI workflow
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -32,35 +30,3 @@ jobs:
          run: docker-compose -f docker-compose-fe.yml up -d
        - name: Run e2e tests within cypress container
          run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
-           
-  deploy-in-production:
-    needs: build-deploy-run-e2e
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
-    steps:
-        - uses: actions/checkout@v1
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-version }}
-        - name: Yarn Install
-          run: |
-            cd src && sed -i 's/asset-management/ec2-54-85-159-102.compute-1.amazonaws.com/g' Properties.js
-            sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-            yarn install
-        - name: Production Build
-          run: |
-            yarn build
-        - name: Deploy to S3
-          uses: jakejarvis/s3-sync-action@master
-          with:
-            args: --acl public-read --delete
-          env:
-            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: ${{ secrets.AWS_REGION }}
-            SOURCE_DIR: "build"
-     
