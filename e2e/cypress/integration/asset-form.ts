@@ -149,5 +149,12 @@ describe('Asset Form functionalities', () => {
         cy.get(':nth-child(7) > .fieldCategA').type('456')
         cy.get('.btn-success').click();
     });
+    
+    it.only('Create fixed income asset 21', () => {
+        cy.get(':nth-child(1) > .fieldCategA').type(`Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`);
+        cy.get(':nth-child(3) > .fieldCategA').type('123');
+        cy.get(':nth-child(7) > .fieldCategA').type('456')
+        cy.get('.btn-success').click();
+    });
 
 });
