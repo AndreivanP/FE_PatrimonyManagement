@@ -4,11 +4,6 @@ import AuthenticationService from '../../authentication/AuthenticationService'
 import { withRouter } from 'react-router';
 import { BUILD_NUMBER } from "../../Properties"
 
-function getCurrentDate() {
-    return new Date().toLocaleString();
-}
-
-
 class HeaderComponent extends Component {
      
     render() {
