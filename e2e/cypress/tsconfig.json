@@ -26,7 +26,6 @@
       "./cypress/*.ts",
       "./cypress/**/*.ts",
       "./cypress/integration/landing_pages/landing_page_spec.js",
-      "./cypress/support/index.js",
-      "./cypress/support/commands.js"
+      "./cypress/support/index.js"
     ]
   }
