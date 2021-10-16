@@ -8,6 +8,7 @@ const TOKEN_SESSION_ATTRIBUTE = 'tokenUser';
 class AuthenticationService {   
 
     executeJwtAuthenticationService(username, password) {
+        console.log('Auth')
         return axios.post(`${API_URL}/authenticate`, {
             username,
             password

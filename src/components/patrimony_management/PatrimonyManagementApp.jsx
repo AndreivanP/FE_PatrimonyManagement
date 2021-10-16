@@ -1,4 +1,4 @@
-import LoginComponent from "./LoginComponent";
+import LoginComponent from "./LoginForm.component";
 import React, { Component } from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import HeaderComponent from './HeaderComponent'
@@ -12,7 +12,7 @@ import FinancialComponent from "./FinancialComponent";
 class PatrimonyManagementApp extends Component {
     render() {
         return (
-            <div className="PatrimonyManagementApp">
+            // <div className="PatrimonyManagementApp">
                 <Router>
                 <>
                     <HeaderComponent/>
@@ -28,7 +28,7 @@ class PatrimonyManagementApp extends Component {
                     {/* <FooterComponent/>     */}
                 </>
                 </Router>
-            </div>
+            // </div>
         )
     }
 }
