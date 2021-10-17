@@ -59,7 +59,7 @@ class LoginForm extends Component {
 
                 <button type="submit" className="btn btn-primary btn-block" onClick={this.loginClicked}>Submit</button>
                 <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
+                    Forgot <a href="https://www.google.com/">password?</a>
                 </p>
             </div>
         //     <div className="text-center">
