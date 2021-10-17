@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AuthenticationService from '../../authentication/AuthenticationService'
+import './Login.css';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -12,7 +13,6 @@ class LoginForm extends Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.loginClicked = this.loginClicked.bind(this);
-
     }
 
     handleChange(event) {
@@ -23,7 +23,6 @@ class LoginForm extends Component {
     }
 
     loginClicked() {
-        console.log('Testtttttt')
         AuthenticationService.executeJwtAuthenticationService(this.state.username, this.state.password)
             .then( (response) => {
                 AuthenticationService.registerSuccessfulLoginJwt(this.state.username, response.data.token)
@@ -40,9 +39,9 @@ class LoginForm extends Component {
                 <h3>Welcome to the Asset App</h3>
 
                 <div className="form-group">
-                    <label>Username</label>
                     {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
                     {this.state.showSuccesMessage && <div>Login Sucessful</div>}
+                    <label>Username</label> 
                     <input type="text" className="form-control" name="username" value={this.state.username} placeholder="Enter username" onChange={this.handleChange}/>
                 </div>
 
