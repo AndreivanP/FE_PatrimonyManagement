@@ -3,23 +3,22 @@ import AuthenticationService from '../../authentication/AuthenticationService'
 import AssetDataService from '../../api/AssetDataService'
 import { Formik, Form, Field } from "formik";
 
-let username = AuthenticationService.getLoggedInUserName();        
-let token = AuthenticationService.getLoggedInToken(); 
-
 class ListAssetComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
             total : null,
             variableIncomeTotal : null,
-            totalValueToBeInvested : null
+            totalValueToBeInvested : null,
+            username: AuthenticationService.getLoggedInUserName(),
+            token: AuthenticationService.getLoggedInToken()
         }
         this.calcVariableIncome = this.calcVariableIncome.bind(this);
         this.calcFixedIncome = this.calcFixedIncome.bind(this);
     }
 
     componentDidMount() {
-        AssetDataService.getCurrentTotal(username, token)
+        AssetDataService.getCurrentTotal(this.state.username, this.state.token)
         .then(response => this.setState({
             total : response.data.current_total,
             variableIncomeTotal : response.data.variable_income_total,
