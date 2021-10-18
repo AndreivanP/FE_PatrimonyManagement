@@ -19,7 +19,8 @@ class AssetFormComponent extends Component {
       current_value: '',
       is_variable_income: '',
       username: AuthenticationService.getLoggedInUserName(),
-      token: AuthenticationService.getLoggedInToken()
+      token: AuthenticationService.getLoggedInToken(),
+      hasFieldValidationFailed: false
     }
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -53,18 +54,28 @@ class AssetFormComponent extends Component {
       is_variable_income: values.is_variable_income
     }
     if (this.state.id === "new") {
-      AssetDataService.createAsset(this.state.username, asset, this.state.token)
-        .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token)
-          .then(this.props.history.push('/assets')))
-    } else {
-      asset.id = this.state.id
-      if (asset.current_value !== this.state.current_value) {
-        AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
-          .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token),
-            this.props.history.push('/assets'));
+      if (asset.name === '' || asset.date === '' || asset.initial_value === '' ||
+        asset.company === '' || asset.current_value === '') {
+        this.setState({ hasFieldValidationFailed: true })
       } else {
-        AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
-          .then(() => this.props.history.push('/assets'));
+        AssetDataService.createAsset(this.state.username, asset, this.state.token)
+          .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token)
+            .then(this.props.history.push('/assets')))
+      }
+    } else {
+      if (asset.name === '' || asset.date === '' || asset.initial_value === '' ||
+        asset.company === '' || asset.current_value === '') {
+        this.setState({ hasFieldValidationFailed: true })
+      } else {
+        asset.id = this.state.id
+        if (asset.current_value !== this.state.current_value) {
+          AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
+            .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token),
+              this.props.history.push('/assets'));
+        } else {
+          AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
+            .then(() => this.props.history.push('/assets'));
+        }
       }
     }
   }
@@ -90,6 +101,7 @@ class AssetFormComponent extends Component {
           >
             {(props) => (
               <Form>
+                {this.state.hasFieldValidationFailed && <div className="alert alert-danger">You have some incorrect data!</div>}
                 <fieldset className="form-group">
                   <label>Name:</label>
                   <Field className="fieldCategA" type="text" name="name" />
@@ -106,16 +118,20 @@ class AssetFormComponent extends Component {
                   <label>Initial Value:</label>
                   <Field
                     className="fieldCategA"
-                    type="text"
+                    type="number"
                     name="initial_value"
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                   />
                 </fieldset>
                 <fieldset className="form-group">
                   <label>Interest Rate:</label>
                   <Field
                     className="fieldCategA"
-                    type="text"
+                    type="number"
                     name="interest_rate"
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                   />
                 </fieldset>
                 <fieldset className="form-group">
@@ -138,8 +154,10 @@ class AssetFormComponent extends Component {
                   <label>Current Value:</label>
                   <Field
                     className="fieldCategA"
-                    type="text"
+                    type="number"
                     name="current_value"
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                   />
                 </fieldset>
                 <fieldset className="form-group">
