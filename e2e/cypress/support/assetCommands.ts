@@ -11,10 +11,24 @@ declare global {
     }
 }
 
-export function createNewAsset(assetName: string, initialValue: string, currentValue: string): void {
-    cy.get(selectors.default.assetName).type(assetName);
-    cy.get(selectors.default.initialValue).type(initialValue);
-    cy.get(selectors.default.currentValue).type(currentValue);
+export function createNewAsset(assetName: string = '', initialValue: string = '', 
+                               currentValue: string = '', companyName: string = '',
+                               isVariableIncome: boolean = false): void {
+    if(assetName != '') {
+        cy.get(selectors.default.assetName).type(assetName);
+    }
+    if(initialValue != '') {
+        cy.get(selectors.default.initialValue).type(initialValue);
+    }
+    if(currentValue != '') {
+        cy.get(selectors.default.currentValue).type(currentValue);
+    }
+    if(companyName != '') {
+        cy.get(selectors.default.companyName).type(companyName);
+    }
+    if(isVariableIncome === true) {
+        cy.get(selectors.default.variableIncomeCheckBox).click();
+    }
     cy.get(selectors.default.btnSave).click();
 }
 

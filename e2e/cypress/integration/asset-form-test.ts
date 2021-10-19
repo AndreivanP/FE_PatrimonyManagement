@@ -10,15 +10,34 @@ describe('Asset Form functionalities', () => {
         // cy.wait('@apiCheck');
     });
 
-    it.only('Create 20 fixed income asset', () => {
-        for(let i=0; i <= 20; i++) {
+    it('Create 10 fixed income asset', () => {
+        for(let i=0; i <= 10; i++) {
             let initialValue = `${faker.finance.amount()}`;
             let currentValue = `${faker.finance.amount()}`;
-            let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`
-            cy.createNewAsset(assetName, initialValue, currentValue);
+            let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
+            let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
+            cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
-            cy.visit('/users/Andreivan/assets/new')
+            cy.visit('/users/Andreivan/assets/new');
         } 
+    });
+
+    it('Create variable income asset', () => {
+        let initialValue = `${faker.finance.amount()}`;
+        let currentValue = `${faker.finance.amount()}`;
+        let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
+        let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
+        cy.createNewAsset(assetName, initialValue, currentValue, companyName, true);
+        cy.checkWhetherAssetIsCreated(assetName);
+        cy.visit('/users/Andreivan/assets/new');
+    });
+
+    it('Check mandatory fields message', () => {
+        let initialValue = `${faker.finance.amount()}`;
+        let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
+        let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
+        cy.createNewAsset(assetName, initialValue, companyName);
+        cy.get('.alert').contains('You have some incorrect data!');
     });
 
 });
