@@ -78,7 +78,7 @@ class ListAssetComponent extends Component {
                     </fieldset>
                     <fieldset className="form-group">
                       <label>Value to be Invested:</label>
-                      <Field className="fieldCategA" type="text" name="valueToBeInvested" value={props.values.valueToBeInvested || ''}/> 
+                      <Field className="fieldCategA" type="number" pattern="[0-9]*" inputMode="numeric" name="valueToBeInvested" value={props.values.valueToBeInvested || ''}/> 
                     </fieldset>
                     <fieldset className="form-group">
                       <label>You Should Invest in Variable Income:</label>
