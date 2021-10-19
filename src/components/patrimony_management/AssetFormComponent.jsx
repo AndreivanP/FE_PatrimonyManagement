@@ -70,8 +70,8 @@ class AssetFormComponent extends Component {
         asset.id = this.state.id
         if (asset.current_value !== this.state.current_value) {
           AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
-            .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token),
-              this.props.history.push('/assets'));
+            .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token)
+              .then(this.props.history.push('/assets')));
         } else {
           AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
             .then(() => this.props.history.push('/assets'));
