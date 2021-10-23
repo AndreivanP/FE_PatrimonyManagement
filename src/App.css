@@ -1,4 +1,4 @@
-.App {
+  .App {
     height: 100vh; /* Magic here */
     display: flex;
     justify-content: center;
@@ -25,27 +25,6 @@
     position: fixed;  
     left: 50%;  
     margin-left: -300px;
-  }
-  
-  .total {
-    background-color: #274cf0;
-    color: rgb(255, 255, 255);
-    justify-content: center;
-    display: flex;
-  }
-  
-  .variableIncTotal {
-    background-color: #3054f1;
-    color: rgb(255, 255, 255);
-    justify-content: center;
-    display: flex;
-  }
-  
-  .percentageIncTotal {
-    background-color: #4161f1;
-    color: rgb(255, 255, 255);
-    justify-content: center;
-    display: flex;
   }
   
   .checkbox {

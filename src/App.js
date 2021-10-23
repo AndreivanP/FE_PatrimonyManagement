@@ -7,22 +7,21 @@ import LogoutComponent from './components/patrimony_management/LogoutComponent'
 import AuthenticatedRoute from './components/patrimony_management/AuthenticateRoute'
 import ListAssetComponent from './components/patrimony_management/ListAssetComponent'
 import AssetFormComponent from './components/patrimony_management/AssetFormComponent'
-import DashboardComponent from "./components/patrimony_management/DashboardComponent";
+import DashboardComponent from "./components/dashboard/Dashboard.component";
 import FinancialComponent from "./components/patrimony_management/FinancialComponent";
 
 function App() {
   return (
-        <Router>
-            <HeaderComponent/>
-            <Switch>
-                    <AuthenticatedRoute path="/users/:username/assets/:id" component={AssetFormComponent}/>
-                    <AuthenticatedRoute path="/dashboard/" component={DashboardComponent}/>
-                    <AuthenticatedRoute path="/assets/" component={ListAssetComponent}/>
-                    <AuthenticatedRoute path="/financial/" component={FinancialComponent}/>
-                    <AuthenticatedRoute path="/logout/" component={LogoutComponent}/>
-            </Switch>
-
-          <div className="App"> 
+    <Router>
+      <HeaderComponent />
+      <Switch>
+        <AuthenticatedRoute path="/users/:username/assets/:id" component={AssetFormComponent} />
+        <AuthenticatedRoute path="/dashboard/" component={DashboardComponent} />
+        <AuthenticatedRoute path="/assets/" component={ListAssetComponent} />
+        <AuthenticatedRoute path="/financial/" component={FinancialComponent} />
+        <AuthenticatedRoute path="/logout/" component={LogoutComponent} />
+        <React.Fragment>
+          <div className="App">
             <div className="auth-wrapper">
               <div className="auth-inner">
                 <Switch>
@@ -32,7 +31,9 @@ function App() {
               </div>
             </div>
           </div>
-        </Router>
+        </React.Fragment>
+      </Switch>
+    </Router>
   );
 }
 
