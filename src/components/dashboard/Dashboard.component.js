@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetDataService from "../../api/AssetDataService"
+import './Dashboard.css';
 
 class DashboardComponent extends Component {
     constructor(props) {
