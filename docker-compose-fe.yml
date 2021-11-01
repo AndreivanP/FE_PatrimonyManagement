@@ -10,6 +10,7 @@ services:
     ports:
       - 4200:4200
     stdin_open: true
+    tty: true
 
   e2e-runner:
     image: cypresstests
