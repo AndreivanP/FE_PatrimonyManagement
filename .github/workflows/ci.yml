@@ -28,11 +28,11 @@ jobs:
           docker-compose -f docker-compose-fe.yml build
        - name: Create docker containers for FE app and Cypress runner
          run: docker-compose -f docker-compose-fe.yml up -d
-       - name: Run e2e tests within cypress container
        - name: Sleep for 30 seconds
          uses: jakejarvis/wait-action@master
          with:
           time: '45s'
-          run: |
+       - name: Run e2e tests within cypress container
+         run: |
             docker ps
             docker logs fe-asset-management
