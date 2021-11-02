@@ -1,9 +1,10 @@
 export default {
-    assetName: ':nth-child(1) > .fieldCategA',
-    initialValue: ':nth-child(3) > .fieldCategA',
-    currentValue: ':nth-child(7) > .fieldCategA',
-    btnSave: '.btn-success',
-    companyName: ':nth-child(8) > .fieldCategA',
+    assetName: '[name="name"]',
+    initialValue: '[name="initial_value"]',
+    currentValue: '[name="current_value"]',
+    btnSave: '.btn-primary',
+    companyName: '[name="broker"]',
     alert: '.alert',
-    variableIncomeCheckBox: ':nth-child(6) > .checkbox'
+    variableIncomeCheckBox: '#inlineCheckbox2',
+    isActiveCheckbox: '#inlineCheckbox1'
 }

@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Login from './components/login/LoginForm.component'
+import Asset from './components/asset/AssetForm.component'
 import HeaderComponent from './components/patrimony_management/HeaderComponent'
 import LogoutComponent from './components/patrimony_management/LogoutComponent'
 import AuthenticatedRoute from './components/patrimony_management/AuthenticateRoute'
 import ListAssetComponent from './components/patrimony_management/ListAssetComponent'
-import AssetFormComponent from './components/patrimony_management/AssetFormComponent'
 import DashboardComponent from "./components/dashboard/Dashboard.component";
 import FinancialComponent from "./components/patrimony_management/FinancialComponent";
 
@@ -15,7 +15,6 @@ function App() {
     <Router>
       <HeaderComponent />
       <Switch>
-        <AuthenticatedRoute path="/users/:username/assets/:id" component={AssetFormComponent} />
         <AuthenticatedRoute path="/dashboard/" component={DashboardComponent} />
         <AuthenticatedRoute path="/assets/" component={ListAssetComponent} />
         <AuthenticatedRoute path="/financial/" component={FinancialComponent} />
@@ -27,6 +26,7 @@ function App() {
                 <Switch>
                   <Route exact path='/' component={Login} />
                   <Route path="/login" component={Login} />
+                  <AuthenticatedRoute path="/users/:username/assets/:id" component={Asset} />
                 </Switch>
               </div>
             </div>
