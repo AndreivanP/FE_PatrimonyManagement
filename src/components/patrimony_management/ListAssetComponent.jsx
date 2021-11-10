@@ -56,7 +56,7 @@ class ListAssetComponent extends Component {
     render() {        
         return (        
             <div className="text-center">
-                <h1>Your Assets
+                <h1>Manage Assets
                     <div className="text-right">
                         <button className="btn btn-success" onClick={this.addAsset}>Add New Asset</button>
                     </div>
