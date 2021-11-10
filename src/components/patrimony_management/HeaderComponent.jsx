@@ -11,11 +11,10 @@ class HeaderComponent extends Component {
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><a href="https://www.linkedin.com/in/andreivansantos" className="navbar-brand">Andreivan</a></div>
                     <ul className="navbar-nav">                        
                         {isUserLoggedIn && <li ><Link className="nav-link" to="/dashboard">Dashboard</Link></li>}
                         {isUserLoggedIn && <li ><Link className="nav-link" to="/assets">Assets</Link></li>} 
-                        {isUserLoggedIn && <li ><Link className="nav-link" to="/financial">Financial Calc</Link></li>}                    
+                        {isUserLoggedIn && <li ><Link className="nav-link" to="/investment">Investment Guru</Link></li>}                    
                     </ul>
                     <ul className="navbar-nav navbar-collapse justify-content-end">
                         <div>`{BUILD_NUMBER}`</div>
