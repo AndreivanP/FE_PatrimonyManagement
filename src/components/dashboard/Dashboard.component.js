@@ -29,12 +29,19 @@ class DashboardComponent extends Component {
 
     render() {
         const data = {
-            labels: ['Jan/2017', 'Mar/2017', 'May/2017', 'Jul/2017', 'Oct/2017',
-                     'Jan/2018', 'Mar/2018', 'May/2018', 'Jul/2018', 'Oct/2018' ],
+            labels: ['Jan/2017', 'Apr/2017', 'Jul/2017', 'Oct/2017',
+                     'Jan/2018', 'Apr/2018', 'Jul/2018', 'Oct/2018',
+                     'Jan/2019', 'Apr/2019', 'Jul/2019', 'Oct/2019',
+                     'Jan/2020', 'Apr/2020', 'Jul/2020', 'Oct/2020',
+                     'Jan/2021', 'Apr/2021', 'Jul/2021', 'Oct/2021'],
             datasets: [
                 {
-                    label: 'Patrimony',
-                    data: [1622, 1079, 3777, 5656, 7872, 8534, 6453, 7453, 9234, 10987],
+                    label: 'Total Patrimony in R$',
+                    data: [1622, 1079, 3777, 5656,
+                           7872, 8534, 6453, 7453, 
+                           9234, 10987, 11098, 11298,
+                           12000, 12324, 11888, 12111,
+                           12300, 12724, 12888, 12911],
                     fill: true,
                     backgroundColor: "#2e4355",
                     pointBorderColor: "#8884d8",
@@ -72,7 +79,7 @@ class DashboardComponent extends Component {
                     ticks: {
                         color: "white",
                         font: {
-                            size: 18
+                            size: 12
                         }
                     }
                 }

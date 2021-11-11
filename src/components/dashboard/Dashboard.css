@@ -1,19 +1,19 @@
   .total {
-    background-color: #274cf0;
+    background-color: #2e4355;
     color: rgb(255, 255, 255);
     justify-content: center;
     display: flex;
   }
 
   .variableIncTotal {
-    background-color: #3054f1;
+    background-color: #2e4355;
     color: rgb(255, 255, 255);
     justify-content: center;
     display: flex;
   }
   
   .percentageIncTotal {
-    background-color: #4161f1;
+    background-color: #2e4355;
     color: rgb(255, 255, 255);
     justify-content: center;
     display: flex;
