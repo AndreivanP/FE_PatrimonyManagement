@@ -19,7 +19,8 @@ class AssetFormComponent extends Component {
       current_value: '',
       is_variable_income: '',
       username: AuthenticationService.getLoggedInUserName(),
-      token: AuthenticationService.getLoggedInToken()
+      token: AuthenticationService.getLoggedInToken(),
+      old_current_value: ''
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -29,6 +30,7 @@ class AssetFormComponent extends Component {
     if (this.state.id === "new") {
       return;
     }
+    
     AssetDataService.retrieveAsset(this.state.username, this.state.id, this.state.token)
       .then(response => this.setState({
         name: response.data.name,
@@ -38,7 +40,8 @@ class AssetFormComponent extends Component {
         interest_rate: response.data.interest_rate,
         is_active: response.data.is_active,
         current_value: response.data.current_value,
-        is_variable_income: response.data.is_variable_income
+        is_variable_income: response.data.is_variable_income,
+        old_current_value: response.data.current_value
       }));
   }
 
@@ -59,7 +62,7 @@ class AssetFormComponent extends Component {
             .then(this.props.history.push('/assets')))
     } else {
         asset.id = this.state.id
-        if (asset.current_value !== this.state.current_value) {
+        if (asset.current_value !== this.state.old_current_value) {
           AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
             .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token)
               .then(this.props.history.push('/assets')));
