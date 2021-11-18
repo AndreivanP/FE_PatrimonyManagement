@@ -3,6 +3,8 @@ import AuthenticationService from "../../authentication/AuthenticationService"
 import AssetDataService from "../../api/AssetDataService"
 import { Line } from 'react-chartjs-2';
 import './Dashboard.css';
+import axios from "axios"
+import { API_URL } from "../../Properties"
 
 class DashboardComponent extends Component {
     constructor(props) {
@@ -11,40 +13,55 @@ class DashboardComponent extends Component {
             total: '',
             variableIncomeTotal: '',
             variableIncomePercentage: '',
+            chartData: [],
+            datesInterval: ['2017/01/01', '2017/04/01', '2017/07/01', '2017/10/01',
+                            '2018/01/01', '2018/04/01', '2018/07/01', '2018/10/01',
+                            '2019/01/01', '2019/04/01', '2019/07/01', '2019/10/01',
+                            '2020/01/01', '2020/04/01', '2020/07/01', '2020/10/01',
+                            '2021/01/01', '2021/04/01', '2021/07/01', '2021/10/01',
+                            '2022/01/01'],
             username: AuthenticationService.getLoggedInUserName(),
             token: AuthenticationService.getLoggedInToken()
         }
-
     }
 
-
-    componentDidMount() {
+    async componentDidMount() {
         AssetDataService.getCurrentTotal(this.state.username, this.state.token)
             .then(response => this.setState({
                 total: response.data.current_total,
                 variableIncomeTotal: response.data.variable_income_total,
                 variableIncomePercentage: response.data.variable_income_percent
             }));
+
+        for (let i = 0; i < this.state.datesInterval.length; i++) {
+            if (i !== this.state.datesInterval.length - 1) {
+                const response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]}&till=${this.state.datesInterval[i + 1]}`,
+                    { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) } });
+                if (response.data != '') {
+                    this.setState(prevState => ({
+                        chartData: [...prevState.chartData, response.data[0].currentTotalValue]
+                    }))
+                } else {
+                    let lastValue = this.state.chartData.at(-1);
+                    this.setState(prevState => ({
+                        chartData: [...prevState.chartData, lastValue]
+                    }))
+                }
+            }
+        }
     }
+
 
     render() {
         const data = {
-            labels: ['Jan/2017', 'Apr/2017', 'Jul/2017', 'Oct/2017',
-                     'Jan/2018', 'Apr/2018', 'Jul/2018', 'Oct/2018',
-                     'Jan/2019', 'Apr/2019', 'Jul/2019', 'Oct/2019',
-                     'Jan/2020', 'Apr/2020', 'Jul/2020', 'Oct/2020',
-                     'Jan/2021', 'Apr/2021', 'Jul/2021', 'Oct/2021'],
+            labels: this.state.datesInterval,
             datasets: [
                 {
                     label: 'Total Patrimony in R$',
-                    data: [1622, 1079, 3777, 5656,
-                           7872, 8534, 6453, 7453, 
-                           9234, 10987, 11098, 11298,
-                           12000, 12324, 11888, 12111,
-                           12300, 12724, 12888, 12911],
+                    data: this.state.chartData,
                     fill: true,
-                    backgroundColor: "#2e4355",
-                    pointBorderColor: "#8884d8",
+                    backgroundColor: "#5c80a1",
+                    pointBorderColor: "#0077ff",
                     pointBorderWidth: 5,
                     pointRadius: 5,
                     tension: 0.4
@@ -60,7 +77,7 @@ class DashboardComponent extends Component {
             },
             layout: {
                 padding: {
-                    bottom: 100 
+                    bottom: 100
                 }
             },
             scales: {
