@@ -7,8 +7,8 @@ import axios from "axios"
 import { API_URL } from "../../Properties"
 
 
-var getDaysArray = function(start, end) {
-    for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+90)){
+var getDaysArray = function (start, end) {
+    for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 90)) {
         arr.push(new Date(dt).toLocaleDateString('en-ZA'));
     }
     arr.push(new Date().toLocaleDateString('en-ZA'));
@@ -23,17 +23,11 @@ class DashboardComponent extends Component {
             variableIncomeTotal: '',
             variableIncomePercentage: '',
             chartData: [],
-                datesInterval: getDaysArray(new Date("2017-01-01"), new Date()),
-            // datesInterval: ['2017/01/01', '2017/04/01', '2017/07/01', '2017/10/01',
-            //     '2018/01/01', '2018/04/01', '2018/07/01', '2018/10/01',
-            //     '2019/01/01', '2019/04/01', '2019/07/01', '2019/10/01',
-            //     '2020/01/01', '2020/04/01', '2020/07/01', '2020/10/01',
-            //     '2021/01/01', '2021/04/01', '2021/07/01', '2021/10/01'],
+            datesInterval: getDaysArray(new Date("2017-01-01"), new Date()),
             username: AuthenticationService.getLoggedInUserName(),
             token: AuthenticationService.getLoggedInToken()
         }
     }
-
 
     async componentDidMount() {
         AssetDataService.getCurrentTotal(this.state.username, this.state.token)
@@ -43,37 +37,25 @@ class DashboardComponent extends Component {
                 variableIncomePercentage: response.data.variable_income_percent
             }));
 
-            var daylist = getDaysArray(new Date("2017-01-01"), new Date());
-            console.log("xablau "+daylist)            
-        
-
         for (let i = 0; i < this.state.datesInterval.length; i++) {
+            let response = '';
             if (i !== this.state.datesInterval.length - 1) {
-                const response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]} 00:00:00&till=${this.state.datesInterval[i + 1]} 23:59:00`,
+                response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]} 00:00:00&till=${this.state.datesInterval[i + 1]} 23:59:00`,
                     { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) } });
-                if (response.data != '') {
-                    this.setState(prevState => ({
-                        chartData: [...prevState.chartData, response.data[0].currentTotalValue]
-                    }))
-                } else {
-                    let lastValue = this.state.chartData.at(-1);
-                    this.setState(prevState => ({
-                        chartData: [...prevState.chartData, lastValue]
-                    }))
-                }
             } else {
-                const response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]} 00:00:00&till=${new Date().toLocaleDateString('en-ZA')} 23:59:00`,
+                response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]} 00:00:00&till=${new Date().toLocaleDateString('en-ZA')} 23:59:00`,
                     { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) } });
-                if (response.data != '') {
-                    this.setState(prevState => ({
-                        chartData: [...prevState.chartData, response.data[0].currentTotalValue]
-                    }))
-                } else {
-                    let lastValue = this.state.chartData.at(-1);
-                    this.setState(prevState => ({
-                        chartData: [...prevState.chartData, lastValue]
-                    }))
-                }
+            }
+            // eslint-disable-next-line
+            if (response.data != '') {
+                this.setState(prevState => ({
+                    chartData: [...prevState.chartData, response.data[0].currentTotalValue]
+                }))
+            } else {
+                let lastValue = this.state.chartData.at(-1);
+                this.setState(prevState => ({
+                    chartData: [...prevState.chartData, lastValue]
+                }))
             }
         }
     }
@@ -86,7 +68,7 @@ class DashboardComponent extends Component {
                     label: 'Total Patrimony in R$',
                     data: this.state.chartData,
                     fill: true,
-                    backgroundColor: "#5c80a1",
+                    backgroundColor: "#6fa2d3",
                     pointBorderColor: "#0077ff",
                     pointBorderWidth: 5,
                     pointRadius: 5,
@@ -109,18 +91,18 @@ class DashboardComponent extends Component {
             scales: {
                 y: {
                     ticks: {
-                        color: "white",
+                        color: "black",
                         font: {
                             size: 18
                         }
                     },
                     grids: {
-                        color: "#243240"
+                        color: "#000000"
                     }
                 },
                 x: {
                     ticks: {
-                        color: "white",
+                        color: "black",
                         font: {
                             size: 12
                         }
@@ -128,7 +110,6 @@ class DashboardComponent extends Component {
                 }
             }
         };
-
 
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -151,13 +132,12 @@ class DashboardComponent extends Component {
                 <div className="percentageIncTotal" >
                     Your Variable Income Percentage is {variableIncomePercentage} %
                 </div>
-                <h2>Equity Evolution</h2>
+                <div className="title">Equity Evolution</div>
                 <Line data={data} options={options} ></Line>
             </h1>
 
         )
     }
-
 }
 
 export default DashboardComponent
