@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 import './Dashboard.css';
 import axios from "axios"
 import { API_URL } from "../../Properties"
-
+import Loader from 'react-loader-spinner';
 
 var getDaysArray = function (start, end) {
     for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 90)) {
@@ -24,6 +24,7 @@ class DashboardComponent extends Component {
             variableIncomePercentage: '',
             chartData: [],
             datesInterval: getDaysArray(new Date("2017-01-01"), new Date()),
+            loading: true,
             username: AuthenticationService.getLoggedInUserName(),
             token: AuthenticationService.getLoggedInToken()
         }
@@ -37,14 +38,15 @@ class DashboardComponent extends Component {
                 variableIncomePercentage: response.data.variable_income_percent
             }));
 
+    
         for (let i = 0; i < this.state.datesInterval.length; i++) {
             let response = '';
             if (i !== this.state.datesInterval.length - 1) {
                 response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]} 00:00:00&till=${this.state.datesInterval[i + 1]} 23:59:00`,
-                    { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) } });
+                    { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) }})          
             } else {
                 response = await axios.get(`${API_URL}/users/${this.state.username}/assets-control?since=${this.state.datesInterval[i]} 00:00:00&till=${new Date().toLocaleDateString('en-ZA')} 23:59:00`,
-                    { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) } });
+                    { headers: { authorization: AuthenticationService.createJwtToken(this.state.token) }})
             }
             // eslint-disable-next-line
             if (response.data != '') {
@@ -58,6 +60,10 @@ class DashboardComponent extends Component {
                 }))
             }
         }
+
+        this.setState({
+            loading: false
+        });
     }
 
     render() {
@@ -121,7 +127,18 @@ class DashboardComponent extends Component {
         let { variableIncomePercentage } = this.state;
         total = formatter.format(total);
         variableIncomeTotal = formatter.format(variableIncomeTotal);
-        return (
+
+
+        if(this.state.loading){
+            return (
+                <div className="spinner">
+                    <Loader type="Oval" color="#6fa2d3" height="250" width="250" />
+                </div>
+                
+            )
+          }
+          else {
+            return (                
             <h1>
                 <div className="total" >
                     Your Total Patrimony is {total}
@@ -134,9 +151,9 @@ class DashboardComponent extends Component {
                 </div>
                 <div className="title">Equity Evolution</div>
                 <Line data={data} options={options} ></Line>
-            </h1>
+            </h1> );
+          }
 
-        )
     }
 }
 
