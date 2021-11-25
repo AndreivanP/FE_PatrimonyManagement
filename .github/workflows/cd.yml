@@ -18,7 +18,7 @@ jobs:
             node-version: ${{ matrix.node-version }}
         - name: Yarn Install
           run: |
-            cd src && sed -i 's/asset-management/ec2-54-85-159-102.compute-1.amazonaws.com/g' Properties.js
+            cd src && sed -i 's/asset-management:8080/assetmanagmentapp-env.eba-7mprdj5p.us-east-1.elasticbeanstalk.com/g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
             yarn install
         - name: Production Build
