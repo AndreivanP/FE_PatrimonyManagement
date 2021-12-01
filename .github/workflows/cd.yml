@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     
 jobs:
-  staging:
+  deploy-staging:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,8 +35,21 @@ jobs:
             AWS_REGION: ${{ secrets.AWS_REGION }}
             SOURCE_DIR: "build"
 
-  production:
-    needs: staging
+  run-e2e-on-stg:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v2
+       - name: Build front end related docker images
+         run: |
+          docker-compose -f docker-compose-fe.yml build
+       - name: Create docker containers for FE app and Cypress runner
+         run: docker-compose -f docker-compose-fe.yml up -d
+       - name: Run e2e tests within cypress container
+         run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression-stg
+
+  deploy-production:
+    needs: run-e2e-on-stg
     runs-on: ubuntu-latest
     strategy:
       matrix:

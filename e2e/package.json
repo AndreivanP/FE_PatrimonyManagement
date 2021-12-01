@@ -7,6 +7,7 @@
     "cy:run": "./node_modules/.bin/cypress run",
     "cy:open": "cypress open",
     "cy:regression": "cypress run --config-file cypress.json --browser=chrome",
+    "cy:regression-stg": "cypress run --config-file cypress.json --browser=chrome",
     "cy:report": "yarn merge_reports && yarn mochawesome_report",
     "merge_reports": "mochawesome-merge ./cypress/reports/*.json > ./cypress/reports/outreports/mochawesome.json",
     "mochawesome_report": "marge -t Cypress_Test_Report -f Cypress_HMTL_Report ./cypress/reports/outreports/mochawesome.json"
