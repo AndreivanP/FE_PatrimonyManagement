@@ -1,5 +1,5 @@
 {
-    "baseUrl": "http://fepatmanag-stg.s3-website-us-east-1.amazonaws.com/",
+    "baseUrl": "http://app-asset-management-stg.herokuapp.com/",
     "video": false,
     "defaultCommandTimeout": 10000,
     "viewportWidth": 1440,
@@ -19,7 +19,7 @@
         "json": true
      },
     "env": {
-            "auth_url": "http://assetmanagmentapp-stg-env.eba-bdwrizaz.us-east-1.elasticbeanstalk.com/authenticate",
+            "auth_url": "http://api-asset-management-stg.herokuapp.com/authenticate",
             "auth_username": "Andreivan",
             "auth_password": "asd123",
             "scope": "openid",

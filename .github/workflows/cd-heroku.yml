@@ -1,4 +1,4 @@
-name: React UI on AWS S3 Bucket
+name: Deploy React UI on Heroku
 
 on:
   push:
@@ -16,24 +16,16 @@ jobs:
           uses: actions/setup-node@v1
           with:
             node-version: ${{ matrix.node-version }}
-        - name: Yarn Install
+        - name: Setup API STG Url
           run: |
-            cd src && sed -i 's/asset-management:8080/assetmanagmentapp-stg-env.eba-bdwrizaz.us-east-1.elasticbeanstalk.com/g' Properties.js
+            cd src && sed -i 's/asset-management:8080/api-asset-management-stg.herokuapp.com/g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-            yarn install
-        - name: Staging Build
-          run: |
-            yarn build
-        - name: Deploy to S3
-          uses: jakejarvis/s3-sync-action@master
+        - name: Deploy to Heroku Production Environment
+          uses: AkhileshNS/heroku-deploy@v3.8.8
           with:
-            args: --acl public-read --delete
-          env:
-            AWS_S3_BUCKET: ${{ secrets.AWS_STAGING_BUCKET_NAME }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: ${{ secrets.AWS_REGION }}
-            SOURCE_DIR: "build"
+           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+           heroku_email: ${{secrets.HEROKU_EMAIL}}
+           heroku_app_name: ${{secrets.APP_STG_ASSET_HEROKU_NAME}}
 
   run-e2e-on-stg:
     needs: deploy-staging
@@ -60,21 +52,13 @@ jobs:
           uses: actions/setup-node@v1
           with:
             node-version: ${{ matrix.node-version }}
-        - name: Yarn Install
+        - name: Setup API STG Url
           run: |
-            cd src && sed -i 's/asset-management:8080/assetmanagmentapp-env.eba-7mprdj5p.us-east-1.elasticbeanstalk.com/g' Properties.js
+            cd src && sed -i 's/asset-management:8080/api-asset-management.herokuapp.com/g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-            yarn install
-        - name: Production Build
-          run: |
-            yarn build
-        - name: Deploy to S3
-          uses: jakejarvis/s3-sync-action@master
+        - name: Deploy to Heroku Production Environment
+          uses: AkhileshNS/heroku-deploy@v3.8.8
           with:
-            args: --acl public-read --delete
-          env:
-            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: ${{ secrets.AWS_REGION }}
-            SOURCE_DIR: "build"
+           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+           heroku_email: ${{secrets.HEROKU_EMAIL}}
+           heroku_app_name: ${{secrets.APP_PROD_ASSET_HEROKU_NAME}}

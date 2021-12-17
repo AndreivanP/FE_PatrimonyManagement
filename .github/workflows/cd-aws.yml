@@ -1,0 +1,80 @@
+name: React UI on AWS S3 Bucket
+
+on:
+  push:
+    branches: [ disabled ]
+    
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    steps:
+        - uses: actions/checkout@v1
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: Yarn Install
+          run: |
+            cd src && sed -i 's/asset-management:8080/assetmanagmentapp-stg-env.eba-bdwrizaz.us-east-1.elasticbeanstalk.com/g' Properties.js
+            sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
+            yarn install
+        - name: Staging Build
+          run: |
+            yarn build
+        - name: Deploy to S3
+          uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --acl public-read --delete
+          env:
+            AWS_S3_BUCKET: ${{ secrets.AWS_STAGING_BUCKET_NAME }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            SOURCE_DIR: "build"
+
+  run-e2e-on-stg:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    steps:
+       - uses: actions/checkout@v2
+       - name: Build front end related docker images
+         run: |
+          docker-compose -f docker-compose-fe.yml build
+       - name: Create docker containers for FE app and Cypress runner
+         run: docker-compose -f docker-compose-fe.yml up -d
+       - name: Run e2e tests within cypress container
+         run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression-stg
+
+  deploy-production:
+    needs: run-e2e-on-stg
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    steps:
+        - uses: actions/checkout@v1
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node-version }}
+        - name: Yarn Install
+          run: |
+            cd src && sed -i 's/asset-management:8080/assetmanagmentapp-env.eba-7mprdj5p.us-east-1.elasticbeanstalk.com/g' Properties.js
+            sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
+            yarn install
+        - name: Production Build
+          run: |
+            yarn build
+        - name: Deploy to S3
+          uses: jakejarvis/s3-sync-action@master
+          with:
+            args: --acl public-read --delete
+          env:
+            AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            SOURCE_DIR: "build"
