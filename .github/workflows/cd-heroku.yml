@@ -20,12 +20,12 @@ jobs:
           run: |
             cd src && sed -i 's/asset-management:8080/api-asset-management-stg.herokuapp.com/g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-      - name: Deploy to Heroku Production Environment
-        uses: AkhileshNS/heroku-deploy@v3.8.8
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: ${{secrets.APP_STG_ASSET_HEROKU_NAME}}
+        - name: Deploy to Heroku Production Environment
+          uses: AkhileshNS/heroku-deploy@v3.8.8
+          with:
+           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+           heroku_email: ${{secrets.HEROKU_EMAIL}}
+           heroku_app_name: ${{secrets.APP_STG_ASSET_HEROKU_NAME}}
 
   run-e2e-on-stg:
     needs: deploy-staging
@@ -56,9 +56,9 @@ jobs:
           run: |
             cd src && sed -i 's/asset-management:8080/api-asset-management.herokuapp.com/g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-      - name: Deploy to Heroku Production Environment
-        uses: AkhileshNS/heroku-deploy@v3.8.8
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: ${{secrets.APP_PROD_ASSET_HEROKU_NAME}}
+        - name: Deploy to Heroku Production Environment
+          uses: AkhileshNS/heroku-deploy@v3.8.8
+          with:
+           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+           heroku_email: ${{secrets.HEROKU_EMAIL}}
+           heroku_app_name: ${{secrets.APP_PROD_ASSET_HEROKU_NAME}}
