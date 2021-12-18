@@ -7,9 +7,6 @@ on:
 jobs:
   deploy-staging:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
     steps:
         - uses: actions/checkout@v1
         - name: Use Node.js ${{ matrix.node-version }}
@@ -20,7 +17,7 @@ jobs:
           run: |
             cd src && sed -i 's/asset-management:8080/api-asset-management-stg.herokuapp.com/g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-        - name: Deploy to Heroku Production Environment
+        - name: Deploy to Heroku Staging Environment
           uses: AkhileshNS/heroku-deploy@v3.8.8
           with:
            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -43,9 +40,6 @@ jobs:
   deploy-production:
     needs: run-e2e-on-stg
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x]
     steps:
         - uses: actions/checkout@v1
         - name: Use Node.js ${{ matrix.node-version }}
