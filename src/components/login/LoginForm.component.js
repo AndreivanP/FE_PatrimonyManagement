@@ -36,7 +36,7 @@ class LoginForm extends Component {
     render() {
         return (
             <div>
-                <h3>Welcome to the Asset App Test</h3>
+                <h3>Welcome to the Asset App</h3>
 
                 <div className="form-group">
                     {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
