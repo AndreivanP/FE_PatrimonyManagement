@@ -19,6 +19,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -31,6 +32,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -43,6 +45,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -55,6 +58,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -67,6 +71,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -79,6 +84,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -91,6 +97,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -103,6 +110,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -115,6 +123,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -127,6 +136,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -139,6 +149,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -151,6 +162,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -163,6 +175,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -175,6 +188,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -187,6 +201,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -199,6 +214,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -211,6 +227,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -223,6 +240,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -235,6 +253,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -247,6 +266,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -259,6 +279,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -271,6 +292,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -283,6 +305,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -295,6 +318,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -307,6 +331,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -319,6 +344,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -331,6 +357,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -343,6 +370,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -355,6 +383,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
@@ -367,6 +396,7 @@ describe('Asset Form functionalities', () => {
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
+            cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
     });
