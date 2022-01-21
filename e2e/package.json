@@ -6,7 +6,7 @@
     "cy:ci": "./scripts/triggerTest.sh",
     "cy:run": "./node_modules/.bin/cypress run",
     "cy:open": "cypress open",
-    "cy:regression": "cypress run --config-file cypress.json --browser=chrome",
+    "cy:regression": "cypress run --config-file cypress.json --browser=chrome --parallel --ci-build-id $GITHUB_RUN_NUMBER --record --key d49a1fcd-6718-4b95-83b0-bbba0f342f74",
     "cy:regression-stg": "cypress run --config-file cypress-stg.json --browser=chrome",
     "cy:report": "yarn merge_reports && yarn mochawesome_report",
     "merge_reports": "mochawesome-merge ./cypress/reports/*.json > ./cypress/reports/outreports/mochawesome.json",
