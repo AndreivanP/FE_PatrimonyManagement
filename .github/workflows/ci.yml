@@ -7,6 +7,10 @@ on:
 jobs:
   build-deploy-run-e2e:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
     steps:
        - name: Clone BE repo
          uses: actions/checkout@master
