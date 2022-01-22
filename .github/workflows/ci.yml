@@ -34,7 +34,7 @@ jobs:
           docker-compose -f docker-compose-fe.yml up -d
        - name: Create docker containers for FE app and Cypress runner
          run: |
-          cd e2e & docker-compose -f docker-compose-e2e.yml build
+          cd e2e && docker-compose -f docker-compose-e2e.yml build
           docker-compose -f docker-compose-e2e.yml up -d
        - name: Run e2e tests within cypress container
         #  run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
