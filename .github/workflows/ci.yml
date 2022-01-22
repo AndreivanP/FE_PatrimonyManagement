@@ -19,7 +19,7 @@ jobs:
           token: ${{ secrets.gha_pta || github.token }}
        - name: Generate jar artifact
          run: mvn install -DskipTests
-       - name: Build back end docker images
+       - name: Build Back End docker images
          run: docker-compose -f docker-compose-be.yml build
        - name: Create docker containers for API and Database
          run: docker-compose -f docker-compose-be.yml up -d
