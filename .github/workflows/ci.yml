@@ -19,17 +19,17 @@ jobs:
           token: ${{ secrets.gha_pta || github.token }}
        - name: Generate jar artifact
          run: mvn install -DskipTests
-       - name: Build Back End docker images
+       - name: Build Back-End docker images
          run: docker-compose -f docker-compose-be.yml build
        - name: Create docker containers for API and Database
          run: docker-compose -f docker-compose-be.yml up -d
        - uses: actions/checkout@v2
          with:
           ref: ${{ github.event.pull_request.head.sha }}
-       - name: Build Front End App and Cypress docker images
+       - name: Build Front-End App and Cypress docker images
          run: |
           cd e2e && docker-compose -f docker-compose-e2e.yml build
-       - name: Create docker containers for Front End and Cypress Runner
+       - name: Create docker containers for Front-End and Cypress Runner
          run: |
           cd e2e && docker-compose -f docker-compose-e2e.yml up -d
           docker network connect e2e_default asset-management
