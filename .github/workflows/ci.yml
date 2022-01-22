@@ -35,8 +35,7 @@ jobs:
           docker network connect e2e_default asset-management
           docker network connect e2e_default mongodb
           docker network inspect e2e_default
-       - name: Run e2e tests within cypress container
-        #  run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
+       - name: Run e2e tests within Cypress container
          uses: cypress-io/github-action@v2
          with:
           record: true
