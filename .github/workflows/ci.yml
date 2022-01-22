@@ -32,6 +32,8 @@ jobs:
        - name: Create docker containers for front end and Cypress Runner
          run: |
           cd e2e && docker-compose -f docker-compose-e2e.yml up -d
+          docker network connect e2e_default fe-asset-management
+          docker network connect e2e_default mongodb
        - name: Run e2e tests within cypress container
         #  run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
          uses: cypress-io/github-action@v2
