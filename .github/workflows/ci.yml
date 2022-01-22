@@ -26,10 +26,10 @@ jobs:
        - uses: actions/checkout@v2
          with:
           ref: ${{ github.event.pull_request.head.sha }}
-       - name: Build front end app and Cypress docker images
+       - name: Build Front End app and Cypress docker images
          run: |
           cd e2e && docker-compose -f docker-compose-e2e.yml build
-       - name: Create docker containers for front end and Cypress Runner
+       - name: Create docker containers for Front End and Cypress Runner
          run: |
           cd e2e && docker-compose -f docker-compose-e2e.yml up -d
           docker network connect e2e_default asset-management
