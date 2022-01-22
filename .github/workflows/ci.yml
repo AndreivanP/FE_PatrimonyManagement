@@ -28,10 +28,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
        - name: Build front end app and Cypress docker images
          run: |
-          docker-compose -f docker-compose-fe.yml build
+          cd e2e && docker-compose -f docker-compose-e2e.yml build
        - name: Create docker containers for front end and Cypress
          run: |
-          docker-compose -f docker-compose-fe.yml up -d
+          cd e2e && docker-compose -f docker-compose-e2e.yml up -d
        - name: Run e2e tests within cypress container
         #  run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
          uses: cypress-io/github-action@v2
