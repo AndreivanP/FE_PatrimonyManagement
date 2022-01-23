@@ -70,7 +70,7 @@ describe('Asset Form functionalities', () => {
             let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
             let companyName = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
-            cy.checkWhetherAssetIsCreated('To fail 2');
+            cy.checkWhetherAssetIsCreated(assetName);
             cy.wait(30000);
             cy.visit('/users/Andreivan/assets/new');
  //       } 
