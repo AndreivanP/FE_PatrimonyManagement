@@ -35,7 +35,7 @@ jobs:
           docker network connect e2e_default asset-management
           docker network connect e2e_default mongodb
           docker network inspect e2e_default
-       - name: Run e2e tests within Cypress container
+       - name: Run e2e tests within Cypress Container
          uses: cypress-io/github-action@v2
          with:
           record: true
