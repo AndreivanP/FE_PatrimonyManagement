@@ -189,7 +189,6 @@ describe('Asset Form functionalities', () => {
  //       } 
     });
 
-
     it('Create fixed income asset 55', () => {
         // for(let i=0; i <= 1; i++) {
             let initialValue = `${faker.finance.amount()}`;
