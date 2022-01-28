@@ -20,8 +20,8 @@
      },
     "env": {
             "auth_url": "http://asset-management:8080/authenticate",
-            "auth_username": "Andreivan",
-            "auth_password": "asd123",
+            "auth_username": "Juca",
+            "auth_password": "123456",
             "scope": "openid",
             "filterLoad": "proxy/companies",
             "useFixtures": false,
@@ -29,3 +29,4 @@
           },
     "projectId": "zOWiUM"
   }
+
