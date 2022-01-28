@@ -20,6 +20,7 @@ class AssetFormComponent extends Component {
       is_variable_income: '',
       username: AuthenticationService.getLoggedInUserName(),
       token: AuthenticationService.getLoggedInToken(),
+      expiryDate: '',
       old_current_value: ''
     }
     this.onSubmit = this.onSubmit.bind(this);
@@ -41,6 +42,7 @@ class AssetFormComponent extends Component {
         is_active: response.data.is_active,
         current_value: response.data.current_value,
         is_variable_income: response.data.is_variable_income,
+        expiryDate: moment(response.data.expiryDate).format('YYYY-MM-DD'),
         old_current_value: response.data.current_value
       }));
   }
@@ -54,7 +56,8 @@ class AssetFormComponent extends Component {
       interest_rate: this.state.interest_rate,
       is_active: this.state.is_active,
       current_value: this.state.current_value,
-      is_variable_income: this.state.is_variable_income
+      is_variable_income: this.state.is_variable_income,
+      expiryDate: this.state.expiryDate
     }
     if (this.state.id === "new") {
         AssetDataService.createAsset(this.state.username, asset, this.state.token)
@@ -95,7 +98,7 @@ class AssetFormComponent extends Component {
           <input type="text" className="form-control" name="name" value={this.state.name} onChange={(event)=>this.handleChange(event, "name")} required/>
           <label>Broker</label>
           <input type="text" className="form-control" name="broker" value={this.state.company} onChange={(event)=>this.handleChange(event, "company")}/>
-          <label>Date</label>
+          <label>Start Date</label>
           <input type="date" className="form-control" name="date" value={this.state.date} onChange={(event)=>this.handleChange(event, "date")} required/>
           <div className="form-check form-check-inline">
             <input className="form-check-input" type="checkbox" id="inlineCheckbox1" name="is_active" 
@@ -115,6 +118,8 @@ class AssetFormComponent extends Component {
           <input type="text" className="form-control" name="interest_rate" value={this.state.interest_rate} onChange={(event)=>this.handleChange(event, "interest_rate")}/>
           <label>Current Value</label>
           <input type="number" className="form-control" name="current_value" value={this.state.current_value} onChange={(event)=>this.handleChange(event, "current_value")} required/> 
+          <label>Expiry Date</label>
+          <input type="date" className="form-control" name="expiryDate" value={this.state.expiryDate} onChange={(event)=>this.handleChange(event, "expiryDate")}/>
         </div>
         <button className="btn btn-primary btn-block" type="submit" value="Submit" >Save</button>
         <button className="btn btn-secondary btn-block" onClick={this.onCancel} type="button">Cancel</button>

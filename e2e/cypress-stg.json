@@ -20,8 +20,8 @@
      },
     "env": {
             "auth_url": "http://api-asset-management-stg.herokuapp.com/authenticate",
-            "auth_username": "Andreivan",
-            "auth_password": "asd123",
+            "auth_username": "Staging",
+            "auth_password": "123456",
             "scope": "openid",
             "filterLoad": "proxy/companies",
             "useFixtures": false,
