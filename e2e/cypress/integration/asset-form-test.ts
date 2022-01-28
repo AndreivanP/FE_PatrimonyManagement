@@ -11,7 +11,7 @@ describe('Asset Form functionalities', () => {
         // cy.wait('@apiCheck');
     });
 
-    it('Create 10 fixed income asset', () => {
+    it('Create 10 fixed income asset in a looping', () => {
         for(let i=0; i <= 10; i++) {
             let initialValue = `${faker.finance.amount()}`;
             let currentValue = `${faker.finance.amount()}`;
