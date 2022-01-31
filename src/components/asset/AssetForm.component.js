@@ -35,14 +35,14 @@ class AssetFormComponent extends Component {
     AssetDataService.retrieveAsset(this.state.username, this.state.id, this.state.token)
       .then(response => this.setState({
         name: response.data.name,
-        date: moment(response.data.date).format('YYYY-MM-DD'),
+        date: response.data.date,
         initial_value: response.data.initial_value,
         company: response.data.company,
         interest_rate: response.data.interest_rate,
         is_active: response.data.is_active,
         current_value: response.data.current_value,
         is_variable_income: response.data.is_variable_income,
-        expiryDate: moment(response.data.expiryDate).format('YYYY-MM-DD'),
+        expiryDate: response.data.expiryDate,
         old_current_value: response.data.current_value
       }));
   }
@@ -99,7 +99,7 @@ class AssetFormComponent extends Component {
           <label>Broker</label>
           <input type="text" className="form-control" name="broker" value={this.state.company} onChange={(event)=>this.handleChange(event, "company")}/>
           <label>Start Date</label>
-          <input type="date" className="form-control" name="date" value={this.state.date} onChange={(event)=>this.handleChange(event, "date")} required/>
+          <input type="date" className="form-control" name="date" value={moment(this.state.date).format('YYYY-MM-DD')} onChange={(event)=>this.handleChange(event, "date")} required/>
           <div className="form-check form-check-inline">
             <input className="form-check-input" type="checkbox" id="inlineCheckbox1" name="is_active" 
                    value={this.state.is_active} onChange={(event)=>this.handleChangeCheckboxes(event, "is_active")}
@@ -119,7 +119,7 @@ class AssetFormComponent extends Component {
           <label>Current Value</label>
           <input type="number" className="form-control" name="current_value" value={this.state.current_value} onChange={(event)=>this.handleChange(event, "current_value")} required/> 
           <label>Expiry Date</label>
-          <input type="date" className="form-control" name="expiryDate" value={this.state.expiryDate} onChange={(event)=>this.handleChange(event, "expiryDate")}/>
+          <input type="date" className="form-control" name="expiryDate" value={moment(this.state.expiryDate).format('YYYY-MM-DD')} onChange={(event)=>this.handleChange(event, "expiryDate")}/>
         </div>
         <button className="btn btn-primary btn-block" type="submit" value="Submit" >Save</button>
         <button className="btn btn-secondary btn-block" onClick={this.onCancel} type="button">Cancel</button>
