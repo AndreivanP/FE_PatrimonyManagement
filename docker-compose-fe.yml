@@ -11,13 +11,3 @@ services:
       - 4200:4200
     stdin_open: true
     tty: true
-
-  e2e-runner:
-    image: cypresstests
-    container_name: e2e-cypress-runner
-    build:
-      context: .
-      dockerfile: e2e/Dockerfile
-    ports:
-      - "8081:8081"
-    stdin_open: true  

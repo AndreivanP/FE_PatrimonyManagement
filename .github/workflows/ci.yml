@@ -7,6 +7,10 @@ on:
 jobs:
   build-deploy-run-e2e:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
     steps:
        - name: Clone BE repo
          uses: actions/checkout@master
@@ -15,18 +19,27 @@ jobs:
           token: ${{ secrets.gha_pta || github.token }}
        - name: Generate jar artifact
          run: mvn install -DskipTests
-       - name: Build back end docker images
+       - name: Build Back-End docker images
          run: docker-compose -f docker-compose-be.yml build
        - name: Create docker containers for API and Database
          run: docker-compose -f docker-compose-be.yml up -d
        - uses: actions/checkout@v2
          with:
           ref: ${{ github.event.pull_request.head.sha }}
-       - name: Build front end related docker images
+       - name: Build Front-End App and Cypress docker images
          run: |
-          git status
-          docker-compose -f docker-compose-fe.yml build
-       - name: Create docker containers for FE app and Cypress runner
-         run: docker-compose -f docker-compose-fe.yml up -d
-       - name: Run e2e tests within cypress container
-         run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression
+          cd e2e && docker-compose -f docker-compose-e2e.yml build
+       - name: Create docker containers for Front-End and Cypress Runner
+         run: |
+          cd e2e && docker-compose -f docker-compose-e2e.yml up -d
+          docker network connect e2e_default asset-management
+          docker network connect e2e_default mongodb
+          docker network inspect e2e_default
+       - name: Run e2e tests within Cypress container
+         uses: cypress-io/github-action@v2
+         with:
+          record: true
+          parallel: true
+          group: 'Actions example'
+          working-directory: e2e
+          command: docker-compose -f docker-compose-e2e.yml exec -T e2e-runner npm run cy:regression
