@@ -63,37 +63,37 @@ class InvestmentFormComponent extends Component {
             style: 'currency',
             currency: 'BRL',
             minimumFractionDigits: 2
-          })
-        let {total, variableIncomeTotal, totalValueToBeInvested} = this.state;
+        })
+        let { total, variableIncomeTotal, totalValueToBeInvested } = this.state;
         total = formatter.format(total);
         variableIncomeTotal = formatter.format(variableIncomeTotal);
         return (
             <Formik
-            initialValues={{total, variableIncomeTotal, totalValueToBeInvested}}
-            validateOnChange={false}
-            validateOnBlur={false}
-            validate={this.validate}
-            enableReinitialize={true}
-          >
-            {(props) => (
-            <form>
-                <div>
-                    <div className="form-group">
-                        <label>Total Patrimony</label>
-                        <Field className="readOnlyField" type="text" name="total" readOnly/>
-                        <label>Variable Income Total</label>
-                        <Field className="readOnlyField" type="text" name="variableIncomeTotal" readOnly/>
-                        <label>Value to be Invested</label>
-                        <Field className="fieldCategA" type="number" pattern="[0-9]*" inputMode="numeric" name="valueToBeInvested" value={props.values.valueToBeInvested || ''}/> 
-                        <label>You Should Invest in Variable Income</label>
-                        <Field className="readOnlyField" type="text" name="investVarInc" value={formatter.format(this.calcVariableIncome(props.values.valueToBeInvested)) || ''} readOnly/>
-                        <label>You Should Invest in Fixed Income</label>
-                         <Field className="readOnlyField" type="text" name="investFixInc" value={formatter.format(this.calcFixedIncome(props.values.valueToBeInvested)) || ''} readOnly/>
-                    </div>
-                    <button className="btn btn-secondary btn-block" onClick={this.onCancel} type="button">Close</button>
-                </div>
-            </form>
-            ) }
+                initialValues={{ total, variableIncomeTotal, totalValueToBeInvested }}
+                validateOnChange={false}
+                validateOnBlur={false}
+                validate={this.validate}
+                enableReinitialize={true}
+            >
+                {(props) => (
+                    <form className="auth-wrapper">
+                        <div className="auth-inner">
+                            <div className="form-group">
+                                <label>Total Patrimony</label>
+                                <Field className="readOnlyField" type="text" name="total" readOnly />
+                                <label>Variable Income Total</label>
+                                <Field className="readOnlyField" type="text" name="variableIncomeTotal" readOnly />
+                                <label>Value to be Invested</label>
+                                <Field className="fieldCategA" type="number" pattern="[0-9]*" inputMode="numeric" name="valueToBeInvested" value={props.values.valueToBeInvested || ''} />
+                                <label>You Should Invest in Variable Income</label>
+                                <Field className="readOnlyField" type="text" name="investVarInc" value={formatter.format(this.calcVariableIncome(props.values.valueToBeInvested)) || ''} readOnly />
+                                <label>You Should Invest in Fixed Income</label>
+                                <Field className="readOnlyField" type="text" name="investFixInc" value={formatter.format(this.calcFixedIncome(props.values.valueToBeInvested)) || ''} readOnly />
+                            </div>
+                            <button className="btn btn-secondary btn-block" onClick={this.onCancel} type="button">Close</button>
+                        </div>
+                    </form>
+                )}
             </Formik>
 
         );

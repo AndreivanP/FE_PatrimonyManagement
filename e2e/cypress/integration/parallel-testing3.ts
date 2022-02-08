@@ -11,8 +11,8 @@ describe('Asset Form functionalities', () => {
         // cy.wait('@apiCheck');
     });
 
-    it('Create 10 fixed income asset in a looping', () => {
-        for(let i=0; i <= 10; i++) {
+    it('Create fixed income asset', () => {
+        // for(let i=0; i <= 1; i++) {
             let initialValue = `${faker.finance.amount()}`;
             let currentValue = `${faker.finance.amount()}`;
             let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
@@ -20,7 +20,7 @@ describe('Asset Form functionalities', () => {
             cy.createNewAsset(assetName, initialValue, currentValue, companyName);
             cy.checkWhetherAssetIsCreated(assetName);
             cy.visit('/users/Andreivan/assets/new');
-        } 
+ //       } 
     });
 
     it('Create fixed income asset 2', () => {
