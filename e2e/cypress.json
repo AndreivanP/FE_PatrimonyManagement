@@ -26,5 +26,7 @@
             "filterLoad": "proxy/companies",
             "useFixtures": false,
             "release_notes": "/releases"
-          }
+          },
+    "projectId": "zOWiUM"
   }
+
