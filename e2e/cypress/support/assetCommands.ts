@@ -7,28 +7,50 @@ declare global {
         interface Chainable {
             createNewAsset: typeof createNewAsset,
             checkWhetherAssetIsCreated: typeof checkWhetherAssetIsCreated,
+            checkMandatoryMessage: typeof checkMandatoryMessage
         }
     }
 }
 
-export function createNewAsset(assetName: string = '', initialValue: string = '', 
-                               currentValue: string = '', companyName: string = '',
-                               isVariableIncome: boolean = false): void {
+export function createNewAsset(assetName: string = '', broker = '', startDate: string = '', 
+                               isActive: boolean = true, isVariableIncome: boolean = false, initialValue: string = '',
+                               interestRate: string = '', currentValue: string = '', expiryDate = ''): void {
     if(assetName != '') {
         cy.get(selectors.default.assetName).type(assetName);
     }
-    if(initialValue != '') {
-        cy.get(selectors.default.initialValue).type(initialValue);
+
+    if(broker != '') {
+        cy.get(selectors.default.broker).type(broker);
     }
-    if(currentValue != '') {
-        cy.get(selectors.default.currentValue).type(currentValue);
+
+    if(startDate != '') {
+        cy.get(selectors.default.date).type(startDate);
     }
-    if(companyName != '') {
-        cy.get(selectors.default.companyName).type(companyName);
+
+    if(isActive === true) {
+        cy.get(selectors.default.isActiveCheckBox).click();
     }
+
     if(isVariableIncome === true) {
         cy.get(selectors.default.variableIncomeCheckBox).click();
     }
+
+    if(initialValue != '') {
+        cy.get(selectors.default.initialValue).type(initialValue);
+    }
+
+    if(interestRate != '') {
+        cy.get(selectors.default.currentValue).type(interestRate);
+    }
+
+    if(currentValue != '') {
+        cy.get(selectors.default.currentValue).type(currentValue);
+    }
+
+    if(expiryDate != '') {
+        cy.get(selectors.default.expiryDate).type(expiryDate);
+    }
+
     cy.get(selectors.default.btnSave).click();
 }
 
@@ -47,3 +69,11 @@ export function checkWhetherAssetIsCreated(assetName: string): void {
 }
 
 Cypress.Commands.add('checkWhetherAssetIsCreated', checkWhetherAssetIsCreated);
+
+export function checkMandatoryMessage(selector: any, message: string): void {
+    cy.get(selector).then(($input) => {
+        expect($input[0].validationMessage).to.eq(message)
+    })
+}
+
+Cypress.Commands.add('checkMandatoryMessage', checkMandatoryMessage);
