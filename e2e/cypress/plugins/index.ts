@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+// / <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -16,7 +16,30 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+
+const { MongoClient } = require('mongodb');
+var ObjectId = require('mongodb').ObjectId;
+
+/*  eslint-enable */
+
+const path = require('path');
+const seeder = require('cypress-mongo-seeder');
+
+const mongouri = 'mongodb://localhost:27017/pat_manag';
+const folder = './cypress/data';
+const dropCollections = false;
+
+module.exports = async (on, config) => {
+  
+  on('task', {
+    //Files names are collection names
+    async seedDbAll(folderPath: string) {
+        return await seeder.seedAll(mongouri, folderPath, dropCollections);
+    },
+
+    //File name is collection name
+    async seedDbSingle(filePath: string) {
+      return await seeder.seedSingleCollection(mongouri, filePath, dropCollections);
+  },
+  });
+};

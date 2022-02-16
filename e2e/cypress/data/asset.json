@@ -1,0 +1,41 @@
+[
+    {
+        "_id": {"$oid": "000000000000000000000008"},
+        "name": "Auto test 33333",
+        "date": "2020-12-31T00:00:00.000Z" ,
+        "initial_value": 12031.65,
+        "company": "Easynvest - Andreivan",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Andreivan",
+        "current_value": 22222.0,
+        "is_variable_income": true,
+        "expiryDate": "2020-12-31T00:00:00.000Z"
+    },
+    {
+        "_id": {"$oid": "000000000000000000000009"},
+        "name": "Auto test 2322323",
+        "date": "2020-12-31T00:00:00.000Z" ,
+        "initial_value": 12031.65,
+        "company": "Easynvest - Andreivan",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Andreivan",
+        "current_value": 22222.0,
+        "is_variable_income": true,
+        "expiryDate": {"$date" : ""}
+    },
+    {
+        "_id": {"$oid": "000000000000000000000010"},
+        "name": "Auto test 44444",
+        "date": "2020-12-31T00:00:00.000Z" ,
+        "initial_value": 12031.65,
+        "company": "Easynvest - Andreivan",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Andreivan",
+        "current_value": 22222.0,
+        "is_variable_income": true,
+        "expiryDate": {"$date" : ""}
+    }
+]
