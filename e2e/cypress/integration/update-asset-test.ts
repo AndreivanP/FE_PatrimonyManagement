@@ -3,25 +3,20 @@
 import faker from 'faker';
 import moment from 'moment';
 
-const path = require('path');
-const seeder = require('cypress-mongo-seeder');
-
-const folder = '../seeder';
+const file =  '../e2e/cypress/data/asset.json';
+const folder =  '../e2e/cypress/data';
 const dropCollections = true;
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-//  import { constTest } from '../support/index';
 
 describe('Asset Form functionalities', () => {
 
     beforeEach(() => {
-        // cy.intercept('GET', '**/*').as('apiCheck');
-        //cy.auth0Login('/users/Andreivan/assets/new');
-        // cy.wait('@apiCheck');
+        cy.intercept('GET', '**/*').as('apiCheck');
+        cy.auth0Login('/users/Andreivan/assets/new');
+        cy.wait('@apiCheck');
     });
 
     it.only('Update current value of a complete fixed income asset', () => {
-        cy.task('seeddb');
+        cy.task('seedDbSingle', {filePath: file, dropCollections: dropCollections});
     });
 
     it('Update current value of a fixed income asset without expiry date', () => {

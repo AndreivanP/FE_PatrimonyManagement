@@ -17,28 +17,20 @@
  */
 // eslint-disable-next-line no-unused-vars
 
-const { MongoClient } = require('mongodb');
-var ObjectId = require('mongodb').ObjectId;
-
-/*  eslint-enable */
-
 const path = require('path');
 const seeder = require('cypress-mongo-seeder');
 
-const mongouri = 'mongodb://localhost:27017/pat_manag';
-const folder = './cypress/data';
-const dropCollections = false;
-
 module.exports = async (on, config) => {
-  
+  const mongouri = 'mongodb://localhost:27017/pat_manag'
+
   on('task', {
     //Files names are collection names
-    async seedDbAll(folderPath: string) {
+    async seedDbAll({folderPath, dropCollections}: any) {
         return await seeder.seedAll(mongouri, folderPath, dropCollections);
     },
 
     //File name is collection name
-    async seedDbSingle(filePath: string) {
+    async seedDbSingle({filePath, dropCollections}: any ) {
       return await seeder.seedSingleCollection(mongouri, filePath, dropCollections);
   },
   });
