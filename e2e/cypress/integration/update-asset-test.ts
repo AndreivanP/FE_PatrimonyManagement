@@ -10,13 +10,14 @@ const dropCollections = true;
 describe('Asset Form functionalities', () => {
 
     beforeEach(() => {
-        cy.intercept('GET', '**/*').as('apiCheck');
-        cy.auth0Login('/users/Andreivan/assets/new');
-        cy.wait('@apiCheck');
+        // cy.intercept('GET', '**/*').as('apiCheck');
+        // cy.auth0Login('/users/Andreivan/assets/new');
+        // cy.wait('@apiCheck');
     });
 
     it.only('Update current value of a complete fixed income asset', () => {
-        cy.task('seedDbSingle', {filePath: file, dropCollections: dropCollections});
+        cy.task('deleteMongoEntry', {filePath: file, databaseName: "pat_manag", collectionName: "asset"});
+        cy.task('seedDbSingle', {filePath: file, dropCollections: false});
     });
 
     it('Update current value of a fixed income asset without expiry date', () => {

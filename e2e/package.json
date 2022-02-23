@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "csvtojson": "^2.0.10",
-    "cypress": "^8.0.0",
+    "cypress": "^9.5.0",
     "cypress-mongo-seeder": "^1.0.8",
     "eslint": "^7.26.0",
     "eslint-config-airbnb": "^18.2.1",
