@@ -9,15 +9,15 @@ const dropCollections = true;
 
 describe('Asset Form functionalities', () => {
 
-    beforeEach(() => {
-        // cy.intercept('GET', '**/*').as('apiCheck');
-        // cy.auth0Login('/users/Andreivan/assets/new');
-        // cy.wait('@apiCheck');
-    });
-
     it.only('Update current value of a complete fixed income asset', () => {
-        cy.task('deleteMongoEntry', {filePath: file, databaseName: "pat_manag", collectionName: "asset"});
+        cy.task('deleteMongoEntry', {filePath: file, databaseName: "pat_manag_stg", collectionName: "asset"});
         cy.task('seedDbSingle', {filePath: file, dropCollections: false});
+        cy.intercept('GET', '**/*').as('apiCheck');
+        cy.auth0Login('/users/Andreivan/assets/000000000000000000000001');
+        cy.wait('@apiCheck');
+        let currentValue = `${faker.finance.amount()}`;
+        cy.createNewAsset('', '', '', false, false, '', '', currentValue, '');
+        cy.checkCurrentValueAssetList(currentValue)
     });
 
     it('Update current value of a fixed income asset without expiry date', () => {

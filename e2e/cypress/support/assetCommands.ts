@@ -7,47 +7,50 @@ declare global {
         interface Chainable {
             createNewAsset: typeof createNewAsset,
             checkWhetherAssetIsCreated: typeof checkWhetherAssetIsCreated,
-            checkMandatoryMessage: typeof checkMandatoryMessage
+            checkMandatoryMessage: typeof checkMandatoryMessage,
+            checkCurrentValueAssetList: typeof checkCurrentValueAssetList
         }
     }
 }
 
-export function createNewAsset(assetName: string = '', broker = '', startDate: string = '', 
-                               isActive: boolean = true, isVariableIncome: boolean = false, initialValue: string = '',
-                               interestRate: string = '', currentValue: string = '', expiryDate = ''): void {
-    if(assetName != '') {
+export function createNewAsset(assetName: string = '', broker = '', startDate: string = '',
+    isActive: boolean = true, isVariableIncome: boolean = false, initialValue: string = '',
+    interestRate: string = '', currentValue: string = '', expiryDate = ''): void {
+    if (assetName != '') {
         cy.get(selectors.default.assetName).type(assetName);
     }
 
-    if(broker != '') {
+    if (broker != '') {
         cy.get(selectors.default.broker).type(broker);
     }
 
-    if(startDate != '') {
+    if (startDate != '') {
         cy.get(selectors.default.date).type(startDate);
     }
 
-    if(isActive === true) {
+    if (isActive === true) {
         cy.get(selectors.default.isActiveCheckBox).click();
     }
 
-    if(isVariableIncome === true) {
+    if (isVariableIncome === true) {
         cy.get(selectors.default.variableIncomeCheckBox).click();
     }
 
-    if(initialValue != '') {
+    if (initialValue != '') {
         cy.get(selectors.default.initialValue).type(initialValue);
     }
 
-    if(interestRate != '') {
+    if (interestRate != '') {
         cy.get(selectors.default.currentValue).type(interestRate);
     }
 
-    if(currentValue != '') {
-        cy.get(selectors.default.currentValue).type(currentValue);
+    if (currentValue != '') {
+        cy.get(selectors.default.currentValue).clear().then(() => {
+            cy.get(selectors.default.currentValue).type(currentValue);
+        });
     }
 
-    if(expiryDate != '') {
+    if (expiryDate != '') {
         cy.get(selectors.default.expiryDate).type(expiryDate);
     }
 
@@ -69,6 +72,20 @@ export function checkWhetherAssetIsCreated(assetName: string): void {
 }
 
 Cypress.Commands.add('checkWhetherAssetIsCreated', checkWhetherAssetIsCreated);
+
+export function checkCurrentValueAssetList(currentValue: string): void {
+    let count = 0;
+    cy.get('.table > tbody > tr > :nth-child(3)').each(($elem) => {
+        if ($elem.text() === currentValue) {
+            count += 1;
+        }
+    }).then(() => {
+        // by the time ".each" is finished, the count has been updated
+        expect(count, 'Asset count').to.equal(1);
+    })
+}
+
+Cypress.Commands.add('checkCurrentValueAssetList', checkCurrentValueAssetList);
 
 export function checkMandatoryMessage(selector: any, message: string): void {
     cy.get(selector).then(($input) => {
