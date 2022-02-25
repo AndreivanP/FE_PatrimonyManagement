@@ -20,25 +20,34 @@
 const seeder = require('cypress-mongo-seeder');
 import { MONGOURI } from "../../../src/Properties"
 const ObjectId = require('mongodb').ObjectId;
-const { MongoClient } = require('mongodb');
 const fs = require('fs')
+const mongo = require('mongodb')
 
-module.exports = async (on, config) => {
+module.exports = async (on: any, config: any) => {
 
-  const client = new MongoClient(MONGOURI);
+  let client: any = '';
 
-  async function connect(databaseName: string) {
-    // Connect the client to the server
-    await client.connect();
-    await client.db(databaseName).command({ ping: 1 });
-    return client.db(databaseName);
-  }
-
-  async function disconnect() {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-
+  async function connectToDB(uri: string) {
+    let connectionString = 'mongodb://localhost/seed_db';
+  
+    const hasScheme =
+      uri.startsWith('mongodb://') || uri.startsWith('mongodb+srv://');
+  
+    if (uri && !hasScheme) {
+      connectionString = `mongodb://${uri}`;
+    } else if (uri && hasScheme) {
+      connectionString = uri;
+    }
+    try {
+      client = await mongo.MongoClient.connect(connectionString, {
+        useNewUrlParser: true,
+      });
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
 
   async function readJsonFile(jsonPath: string) {
     let arrayIds: any = [];
@@ -70,10 +79,10 @@ module.exports = async (on, config) => {
       return await seeder.seedSingleCollection(MONGOURI, filePath, dropCollections);
     },
 
-    async deleteMongoEntry({ filePath, databaseName, collectionName }: any) {
+    async deleteMongoEntry({ filePath, collectionName }: any) {
       let arraysIDs: any = await readJsonFile(filePath);
-      const db = await connect(databaseName);
-      const collection = db.collection(collectionName);
+      await connectToDB(MONGOURI);
+      let collection = client.db().collection(collectionName);
 
       for (let i = 0; arraysIDs.length > i; i++) {
         const o_id = new ObjectId(arraysIDs[i]);
