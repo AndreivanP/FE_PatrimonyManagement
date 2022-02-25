@@ -1,68 +1,83 @@
-const selectors = require('../support/selectors/asset-form');
+import {default as selectors} from '../support/selectors/asset-form';
+import {default as listSelectors} from '../support/selectors/asset-list';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         interface Chainable {
-            createNewAsset: typeof createNewAsset,
-            checkWhetherAssetIsCreated: typeof checkWhetherAssetIsCreated,
+            handleAsset: typeof handleAsset,
             checkMandatoryMessage: typeof checkMandatoryMessage,
-            checkCurrentValueAssetList: typeof checkCurrentValueAssetList
+            checkAssetList: typeof checkAssetList
         }
     }
 }
 
-export function createNewAsset(assetName: string = '', broker = '', startDate: string = '',
-    isActive: boolean = true, isVariableIncome: boolean = false, initialValue: string = '',
-    interestRate: string = '', currentValue: string = '', expiryDate = ''): void {
+export function handleAsset( {assetName = '', broker = '', startDate = '',
+                              isActive = true, isVariableIncome = false, initialValue = '',
+                              interestRate = '', currentValue = '', expiryDate = ''}): void {
     if (assetName != '') {
-        cy.get(selectors.default.assetName).type(assetName);
+        cy.get(selectors.assetName).click().clear().type(assetName);
     }
 
     if (broker != '') {
-        cy.get(selectors.default.broker).type(broker);
+        cy.get(selectors.broker).click().clear().type(broker); 
     }
 
     if (startDate != '') {
-        cy.get(selectors.default.date).type(startDate);
+        cy.get(selectors.date).click().clear().type(startDate);
     }
 
     if (isActive === true) {
-        cy.get(selectors.default.isActiveCheckBox).click();
+        cy.get(selectors.isActiveCheckBox).click();
     }
 
     if (isVariableIncome === true) {
-        cy.get(selectors.default.variableIncomeCheckBox).click();
+        cy.get(selectors.variableIncomeCheckBox).click();
     }
 
     if (initialValue != '') {
-        cy.get(selectors.default.initialValue).type(initialValue);
+        cy.get(selectors.initialValue).click().clear().type(initialValue);
     }
 
     if (interestRate != '') {
-        cy.get(selectors.default.currentValue).type(interestRate);
+        cy.get(selectors.currentValue).click().clear().type(interestRate);
     }
 
     if (currentValue != '') {
-        cy.get(selectors.default.currentValue).clear().then(() => {
-            cy.get(selectors.default.currentValue).type(currentValue);
-        });
+        cy.get(selectors.currentValue).click().clear().type(currentValue);
     }
 
     if (expiryDate != '') {
-        cy.get(selectors.default.expiryDate).type(expiryDate);
+        cy.get(selectors.expiryDate).click().clear().type(expiryDate);
     }
 
-    cy.get(selectors.default.btnSave).click();
+    cy.get(selectors.btnSave).click();
 }
 
-Cypress.Commands.add('createNewAsset', createNewAsset);
+Cypress.Commands.add('handleAsset', handleAsset);
 
-export function checkWhetherAssetIsCreated(assetName: string): void {
+export function checkAssetList(fieldToCheck: string, newValue: string): void {
+    switch(fieldToCheck) {
+        case 'name':
+            fieldToCheck = listSelectors.listAssetName
+            break;
+        case 'initialValue':
+            fieldToCheck = listSelectors.listInitialValue
+            break;
+        case 'currentValue':
+            fieldToCheck = listSelectors.listCurrentValue
+            break;
+        case 'company':
+            listSelectors.listAssetCompany
+            break;
+        default:
+            ''
+    }
+
     let count = 0;
-    cy.get('.table > tbody > tr > :nth-child(1)').each(($elem) => {
-        if ($elem.text() === assetName) {
+    cy.get(fieldToCheck).each(($elem) => {
+        if ($elem.text() === newValue) {
             count += 1;
         }
     }).then(() => {
@@ -71,21 +86,7 @@ export function checkWhetherAssetIsCreated(assetName: string): void {
     })
 }
 
-Cypress.Commands.add('checkWhetherAssetIsCreated', checkWhetherAssetIsCreated);
-
-export function checkCurrentValueAssetList(currentValue: string): void {
-    let count = 0;
-    cy.get('.table > tbody > tr > :nth-child(3)').each(($elem) => {
-        if ($elem.text() === currentValue) {
-            count += 1;
-        }
-    }).then(() => {
-        // by the time ".each" is finished, the count has been updated
-        expect(count, 'Asset count').to.equal(1);
-    })
-}
-
-Cypress.Commands.add('checkCurrentValueAssetList', checkCurrentValueAssetList);
+Cypress.Commands.add('checkAssetList', checkAssetList);
 
 export function checkMandatoryMessage(selector: any, message: string): void {
     cy.get(selector).then(($input) => {

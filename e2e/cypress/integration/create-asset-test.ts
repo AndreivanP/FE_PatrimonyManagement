@@ -18,8 +18,9 @@ describe('Asset Form functionalities', () => {
             let currentValue = `${faker.finance.amount()}`;
             let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
             let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
-            cy.createNewAsset(assetName, broker, '', true, false, initialValue, '', currentValue, '');
-            cy.checkWhetherAssetIsCreated(assetName);
+            cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: false, 
+                            initialValue: initialValue, interestRate: '', currentValue: currentValue, expiryDate: ''});
+            cy.checkAssetList('name', assetName);
             cy.visit('/users/Andreivan/assets/new');
         } 
     });
@@ -29,16 +30,16 @@ describe('Asset Form functionalities', () => {
         let currentValue = `${faker.finance.amount()}`;
         let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
-        cy.createNewAsset(assetName, broker, '', true, true, initialValue, '', currentValue, '');
-        cy.checkWhetherAssetIsCreated(assetName);
+        cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: true, 
+                        initialValue: initialValue, interestRate: '', currentValue: currentValue, expiryDate: ''});        
+        cy.checkAssetList('name', assetName);
         cy.visit('/users/Andreivan/assets/new');
     });
 
     it('Check mandatory fields message for asset name', () => {
-        let initialValue = `${faker.finance.amount()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
-        let currentValue = `${faker.finance.amount()}`;
-        cy.createNewAsset('', broker, '', true, true, initialValue, '', currentValue, '');
+        cy.handleAsset({assetName: '', broker: broker, startDate: '', isActive: true, isVariableIncome: true, 
+                        initialValue: '', interestRate: '', currentValue: '', expiryDate: ''});
         cy.checkMandatoryMessage(selectors.default.assetName, 'Please fill out this field.');
     });
 
@@ -46,7 +47,8 @@ describe('Asset Form functionalities', () => {
         let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
         let currentValue = `${faker.finance.amount()}`;
-        cy.createNewAsset(assetName, broker, '', true, true, '', '', currentValue, '');
+        cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: true, 
+                        initialValue: '', interestRate: '', currentValue: currentValue, expiryDate: ''});
         cy.checkMandatoryMessage(selectors.default.initialValue, 'Please fill out this field.');
     });
 
@@ -54,7 +56,8 @@ describe('Asset Form functionalities', () => {
         let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
         let initialValue = `${faker.finance.amount()}`;
-        cy.createNewAsset(assetName, broker, '', true, true, initialValue, '', '', '');
+        cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: true, 
+                        initialValue: initialValue, interestRate: '', currentValue: '', expiryDate: ''});
         cy.checkMandatoryMessage(selectors.default.currentValue, 'Please fill out this field.');
     });
 
@@ -63,8 +66,9 @@ describe('Asset Form functionalities', () => {
         let currentValue = `${faker.finance.amount()}`;
         let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
-        cy.createNewAsset(assetName, broker, '', true, true, initialValue, '', currentValue, '');
-        cy.checkWhetherAssetIsCreated(assetName);
+        cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: true, 
+                        initialValue: initialValue, interestRate: '', currentValue: currentValue, expiryDate: ''});
+        cy.checkAssetList('name', assetName);
         cy.visit('/users/Andreivan/assets/new');
     });
 
@@ -74,8 +78,9 @@ describe('Asset Form functionalities', () => {
         let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
         const expiryDate = moment().add(180, 'days').format('YYYY-MM-DD');
-        cy.createNewAsset(assetName, broker, '', true, false, initialValue, '', currentValue, expiryDate);
-        cy.checkWhetherAssetIsCreated(assetName);
+        cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: false, 
+                        initialValue: initialValue, interestRate: '', currentValue: currentValue, expiryDate: expiryDate});
+        cy.checkAssetList('name', assetName);
         cy.visit('/users/Andreivan/assets/new');
     });
 
@@ -85,8 +90,9 @@ describe('Asset Form functionalities', () => {
         let assetName = `Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
         let broker = `Company ${faker.lorem.word()} ${faker.datatype.number()}`;
         const expiryDate = moment().add(365, 'days').format('YYYY-MM-DD');
-        cy.createNewAsset(assetName, broker, '', true, true, initialValue, '', currentValue, expiryDate);
-        cy.checkWhetherAssetIsCreated(assetName);
+        cy.handleAsset({assetName: assetName, broker: broker, startDate: '', isActive: true, isVariableIncome: true, 
+                        initialValue: initialValue, interestRate: '', currentValue: currentValue, expiryDate: expiryDate});
+        cy.checkAssetList('name', assetName);
         cy.visit('/users/Andreivan/assets/new');
     });
 
