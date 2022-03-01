@@ -1,10 +1,9 @@
 // / <reference types="cypress" />
 
 import faker from 'faker';
-
+import {default as selectors} from '../support/selectors/asset-form';
 const file =  '../e2e/cypress/data/asset.json';
-const folder =  '../e2e/cypress/data';
-const dropCollections = true;
+import moment from 'moment';
 
 describe('Asset Form functionalities', () => {
 
@@ -37,16 +36,30 @@ describe('Asset Form functionalities', () => {
         cy.checkAssetList('name', name);
     });
 
-    it('Add expiry date to a fixed income asset without expiry date', () => {
-
+    it('Add expiry date to a fixed income asset', () => {
+        cy.auth0Login('/users/Staging/assets/000000000000000000000002');
+        const expiryDate = moment().add(365, 'days').format('YYYY-MM-DD');
+        cy.handleAsset({assetName: '', broker: '', startDate: '', isActive: true, isVariableIncome: false, 
+                        initialValue: '', interestRate: '', currentValue: '', expiryDate: expiryDate});
+        cy.visit('/users/Staging/assets/000000000000000000000002');
+        cy.get(selectors.expiryDate).should('have.value', expiryDate);
     });
 
     it('Change expiry date of a fixed income asset', () => {
-
+        cy.auth0Login('/users/Staging/assets/000000000000000000000001');
+        const expiryDate = moment().add(365, 'days').format('YYYY-MM-DD');
+        cy.handleAsset({assetName: '', broker: '', startDate: '', isActive: true, isVariableIncome: false, 
+                        initialValue: '', interestRate: '', currentValue: '', expiryDate: expiryDate});
+        cy.visit('/users/Staging/assets/000000000000000000000001');
+        cy.get(selectors.expiryDate).should('have.value', expiryDate);
     });
 
     it('Update initial value of variable income asset', () => {
-
+        cy.auth0Login('/users/Staging/assets/000000000000000000000003');
+        let initialValue = `${faker.finance.amount()}`;
+        cy.handleAsset({assetName: '', broker: '', startDate: '', isActive: true, isVariableIncome: false, 
+                        initialValue: initialValue, interestRate: '', currentValue: '', expiryDate: ''});
+        cy.checkAssetList('initialValue', initialValue);
     });
 
 });
