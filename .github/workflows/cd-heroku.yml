@@ -32,7 +32,7 @@ jobs:
        - name: Build front end related docker images
          run: |
           cd src && sed -i 's#mongodb://mongodb:27017/pat_manag#${{secrets.STG_DB_URL}}#g' Properties.js
-          docker-compose -f docker-compose-fe.yml build
+          cd .. && docker-compose -f docker-compose-fe.yml build
        - name: Create docker containers for FE app and Cypress runner
          run: docker-compose -f docker-compose-fe.yml up -d
        - name: Run e2e tests within cypress container
