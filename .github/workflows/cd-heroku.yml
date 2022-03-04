@@ -16,7 +16,6 @@ jobs:
         - name: Setup API STG Url
           run: |
             cd src && sed -i 's#http://asset-management:8080#https://api-asset-management-stg.herokuapp.com#g' Properties.js
-            cd src && sed -i 's#mongodb://mongodb:27017/pat_manag#${{secrets.STG_DB_URL}}#g' Properties.js
             sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
         - name: Deploy to Heroku Staging Environment
           uses: AkhileshNS/heroku-deploy@v3.8.8
@@ -32,6 +31,7 @@ jobs:
        - uses: actions/checkout@v2
        - name: Build front end related docker images
          run: |
+          cd src && sed -i 's#mongodb://mongodb:27017/pat_manag#${{secrets.STG_DB_URL}}#g' Properties.js
           docker-compose -f docker-compose-fe.yml build
        - name: Create docker containers for FE app and Cypress runner
          run: docker-compose -f docker-compose-fe.yml up -d
