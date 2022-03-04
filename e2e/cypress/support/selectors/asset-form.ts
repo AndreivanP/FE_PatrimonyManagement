@@ -3,8 +3,12 @@ export default {
     initialValue: '[name="initial_value"]',
     currentValue: '[name="current_value"]',
     btnSave: '.btn-primary',
-    companyName: '[name="broker"]',
+    broker: '[name="broker"]',
     alert: '.alert',
+    isActiveCheckBox: '#inlineCheckbox1',
     variableIncomeCheckBox: '#inlineCheckbox2',
-    isActiveCheckbox: '#inlineCheckbox1'
+    isActiveCheckbox: '#inlineCheckbox1',
+    expiryDate: '[name="expiryDate"]',
+    date: '[name="date"]',
+    interestRate: '[name="interest_rate"]',
 }

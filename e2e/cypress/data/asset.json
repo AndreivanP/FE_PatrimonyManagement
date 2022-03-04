@@ -1,0 +1,41 @@
+[
+    {
+        "_id": {"$oid": "000000000000000000000001"},
+        "name": "Auto test Update Asset",
+        "date": {"$date" : "2022-10-30 00:00:00.000Z"},
+        "initial_value": 12031.69,
+        "company": "Broker AB",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Staging",
+        "current_value": 22223.0,
+        "is_variable_income": false,
+        "expiryDate": {"$date" : "2026-10-30 00:00:00.000Z"}
+    },
+    {
+        "_id": {"$oid": "000000000000000000000002"},
+        "name": "Auto test Update Asset Fixed",
+        "date": {"$date" : "2022-10-30 00:00:00.000Z"},
+        "initial_value": 125.69,
+        "company": "Broker AB",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Staging",
+        "current_value": 12345.0,
+        "is_variable_income": false,
+        "expiryDate": null
+    },
+    {
+        "_id": {"$oid": "000000000000000000000003"},
+        "name": "Auto test Update Asset Variable",
+        "date": {"$date" : "2022-10-30 00:00:00.000Z"},
+        "initial_value": 125.69,
+        "company": "Broker AB",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Staging",
+        "current_value": 543.0,
+        "is_variable_income": true,
+        "expiryDate": null
+    }
+]

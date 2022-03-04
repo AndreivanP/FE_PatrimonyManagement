@@ -66,23 +66,23 @@ class ListAssetComponent extends Component {
                     <table className="table">
                         <thead>
                             <tr>                                
-                                <th>Name</th>                                
-                                <th>Initial Value</th>                                
-                                <th>Current Value</th>
-                                <th>Company</th>
+                                <th data-testid="column-name">Name</th>
+                                <th data-testid="column-initial-value">Initial Value</th>
+                                <th data-testid="column-current-value">Current Value</th>
+                                <th data-testid="column-company">Company</th>
                             </tr>
                         </thead>                        
                         <tbody>                            
                             {
                                 this.state.assets.map(                                    
                                     asset =>
-                                        <tr key={asset.id}>                                            
-                                            <td>{asset.name}</td>
-                                            <td>{asset.initial_value}</td>
-                                            <td>{asset.current_value}</td>
-                                            <td>{asset.company}</td>
-                                            <td><button className="brn btn-warning" onClick={() => this.updateAsset(asset.id)}>Update</button></td>
-                                            <td><button className="brn btn-danger" onClick={() => this.deleteAsset(asset.id)}>Delete</button></td>
+                                        <tr key={asset.id}>
+                                            <td data-testid="name">{asset.name}</td>
+                                            <td data-testid="initial-value">{asset.initial_value}</td>
+                                            <td data-testid="current-value">{asset.current_value}</td>
+                                            <td data-testid="company">{asset.company}</td>
+                                            <td data-testid="btn-update"><button className="brn btn-warning" onClick={() => this.updateAsset(asset.id)}>Update</button></td>
+                                            <td data-testid="btn-delete"><button className="brn btn-danger" onClick={() => this.deleteAsset(asset.id)}>Delete</button></td>
                                         </tr>                                        
                                 )
                             }                            

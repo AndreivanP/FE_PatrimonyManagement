@@ -10,7 +10,8 @@
     "cy:regression-stg": "cypress run --config-file cypress-stg.json --browser=chrome",
     "cy:report": "yarn merge_reports && yarn mochawesome_report",
     "merge_reports": "mochawesome-merge ./cypress/reports/*.json > ./cypress/reports/outreports/mochawesome.json",
-    "mochawesome_report": "marge -t Cypress_Test_Report -f Cypress_HMTL_Report ./cypress/reports/outreports/mochawesome.json"
+    "mochawesome_report": "marge -t Cypress_Test_Report -f Cypress_HMTL_Report ./cypress/reports/outreports/mochawesome.json",
+    "seed:db": "npm "
   },
   "dependencies": {
     "@babel/core": "7.9.0",
@@ -23,7 +24,8 @@
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "csvtojson": "^2.0.10",
-    "cypress": "^8.0.0",
+    "cypress": "^9.5.0",
+    "cypress-mongo-seeder": "^1.0.8",
     "eslint": "^7.26.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-typescript": "^2.4.0",
@@ -34,6 +36,7 @@
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",
     "mochawesome-report-generator": "^5.2.0",
+    "moment": "^2.29.1",
     "mongodb": "^3.6.9",
     "node-xlsx": "^0.16.1",
     "path": "^0.12.7",
@@ -41,6 +44,7 @@
     "typescript": "^4.2.4",
     "xlsx": "^0.17.0"
   },
+  "type": "module",
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -53,6 +57,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mongodb": "^4.0.7",
-    "cypress-wait-until": "^1.7.1"
+    "cypress-wait-until": "^1.7.1",
+    "webpack-cli": "^4.9.2"
   }
 }

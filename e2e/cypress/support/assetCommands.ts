@@ -1,43 +1,83 @@
-const selectors = require('../support/selectors/asset-form');
+import {default as selectors} from '../support/selectors/asset-form';
+import {default as listSelectors} from '../support/selectors/asset-list';
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         interface Chainable {
-            createNewAsset: typeof createNewAsset,
-            checkWhetherAssetIsCreated: typeof checkWhetherAssetIsCreated,
+            handleAsset: typeof handleAsset,
+            checkMandatoryMessage: typeof checkMandatoryMessage,
+            checkAssetList: typeof checkAssetList
         }
     }
 }
 
-export function createNewAsset(assetName: string = '', initialValue: string = '', 
-                               currentValue: string = '', companyName: string = '',
-                               isVariableIncome: boolean = false): void {
-    if(assetName != '') {
-        cy.get(selectors.default.assetName).type(assetName);
+export function handleAsset( {assetName = '', broker = '', startDate = '',
+                              isActive = true, isVariableIncome = false, initialValue = '',
+                              interestRate = '', currentValue = '', expiryDate = ''}): void {
+    if (assetName != '') {
+        cy.get(selectors.assetName).click().clear().type(assetName);
     }
-    if(initialValue != '') {
-        cy.get(selectors.default.initialValue).type(initialValue);
+
+    if (broker != '') {
+        cy.get(selectors.broker).click().clear().type(broker); 
     }
-    if(currentValue != '') {
-        cy.get(selectors.default.currentValue).type(currentValue);
+
+    if (startDate != '') {
+        cy.get(selectors.date).click().clear().type(startDate);
     }
-    if(companyName != '') {
-        cy.get(selectors.default.companyName).type(companyName);
+
+    if (isActive === true) {
+        cy.get(selectors.isActiveCheckBox).click();
     }
-    if(isVariableIncome === true) {
-        cy.get(selectors.default.variableIncomeCheckBox).click();
+
+    if (isVariableIncome === true) {
+        cy.get(selectors.variableIncomeCheckBox).click();
     }
-    cy.get(selectors.default.btnSave).click();
+
+    if (initialValue != '') {
+        cy.get(selectors.initialValue).click().clear().type(initialValue);
+    }
+
+    if (interestRate != '') {
+        cy.get(selectors.currentValue).click().clear().type(interestRate);
+    }
+
+    if (currentValue != '') {
+        cy.get(selectors.currentValue).click().clear().type(currentValue);
+    }
+
+    if (expiryDate != '') {
+        cy.get(selectors.expiryDate).click().clear().type(expiryDate);
+    }
+
+    cy.get(selectors.btnSave).click();
 }
 
-Cypress.Commands.add('createNewAsset', createNewAsset);
+Cypress.Commands.add('handleAsset', handleAsset);
 
-export function checkWhetherAssetIsCreated(assetName: string): void {
+export function checkAssetList(fieldToCheck: string, newValue: string): void {
+    switch(fieldToCheck) {
+        case 'name':
+            fieldToCheck = listSelectors.listAssetName
+            break;
+        case 'initialValue':
+            fieldToCheck = listSelectors.listInitialValue
+            break;
+        case 'currentValue':
+            fieldToCheck = listSelectors.listCurrentValue
+            break;
+        case 'company':
+            listSelectors.listAssetCompany
+            break;
+        default:
+            ''
+    }
+
     let count = 0;
-    cy.get('.table > tbody > tr > :nth-child(1)').each(($elem) => {
-        if ($elem.text() === assetName) {
+    cy.get(fieldToCheck).each(($elem) => {
+        if ($elem.text() === newValue) {
             count += 1;
         }
     }).then(() => {
@@ -46,4 +86,12 @@ export function checkWhetherAssetIsCreated(assetName: string): void {
     })
 }
 
-Cypress.Commands.add('checkWhetherAssetIsCreated', checkWhetherAssetIsCreated);
+Cypress.Commands.add('checkAssetList', checkAssetList);
+
+export function checkMandatoryMessage(selector: any, message: string): void {
+    cy.get(selector).then(($input) => {
+        expect($input[0].validationMessage).to.eq(message)
+    })
+}
+
+Cypress.Commands.add('checkMandatoryMessage', checkMandatoryMessage);
