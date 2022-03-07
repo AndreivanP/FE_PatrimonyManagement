@@ -14,7 +14,8 @@ class InvestmentFormComponent extends Component {
             variableIncome: null,
             fixedIncome: null,
             username: AuthenticationService.getLoggedInUserName(),
-            token: AuthenticationService.getLoggedInToken()
+            token: AuthenticationService.getLoggedInToken(),
+            variableIncomePercentage: 20
         }
         this.calcVariableIncome = this.calcVariableIncome.bind(this);
         this.calcFixedIncome = this.calcFixedIncome.bind(this);
@@ -29,7 +30,7 @@ class InvestmentFormComponent extends Component {
     }
 
     calcVariableIncome(value) {
-        let idealVariableInc = (this.state.total + parseFloat(value)) / 100 * 20;
+        let idealVariableInc = (this.state.total + parseFloat(value)) / 100 * this.state.variableIncomePercentage;
         if (typeof (value) == 'undefined' || value === "") {
             return 0;
         } else {
@@ -79,6 +80,11 @@ class InvestmentFormComponent extends Component {
                     <form className="auth-wrapper">
                         <div className="auth-inner">
                             <div className="form-group">
+                            <nav className="navbar navbar-custom">
+                                <div className="row col-12 d-flex justify-content-center text-white">
+                                <span className="h6">Ideal Variable Income Share is {this.state.variableIncomePercentage}%</span>
+                                </div>
+                            </nav>
                                 <label>Total Patrimony</label>
                                 <Field className="readOnlyField" type="text" name="total" readOnly />
                                 <label>Variable Income Total</label>
