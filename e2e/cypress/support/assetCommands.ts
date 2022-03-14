@@ -17,38 +17,47 @@ export function handleAsset( {assetName = '', broker = '', startDate = '',
                               isActive = true, isVariableIncome = false, initialValue = '',
                               interestRate = '', currentValue = '', expiryDate = ''}): void {
     if (assetName != '') {
-        cy.get(selectors.assetName).click().clear().type(assetName);
+        cy.wait(1000)
+        cy.get(selectors.assetName).clear().type(assetName);
     }
 
     if (broker != '') {
-        cy.get(selectors.broker).click().clear().type(broker); 
+        cy.wait(1000)
+        cy.get(selectors.broker).click().clear().type(broker);
     }
 
     if (startDate != '') {
+        cy.wait(1000)
         cy.get(selectors.date).click().clear().type(startDate);
     }
 
     if (isActive === true) {
+        cy.wait(1000)
         cy.get(selectors.isActiveCheckBox).click();
     }
 
     if (isVariableIncome === true) {
+        cy.wait(1000)
         cy.get(selectors.variableIncomeCheckBox).click();
     }
 
     if (initialValue != '') {
+        cy.wait(1000)
         cy.get(selectors.initialValue).click().clear().type(initialValue);
     }
 
     if (interestRate != '') {
+        cy.wait(1000)
         cy.get(selectors.currentValue).click().clear().type(interestRate);
     }
 
     if (currentValue != '') {
+        cy.wait(1000)
         cy.get(selectors.currentValue).click().clear().type(currentValue);
     }
 
     if (expiryDate != '') {
+        cy.wait(1000)
         cy.get(selectors.expiryDate).click().clear().type(expiryDate);
     }
 
