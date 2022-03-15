@@ -39,9 +39,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 950
   },
   tableHeaderCell: {
-    fontWeight: 'bold',
     backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.getContrastText(theme.palette.primary.dark)
   },
   avatar: {
     backgroundColor: theme.palette.primary.light,
@@ -81,10 +79,10 @@ function ListAssetComponent() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell style={{backgroundColor:'red', color: 'white', fontWeight: 'bold'}}>User Info</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Job Info</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Joining Date</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Status</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>User Info</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Job Info</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Joining Date</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -92,11 +90,8 @@ function ListAssetComponent() {
             <TableRow key={row.name}>
               <TableCell>
                 <Grid container>
-                  <Grid item lg={2}>
-                    <Avatar alt={row.name} src='.' className={classes.avatar} />
-                  </Grid>
                   <Grid item lg={10}>
-                    <Typography className={classes.name}>{row.name}</Typography>
+                    <Typography className={classes.name} style={{ color: 'deeppurple', fontWeight: 'bold'}}>{row.name}</Typography>
                     <Typography color="textSecondary" variant="body2">{row.email}</Typography>
                     <Typography color="textSecondary" variant="body2">{row.phone}</Typography>
                   </Grid>
