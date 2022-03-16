@@ -6,7 +6,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TablePagination from '@mui/material/TablePagination';
@@ -15,16 +14,15 @@ import { makeStyles } from '@material-ui/core/styles'
 import faker from '@faker-js/faker';
 
 let USERS = []
-let STATUSES = ['Active', 'Peding', 'Blocked']
+let STATUSES = ['Active', 'Inactive', 'Blocked']
 
 for (let i = 0; i < 14; i++) {
   USERS[i] = {
-    name: faker.name.findName(),
-    email: faker.internet.email(),
-    phone: faker.phone.phoneNumber(),
-    jobTitle: faker.name.jobTitle(),
-    company: faker.company.companyName(),
-    joinDate: faker.date.past().toLocaleDateString('en-US'),
+    name: faker.finance.accountName()+faker.finance.account(),
+    currentValue: faker.finance.amount(),
+    broker: faker.finance.account(),
+    expiryDate: faker.date.future().toLocaleDateString('en-US'),
+    isVariableIncome: faker.animal.dog(),
     status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
   }
 }
@@ -34,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 650,
   },
   tableContainer: {
-    borderRadius: 15,
-    margin: '10px 470px',
-    maxWidth: 950
+    borderRadius: 20,
+    margin: '10px 350px',
+    maxWidth: 1200
   },
   tableHeaderCell: {
     backgroundColor: theme.palette.primary.dark,
@@ -77,11 +75,18 @@ function ListAssetComponent() {
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Table className={classes.table} aria-label="simple table">
+      <TableHead>
+          <TableRow>
+            <TableCell style={{ color: 'Indigo', fontWeight: 'bold'}}>+ Add Asset</TableCell>
+          </TableRow>
+        </TableHead>
         <TableHead>
           <TableRow>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>User Info</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Job Info</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Joining Date</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Name</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Current Value</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Broker</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Expiry Date</TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Is Variable Income?</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Status</TableCell>
           </TableRow>
         </TableHead>
@@ -90,18 +95,17 @@ function ListAssetComponent() {
             <TableRow key={row.name}>
               <TableCell>
                 <Grid container>
-                  <Grid item lg={10}>
+                  <Grid item lg={60}>
                     <Typography className={classes.name} style={{ color: 'deeppurple', fontWeight: 'bold'}}>{row.name}</Typography>
-                    <Typography color="textSecondary" variant="body2">{row.email}</Typography>
-                    <Typography color="textSecondary" variant="body2">{row.phone}</Typography>
                   </Grid>
                 </Grid>
               </TableCell>
               <TableCell>
-                <Typography color="primary" variant="subtitle2">{row.jobTitle}</Typography>
-                <Typography color="textSecondary" variant="body2">{row.company}</Typography>
+                <Typography color="primary" variant="subtitle2">{row.currentValue}</Typography>
               </TableCell>
-              <TableCell>{row.joinDate}</TableCell>
+              <TableCell>{row.broker}</TableCell>
+              <TableCell>{row.expiryDate}</TableCell>
+              <TableCell>{row.isVariableIncome}</TableCell>
               <TableCell>
                 <Typography
                   className={classes.status}
@@ -113,6 +117,7 @@ function ListAssetComponent() {
                   }}
                 >{row.status}</Typography>
               </TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
