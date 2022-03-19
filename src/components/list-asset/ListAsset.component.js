@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,6 +11,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableFooter from '@mui/material/TableFooter';
 import { makeStyles } from '@material-ui/core/styles'
 import faker from '@faker-js/faker';
+import AuthenticationService from '../../authentication/AuthenticationService'
+import AssetDataService from '../../api/AssetDataService'
+import { useEffect, useState } from "react";
 
 let USERS = []
 let STATUSES = ['Active', 'Inactive', 'Blocked']
@@ -60,8 +62,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ListAssetComponent() {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [product, setProduct] = useState([]);
+  const [search, setSearch] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -72,6 +77,19 @@ function ListAssetComponent() {
     setPage(0);
   };
 
+  const getProductData = async () => {
+    try {
+      const data = await AssetDataService.retrieveAllAssets(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken())
+      console.log(data)
+      setProduct(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getProductData();
+  }, []);
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Table className={classes.table} aria-label="simple table">
@@ -87,11 +105,11 @@ function ListAssetComponent() {
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Broker</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Expiry Date</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Is Variable Income?</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Status</TableCell>
+            {/* <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Status</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {USERS.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+          {product.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
             <TableRow key={row.name}>
               <TableCell>
                 <Grid container>
@@ -101,22 +119,20 @@ function ListAssetComponent() {
                 </Grid>
               </TableCell>
               <TableCell>
-                <Typography color="primary" variant="subtitle2">{row.currentValue}</Typography>
+                <Typography color="primary" variant="subtitle2">R$ {row.current_value}</Typography>
               </TableCell>
-              <TableCell>{row.broker}</TableCell>
+              <TableCell>{row.company}</TableCell>
               <TableCell>{row.expiryDate}</TableCell>
-              <TableCell>{row.isVariableIncome}</TableCell>
-              <TableCell>
+              <TableCell>{row.is_variable_income.toString()}</TableCell>
+              {/* <TableCell>
                 <Typography
                   className={classes.status}
                   style={{
                     backgroundColor:
-                      ((row.status === 'Active' && 'green') ||
-                        (row.status === 'Pending' && 'blue') ||
-                        (row.status === 'Blocked' && 'orange'))
+                      ((row.is_active === true && 'green') || (row.is_active === false && 'red'))
                   }}
-                >{row.status}</Typography>
-              </TableCell>
+                >{row.is_active.toString()}</Typography>
+              </TableCell> */}
               
             </TableRow>
           ))}
@@ -126,7 +142,7 @@ function ListAssetComponent() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={USERS.length}
+              count={product.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
