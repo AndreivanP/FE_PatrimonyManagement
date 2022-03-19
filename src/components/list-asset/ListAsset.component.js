@@ -14,6 +14,7 @@ import faker from '@faker-js/faker';
 import AuthenticationService from '../../authentication/AuthenticationService'
 import AssetDataService from '../../api/AssetDataService'
 import { useEffect, useState } from "react";
+import moment from 'moment'
 
 let USERS = []
 let STATUSES = ['Active', 'Inactive', 'Blocked']
@@ -90,6 +91,7 @@ function ListAssetComponent() {
   useEffect(() => {
     getProductData();
   }, []);
+
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Table className={classes.table} aria-label="simple table">
@@ -122,8 +124,16 @@ function ListAssetComponent() {
                 <Typography color="primary" variant="subtitle2">R$ {row.current_value}</Typography>
               </TableCell>
               <TableCell>{row.company}</TableCell>
-              <TableCell>{row.expiryDate}</TableCell>
-              <TableCell>{row.is_variable_income.toString()}</TableCell>
+              <TableCell>{row.expiryDate !== null ? moment(row.expiryDate).format('DD/MM/YYYY') : '' }</TableCell>
+              <TableCell>
+                <Typography className={classes.status} 
+                style={
+                    {backgroundColor:((row.is_variable_income === true && 'blue') || (row.is_variable_income === false && 'green'))}
+                  }
+                  >
+                {row.is_variable_income.toString() === 'true' ? 'Yes' : 'No'  }
+                </Typography>
+              </TableCell>
               {/* <TableCell>
                 <Typography
                   className={classes.status}
