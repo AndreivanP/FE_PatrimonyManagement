@@ -9,12 +9,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TablePagination from '@mui/material/TablePagination';
 import TableFooter from '@mui/material/TableFooter';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 import faker from '@faker-js/faker';
-import AuthenticationService from '../../authentication/AuthenticationService'
-import AssetDataService from '../../api/AssetDataService'
+import AuthenticationService from '../../authentication/AuthenticationService';
+import AssetDataService from '../../api/AssetDataService';
 import { useEffect, useState } from "react";
-import moment from 'moment'
+import moment from 'moment';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 let USERS = []
 let STATUSES = ['Active', 'Inactive', 'Blocked']
@@ -32,7 +36,7 @@ for (let i = 0; i < 14; i++) {
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    minWidth: 650,
+    minWidth: 650
   },
   tableContainer: {
     borderRadius: 20,
@@ -56,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     backgroundColor: 'grey',
     borderRadius: 8,
-    padding: '3px 10px',
+    padding: '3px 40px',
     display: 'inline-block'
   }
 }));
@@ -107,7 +111,8 @@ function ListAssetComponent() {
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Broker</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Expiry Date</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Is Variable Income?</TableCell>
-            {/* <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Status</TableCell> */}
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}></TableCell>
+            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -128,7 +133,7 @@ function ListAssetComponent() {
               <TableCell>
                 <Typography className={classes.status} 
                 style={
-                    {backgroundColor:((row.is_variable_income === true && 'blue') || (row.is_variable_income === false && 'green'))}
+                    {backgroundColor:((row.is_variable_income === true && 'blue') || (row.is_variable_income === false && 'Green'))}
                   }
                   >
                 {row.is_variable_income.toString() === 'true' ? 'Yes' : 'No'  }
@@ -143,7 +148,12 @@ function ListAssetComponent() {
                   }}
                 >{row.is_active.toString()}</Typography>
               </TableCell> */}
-              
+              <TableCell>
+              <IconButton color="primary" aria-label="update"> <EditIcon /> </IconButton>
+              </TableCell>
+              <TableCell>
+                <IconButton aria-label="delete"> <DeleteIcon /> </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
