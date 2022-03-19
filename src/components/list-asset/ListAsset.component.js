@@ -19,6 +19,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useHistory } from "react-router"
 
 let USERS = []
 let STATUSES = ['Active', 'Inactive', 'Blocked']
@@ -82,7 +83,7 @@ function ListAssetComponent() {
     setPage(0);
   };
 
-  const getProductData = async () => {
+  const getAssetData = async () => {
     try {
       const data = await AssetDataService.retrieveAllAssets(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken())
       console.log(data)
@@ -92,8 +93,13 @@ function ListAssetComponent() {
     }
   };
 
+  const history = useHistory()
+  const updateAsset = (id) => {
+      history.push(`/users/${AuthenticationService.getLoggedInUserName()}/assets/${id}`);
+  }
+
   useEffect(() => {
-    getProductData();
+    getAssetData();
   }, []);
 
   return (
@@ -136,7 +142,7 @@ function ListAssetComponent() {
                     {backgroundColor:((row.is_variable_income === true && 'blue') || (row.is_variable_income === false && 'Green'))}
                   }
                   >
-                {row.is_variable_income.toString() === 'true' ? 'Yes' : 'No'  }
+                {row.is_variable_income.toString() === 'true' ? 'Yes' : 'No'}
                 </Typography>
               </TableCell>
               {/* <TableCell>
@@ -149,7 +155,7 @@ function ListAssetComponent() {
                 >{row.is_active.toString()}</Typography>
               </TableCell> */}
               <TableCell>
-              <IconButton color="primary" aria-label="update"> <EditIcon /> </IconButton>
+                  <IconButton color="primary" aria-label="update" onClick={() => {updateAsset(row.id)}} > <EditIcon/> </IconButton>
               </TableCell>
               <TableCell>
                 <IconButton aria-label="delete"> <DeleteIcon /> </IconButton>
