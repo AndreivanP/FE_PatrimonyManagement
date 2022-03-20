@@ -13,6 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import faker from '@faker-js/faker';
 import AuthenticationService from '../../authentication/AuthenticationService';
 import AssetDataService from '../../api/AssetDataService';
+import AssetControlDataService from "../../api/AssetControlDataService"
+import ConfirmDialog from "./ConfirmDialog.component"
 import { useEffect, useState } from "react";
 import moment from 'moment';
 import Button from '@mui/material/Button';
@@ -70,8 +72,11 @@ function ListAssetComponent() {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [assetID, setAssetID] = useState();
+  const [assetName, setAssetName] = useState();
 
-  const [product, setProduct] = useState([]);
+  const [asset, setAsset] = useState([]);
   const [search, setSearch] = useState("");
 
   const handleChangePage = (event, newPage) => {
@@ -87,20 +92,34 @@ function ListAssetComponent() {
     try {
       const data = await AssetDataService.retrieveAllAssets(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken())
       console.log(data)
-      setProduct(data.data);
+      setAsset(data.data);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const history = useHistory()
+  const history = useHistory();
+
   const updateAsset = (id) => {
       history.push(`/users/${AuthenticationService.getLoggedInUserName()}/assets/${id}`);
+  }
+
+  const deleteAsset = (id) => {
+    console.log("Deleted asset id "+id)
+    AssetDataService.deleteAsset(AuthenticationService.getLoggedInUserName(), id, AuthenticationService.getLoggedInToken())
+    .then(
+        response => {
+            AssetControlDataService.createAssetCurrentValue(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken());
+            getAssetData();
+        }
+    )  
   }
 
   useEffect(() => {
     getAssetData();
   }, []);
+
+  console.log("xablay "+assetID)
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
@@ -122,7 +141,7 @@ function ListAssetComponent() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {product.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+          {asset.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
             <TableRow key={row.name}>
               <TableCell>
                 <Grid container>
@@ -155,10 +174,18 @@ function ListAssetComponent() {
                 >{row.is_active.toString()}</Typography>
               </TableCell> */}
               <TableCell>
-                  <IconButton color="primary" aria-label="update" onClick={() => {updateAsset(row.id)}} > <EditIcon/> </IconButton>
+                  <IconButton color="primary" aria-label="update" onClick={ () => {updateAsset(row.id)}} > <EditIcon/></IconButton>
               </TableCell>
               <TableCell>
-                <IconButton aria-label="delete"> <DeleteIcon /> </IconButton>
+                <IconButton aria-label="delete" onClick={ () => {setConfirmOpen(true); setAssetID(row.id); setAssetName(row.name)}}  > <DeleteIcon /></IconButton>
+                <ConfirmDialog
+                  title="Delete Asset?"
+                  open={confirmOpen}
+                  setOpen={setConfirmOpen}
+                  onConfirm={ () => {deleteAsset(assetID)}}
+                >
+                  Are you sure you want to delete asset {assetName} ?
+                </ConfirmDialog>
               </TableCell>
             </TableRow>
           ))}
@@ -168,7 +195,7 @@ function ListAssetComponent() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={product.length}
+              count={asset.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
