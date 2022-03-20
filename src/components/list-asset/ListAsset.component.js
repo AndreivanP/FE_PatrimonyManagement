@@ -22,6 +22,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from "react-router"
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 let USERS = []
 let STATUSES = ['Active', 'Inactive', 'Blocked']
@@ -75,9 +77,9 @@ function ListAssetComponent() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [assetID, setAssetID] = useState();
   const [assetName, setAssetName] = useState();
-
   const [asset, setAsset] = useState([]);
   const [search, setSearch] = useState("");
+  const [openDeleteToast, setOpenDeleteToast] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -86,6 +88,18 @@ function ListAssetComponent() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  // const handleClick = () => {
+  //   setOpenDeleteToast(true);
+  //   setOpenUpdateToast(true);
+  // };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenDeleteToast(false);
   };
 
   const getAssetData = async () => {
@@ -111,7 +125,8 @@ function ListAssetComponent() {
         response => {
             AssetControlDataService.createAssetCurrentValue(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken());
             getAssetData();
-        }
+        },
+        setOpenDeleteToast(true)
     )  
   }
 
@@ -186,6 +201,11 @@ function ListAssetComponent() {
                 >
                   Are you sure you want to delete asset {assetName} ?
                 </ConfirmDialog>
+                <Snackbar open={openDeleteToast} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
+                  <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Asset {assetName} successfully deleted!
+                  </Alert>
+                </Snackbar>
               </TableCell>
             </TableRow>
           ))}
