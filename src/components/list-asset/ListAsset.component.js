@@ -220,6 +220,8 @@ function ListAssetComponent() {
             </TableRow>
           ))}
         </TableBody>
+      </Table>
+      <Table>
         <TableFooter>
           <TableRow>
             <TablePagination

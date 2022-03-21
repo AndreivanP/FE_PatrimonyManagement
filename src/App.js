@@ -6,7 +6,6 @@ import Asset from './components/asset/AssetForm.component'
 import HeaderComponent from './components/patrimony_management/HeaderComponent'
 import LogoutComponent from './components/patrimony_management/LogoutComponent'
 import AuthenticatedRoute from './components/patrimony_management/AuthenticateRoute'
-// import ListAssetComponent from './components/patrimony_management/ListAssetComponent'
 import DashboardComponent from "./components/dashboard/Dashboard.component";
 import investmentComponent from './components/investment/InvestmentForm.component'
 import ListAssetComponent from './components/list-asset/ListAsset.component'
