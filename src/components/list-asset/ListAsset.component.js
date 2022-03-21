@@ -24,6 +24,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from "react-router"
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import Box from '@mui/material/Box';
 
 let USERS = []
 let STATUSES = ['Active', 'Inactive', 'Blocked']
@@ -114,6 +116,10 @@ function ListAssetComponent() {
 
   const history = useHistory();
 
+  const addAsset = () => {
+    history.push(`/users/${AuthenticationService.getLoggedInUserName()}/assets/new`);
+  }
+
   const updateAsset = (id) => {
       history.push(`/users/${AuthenticationService.getLoggedInUserName()}/assets/${id}`);
   }
@@ -138,12 +144,18 @@ function ListAssetComponent() {
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table className={classes.table} aria-label="simple table">
-      <TableHead>
+      <Table>
+        <TableHead>
           <TableRow>
-            <TableCell style={{ color: 'Indigo', fontWeight: 'bold'}}>+ Add Asset</TableCell>
+            <TableCell align="right">
+              <Button startIcon={<AddBoxIcon />} variant="contained" onClick={ () => {addAsset()}} >
+                  Add Asset
+              </Button>
+            </TableCell>
           </TableRow>
         </TableHead>
+      </Table>
+      <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Name</TableCell>
@@ -189,7 +201,7 @@ function ListAssetComponent() {
                 >{row.is_active.toString()}</Typography>
               </TableCell> */}
               <TableCell>
-                  <IconButton color="primary" aria-label="update" onClick={ () => {updateAsset(row.id)}} > <EditIcon/></IconButton>
+                  <IconButton color="primary" aria-label="update" onClick={ () => {updateAsset(row.id)}}> <EditIcon/></IconButton>
               </TableCell>
               <TableCell>
                 <IconButton aria-label="delete" onClick={ () => {setConfirmOpen(true); setAssetID(row.id); setAssetName(row.name)}}  > <DeleteIcon /></IconButton>
@@ -213,7 +225,7 @@ function ListAssetComponent() {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[5, 10, 25, 1000, { label: 'All', value: -1 }]}
               colSpan={3}
               count={asset.length}
               rowsPerPage={rowsPerPage}
