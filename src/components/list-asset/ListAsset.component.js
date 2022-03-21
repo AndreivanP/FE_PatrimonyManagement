@@ -107,7 +107,6 @@ function ListAssetComponent() {
   const getAssetData = async () => {
     try {
       const data = await AssetDataService.retrieveAllAssets(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken())
-      console.log(data)
       setAsset(data.data);
     } catch (e) {
       console.log(e);
@@ -139,8 +138,6 @@ function ListAssetComponent() {
   useEffect(() => {
     getAssetData();
   }, []);
-
-  console.log("xablay "+assetID)
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>

@@ -1,26 +1,26 @@
   .total {
-    background-color: #6fa2d3;
-    color: rgb(230, 230, 230);
+    background-color: rgb(153, 199, 238);
+    color: rgb(255, 255, 255);
     justify-content: center;
     display: flex;
   }
 
   .variableIncTotal {
-    background-color: #6fa2d3;
-    color: rgb(230, 230, 230);
+    background-color: rgb(153, 199, 238);;
+    color: rgb(255, 255, 255);
     justify-content: center;
     display: flex;
   }
   
   .percentageIncTotal {
-    background-color: #6fa2d3;
-    color: rgb(230, 230, 230);
+    background-color:  rgb(153, 199, 238);
+    color: rgb(255, 255, 255);
     justify-content: center;
     display: flex;
   }
 
   .title {
-    color: rgb(228, 225, 225);
+    color: rgb(207, 202, 202);
     justify-content: center;
     display: flex;
     font-size: calc(30px + 2vmin);
