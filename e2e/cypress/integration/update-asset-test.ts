@@ -17,7 +17,7 @@ describe('Asset Form functionalities', () => {
 
     it('Update current value of a complete fixed income asset', () => {
         login('000000000000000000000001');
-        let currentValue = `${faker.finance.amount()}`;
+        let currentValue = `R$ ${faker.finance.amount()}`;
         cy.handleAsset({assetName: '', broker: '', startDate: '', isActive: true, isVariableIncome: false, 
                         initialValue: '', interestRate: '', currentValue: currentValue, expiryDate: ''});
         cy.checkAssetList('currentValue', currentValue);
@@ -25,7 +25,7 @@ describe('Asset Form functionalities', () => {
 
     it('Update current value of a fixed income asset without expiry date', () => {
         login('000000000000000000000002');
-        let currentValue = `${faker.finance.amount()}`;
+        let currentValue = `R$ ${faker.finance.amount()}`;
         cy.handleAsset({assetName: '', broker: '', startDate: '', isActive: true, isVariableIncome: false, 
                         initialValue: '', interestRate: '', currentValue: currentValue, expiryDate: ''});
         cy.checkAssetList('currentValue', currentValue);
@@ -62,7 +62,8 @@ describe('Asset Form functionalities', () => {
         let initialValue = `${faker.finance.amount()}`;
         cy.handleAsset({assetName: '', broker: '', startDate: '', isActive: true, isVariableIncome: false, 
                         initialValue: initialValue, interestRate: '', currentValue: '', expiryDate: ''});
-        cy.checkAssetList('initialValue', initialValue);
+        cy.visit('/users/Staging/assets/000000000000000000000003');
+        cy.get(selectors.initialValue).should('have.value', initialValue);
     });
 
 });
