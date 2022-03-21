@@ -155,11 +155,11 @@ function ListAssetComponent() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Name</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Current Value</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Broker</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Expiry Date</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Is Variable Income?</TableCell>
+            <TableCell data-testid="column-name" className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Name</TableCell>
+            <TableCell data-testid="column-current-value" className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Current Value</TableCell>
+            <TableCell data-testid="column-company" className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Broker</TableCell>
+            <TableCell data-testid="column-expiry-date" className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Expiry Date</TableCell>
+            <TableCell data-testid="column-is-var-income" className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}>Is Variable Income?</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}></TableCell>
             <TableCell className={classes.tableHeaderCell} style={{ color: 'white', fontWeight: 'bold'}}></TableCell>
           </TableRow>
@@ -170,17 +170,17 @@ function ListAssetComponent() {
               <TableCell>
                 <Grid container>
                   <Grid item lg={60}>
-                    <Typography className={classes.name} style={{ color: 'deeppurple', fontWeight: 'bold'}}>{row.name}</Typography>
+                    <Typography data-testid="name" className={classes.name} style={{ color: 'deeppurple', fontWeight: 'bold'}}>{row.name}</Typography>
                   </Grid>
                 </Grid>
               </TableCell>
               <TableCell>
-                <Typography color="primary" variant="subtitle2">R$ {row.current_value}</Typography>
+                <Typography data-testid="current-value" color="primary" variant="subtitle2">R$ {row.current_value}</Typography>
               </TableCell>
-              <TableCell>{row.company}</TableCell>
-              <TableCell>{row.expiryDate !== null ? moment(row.expiryDate).format('DD/MM/YYYY') : '' }</TableCell>
+              <TableCell data-testid="company">{row.company}</TableCell>
+              <TableCell data-testid="expiry-date">{row.expiryDate !== null ? moment(row.expiryDate).format('DD/MM/YYYY') : '' }</TableCell>
               <TableCell>
-                <Typography className={classes.status} 
+                <Typography data-testid="is-var-income" className={classes.status} 
                 style={
                     {backgroundColor:((row.is_variable_income === true && 'blue') || (row.is_variable_income === false && 'Green'))}
                   }
@@ -198,11 +198,12 @@ function ListAssetComponent() {
                 >{row.is_active.toString()}</Typography>
               </TableCell> */}
               <TableCell>
-                  <IconButton color="primary" aria-label="update" onClick={ () => {updateAsset(row.id)}}> <EditIcon/></IconButton>
+                  <IconButton data-testid="icon-update" color="primary" aria-label="update" onClick={ () => {updateAsset(row.id)}}> <EditIcon/></IconButton>
               </TableCell>
               <TableCell>
-                <IconButton aria-label="delete" onClick={ () => {setConfirmOpen(true); setAssetID(row.id); setAssetName(row.name)}}  > <DeleteIcon /></IconButton>
+                <IconButton data-testid="icon-delete" aria-label="delete" onClick={ () => {setConfirmOpen(true); setAssetID(row.id); setAssetName(row.name)}}  > <DeleteIcon /></IconButton>
                 <ConfirmDialog
+                  data-testid="delete-dialog"
                   title="Delete Asset?"
                   open={confirmOpen}
                   setOpen={setConfirmOpen}
@@ -210,7 +211,7 @@ function ListAssetComponent() {
                 >
                   Are you sure you want to delete asset {assetName} ?
                 </ConfirmDialog>
-                <Snackbar open={openDeleteToast} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
+                <Snackbar data-testid="toast-msg" open={openDeleteToast} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
                   <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                     Asset {assetName} successfully deleted!
                   </Alert>
@@ -222,6 +223,7 @@ function ListAssetComponent() {
         <TableFooter>
           <TableRow>
             <TablePagination
+              data-testid="table-pagination"
               rowsPerPageOptions={[5, 10, 25, 1000, { label: 'All', value: -1 }]}
               colSpan={3}
               count={asset.length}
