@@ -1,0 +1,15 @@
+/* Modify the background color */
+.custom-bar {
+  background-color: rgb(82, 168, 238);
+}
+
+/*Modify the text */
+.text{
+  color: rgb(255, 255, 255);
+  font-weight: bold
+}
+
+/*Modify the text for build place holder which is hidden in the header*/
+.text-hidden{
+  color: rgb(82, 168, 238)
+}
