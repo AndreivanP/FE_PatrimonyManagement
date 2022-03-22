@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 import TablePagination from '@mui/material/TablePagination';
 import TableFooter from '@mui/material/TableFooter';
 import { makeStyles } from '@material-ui/core/styles';
-import faker from '@faker-js/faker';
 import AuthenticationService from '../../authentication/AuthenticationService';
 import AssetDataService from '../../api/AssetDataService';
 import AssetControlDataService from "../../api/AssetControlDataService"
@@ -25,21 +24,6 @@ import { useHistory } from "react-router"
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import Box from '@mui/material/Box';
-
-let USERS = []
-let STATUSES = ['Active', 'Inactive', 'Blocked']
-
-for (let i = 0; i < 14; i++) {
-  USERS[i] = {
-    name: faker.finance.accountName()+faker.finance.account(),
-    currentValue: faker.finance.amount(),
-    broker: faker.finance.account(),
-    expiryDate: faker.date.future().toLocaleDateString('en-US'),
-    isVariableIncome: faker.animal.dog(),
-    status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
-  }
-}
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -166,7 +150,7 @@ function ListAssetComponent() {
         </TableHead>
         <TableBody>
           {asset.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell>
                 <Grid container>
                   <Grid item lg={60}>
