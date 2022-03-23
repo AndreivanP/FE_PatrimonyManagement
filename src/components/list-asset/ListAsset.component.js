@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   date: {
     fontWeight: 'bold',
-    fontSize: '0.15rem',
+    fontSize: '0.80rem',
     borderRadius: 8,
     color: 'white',
     padding: '1px 10px',
@@ -116,7 +116,6 @@ function ListAssetComponent() {
   }
 
   const deleteAsset = (id) => {
-    console.log("Deleted asset id "+id)
     AssetDataService.deleteAsset(AuthenticationService.getLoggedInUserName(), id, AuthenticationService.getLoggedInToken())
     .then(
         response => {
@@ -173,17 +172,14 @@ function ListAssetComponent() {
                 <Typography data-testid="current-value" color="primary" variant="subtitle2">R$ {row.current_value}</Typography>
               </TableCell>
               <TableCell data-testid="company">{row.company}</TableCell>
-              
               <TableCell data-testid="expiry-date"  style={{ fontWeight: 'bold'}}>
-                {(moment(moment(row.expiryDate).format('YYYY-MM-DD') + "T00:00:00.000Z").isBefore( moment()))
-                  && row.expiryDate !== null
+                {(moment(moment(row.expiryDate).format('YYYY-MM-DD') + "T00:00:00.000Z").isBefore( moment())) && row.expiryDate !== null
                 ?
-                  <Typography className={classes.date} style={{ backgroundColor:'red'}}>
+                  <Typography className={classes.date} style={ {backgroundColor: 'red'}} >
                         {moment(row.expiryDate).format('DD/MM/YYYY')}
                    </Typography> :
                   row.expiryDate !== null ? moment(row.expiryDate).format('DD/MM/YYYY') : ''
                 }
-                
               </TableCell>
               <TableCell>
                 <Typography data-testid="is-var-income" className={classes.status} 
