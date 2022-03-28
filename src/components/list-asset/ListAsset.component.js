@@ -130,11 +130,10 @@ function ListAssetComponent() {
     getAssetData();
   }, []);
 
-    console.log("Rendered")
+  let databaseDate = '';
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
-          {console.log("Rendered 2")}
       <Table>
         <TableHead>
           <TableRow>
@@ -173,7 +172,7 @@ function ListAssetComponent() {
               </TableCell>
               <TableCell data-testid="company">{row.company}</TableCell>
               <TableCell data-testid="expiry-date"  style={{ fontWeight: 'bold'}}>
-                {(moment(moment(row.expiryDate).format('YYYY-MM-DD') + "T00:00:00.000Z").isBefore( moment())) && row.expiryDate !== null
+                {(moment(moment(row.expiryDate)).isBefore(moment())) && row.expiryDate !== null
                 ?
                   <Typography className={classes.date} style={ {backgroundColor: 'red'}} >
                         {moment(row.expiryDate).format('DD/MM/YYYY')}
