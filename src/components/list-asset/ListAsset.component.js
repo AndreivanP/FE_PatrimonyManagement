@@ -204,8 +204,7 @@ function ListAssetComponent() {
                   setOpen={setConfirmOpen}
                   onConfirm={ () => {deleteAsset(assetID)}}
                 >
-                  Are you sure you want to delete asset {assetName}
-                  
+                  Are you sure you want to delete asset {assetName}  
                 </ConfirmDialog>
                 <BasicSnackbar 
                     open={open}
