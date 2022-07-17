@@ -3,7 +3,7 @@ import AssetControlDataService from "../../api/AssetControlDataService"
 import AssetDataService from "../../api/AssetDataService"
 import AuthenticationService from '../../authentication/AuthenticationService'
 import moment from 'moment'
-import BasicSnackbar from "../asset/BasicSnackbar.component"
+import BasicSnackbar from "../patrimony_management/BasicSnackbar.component"
 
 class AssetFormComponent extends Component {
   constructor(props) {
@@ -84,6 +84,7 @@ class AssetFormComponent extends Component {
         AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
           .then(() => this.props.history.push('/assets'));
       }
+      this.setState({open: true})
     }
     event.preventDefault();
     
@@ -140,18 +141,30 @@ class AssetFormComponent extends Component {
         </form>
       );
     } else {
-      return(
-        <form>
-          <div>
-              <BasicSnackbar 
+        return(
+          <form>
+            { this.state.id !== 'new' ? (
+              <div>
+                <BasicSnackbar 
                     open={this.state.open}
                     onClose={this.handleClose}
                     severity="success"
                     message={`Asset ${this.state.name} successfully added!`}
                 />
-          </div>
-        </form>
-      )
+              </div>
+            ) : (
+              <div>
+                <BasicSnackbar 
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    severity="success"
+                    message={`Asset ${this.state.name} successfully updated!`}
+                />
+              </div>
+            )
+            }
+          </form>
+        )
     }
   }
 }

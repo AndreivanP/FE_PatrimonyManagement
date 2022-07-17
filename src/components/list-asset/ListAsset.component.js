@@ -14,7 +14,7 @@ import AuthenticationService from '../../authentication/AuthenticationService';
 import AssetDataService from '../../api/AssetDataService';
 import AssetControlDataService from "../../api/AssetControlDataService"
 import ConfirmDialog from "./ConfirmDialog.component"
-import BasicSnackbar from "../asset/BasicSnackbar.component"
+import BasicSnackbar from "../patrimony_management/BasicSnackbar.component"
 import { useEffect, useState } from "react";
 import moment from 'moment';
 import Button from '@mui/material/Button';
@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 20,
     margin: '10px 350px',
-    maxWidth: 1200
+    maxWidth: 1200,
+    flexGrow: 1
   },
   tableHeaderCell: {
     backgroundColor: theme.palette.primary.dark,
