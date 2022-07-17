@@ -145,7 +145,8 @@ class AssetFormComponent extends Component {
           <form>
             { this.state.id !== 'new' ? (
               <div>
-                <BasicSnackbar 
+                <BasicSnackbar
+                    data-testid="add-asset-toast"
                     open={this.state.open}
                     onClose={this.handleClose}
                     severity="success"
@@ -155,6 +156,7 @@ class AssetFormComponent extends Component {
             ) : (
               <div>
                 <BasicSnackbar 
+                    data-testid="update-asset-toast"
                     open={this.state.open}
                     onClose={this.handleClose}
                     severity="success"

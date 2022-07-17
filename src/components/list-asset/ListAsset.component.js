@@ -199,7 +199,7 @@ function ListAssetComponent() {
               <TableCell>
                 <IconButton data-testid="icon-delete" aria-label="delete" onClick={ () => {setConfirmOpen(true); setAssetID(row.id); setAssetName(row.name)}}  > <DeleteIcon /></IconButton>
                 <ConfirmDialog
-                  data-testid="delete-dialog"
+                  data-testid="delete-asset-dialog"
                   title="Delete Asset?"
                   open={confirmOpen}
                   setOpen={setConfirmOpen}
@@ -207,7 +207,8 @@ function ListAssetComponent() {
                 >
                   Are you sure you want to delete asset {assetName}  
                 </ConfirmDialog>
-                <BasicSnackbar 
+                <BasicSnackbar
+                    data-testid="delete-asset-toast"
                     open={open}
                     onClose={handleClose}
                     severity="success"
