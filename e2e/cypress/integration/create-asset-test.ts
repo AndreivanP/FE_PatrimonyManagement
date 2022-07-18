@@ -5,7 +5,7 @@ const selectors = require('../support/selectors/asset-form');
 import moment from 'moment';
 
 describe('Asset Form functionalities', () => {
-    const message = 'Please fill in this field.'
+    const message = 'Please fill out this field.'
 
     beforeEach(() => {
         // cy.intercept('GET', '**/*').as('apiCheck');
