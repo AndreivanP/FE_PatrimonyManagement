@@ -18,6 +18,7 @@ const ConfirmDialog = (props) => {
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
+          data-testid="btn-no-delete"
           variant="contained"
           onClick={() => setOpen(false)}
           color="primary"
@@ -25,6 +26,7 @@ const ConfirmDialog = (props) => {
           No
         </Button>
         <Button
+          data-testid="btn-yes-delete"
           variant="contained"
           onClick={() => {
             setOpen(false);

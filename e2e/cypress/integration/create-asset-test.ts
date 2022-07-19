@@ -4,7 +4,7 @@ import faker from 'faker';
 const selectors = require('../support/selectors/asset-form');
 import moment from 'moment';
 
-describe('Asset Form functionalities', () => {
+describe('Asset Form Create Functionality', () => {
     const message = 'Please fill out this field.'
 
     beforeEach(() => {

@@ -8,7 +8,8 @@ declare global {
         interface Chainable {
             handleAsset: typeof handleAsset,
             checkMandatoryMessage: typeof checkMandatoryMessage,
-            checkAssetList: typeof checkAssetList
+            checkAssetList: typeof checkAssetList,
+            deleteAssetByName: typeof deleteAssetByName
         }
     }
 }
@@ -97,3 +98,36 @@ export function checkMandatoryMessage(selector: any, message: string): void {
 }
 
 Cypress.Commands.add('checkMandatoryMessage', checkMandatoryMessage);
+
+export function deleteAssetByName(assetName: string): void {
+    cy.get('#mui-1').select('1000');
+
+    cy.get(listSelectors.listAssetName).each(($elem) => {
+        if ($elem.text() === assetName) {
+            cy.wrap($elem)
+                .parent()
+                .parent()
+                .parent()
+                .siblings()
+                .find(listSelectors.iconDelete)
+                .click()
+        }
+    });
+
+    let count = 0;
+    cy.get('.MuiDialogContent-root').each(($elem) => {
+        console.log($elem.text())
+        if($elem.text().includes(assetName)){
+            cy.wrap($elem)
+                .next()
+                .find(listSelectors.btnYesDelete)
+                .click({force: true})
+                count += 1;
+        }
+        if(count === 1) {
+            return false;
+        }
+    });
+}
+
+Cypress.Commands.add('deleteAssetByName', deleteAssetByName);

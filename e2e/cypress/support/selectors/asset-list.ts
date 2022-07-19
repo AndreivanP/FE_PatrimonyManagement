@@ -4,5 +4,7 @@ export default {
     listCurrentValue: '[data-testid=current-value]',
     listAssetCompany: '[data-testid=company]',
     btnUpdate: '[data-testid=btn-update]',
-    btnDelete: '[data-testid=btn-delete]'
+    iconDelete: '[data-testid=icon-delete]',
+    btnYesDelete: '[data-testid=btn-yes-delete]',
+    toastMsg: '.MuiAlert-message'
 }
