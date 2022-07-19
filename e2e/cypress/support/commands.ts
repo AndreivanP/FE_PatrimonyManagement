@@ -27,11 +27,6 @@ declare global {
 let Id: string;
 
 export function auth0Login(endpoint = ''): void {
-  cy.wait(300);
-  Cypress.log({
-    name: 'loginViaAuth0',
-  });
-
   const options = {
     method: 'POST',
 

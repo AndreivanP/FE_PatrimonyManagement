@@ -3,6 +3,7 @@ import AssetControlDataService from "../../api/AssetControlDataService"
 import AssetDataService from "../../api/AssetDataService"
 import AuthenticationService from '../../authentication/AuthenticationService'
 import moment from 'moment'
+import BasicSnackbar from "../patrimony_management/BasicSnackbar.component"
 
 class AssetFormComponent extends Component {
   constructor(props) {
@@ -20,11 +21,21 @@ class AssetFormComponent extends Component {
       username: AuthenticationService.getLoggedInUserName(),
       token: AuthenticationService.getLoggedInToken(),
       expiryDate: '',
-      old_current_value: ''
+      old_current_value: '',
+      openToast: false,
+      open: false
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({openToast: false});
+  };
 
   componentDidMount() {
     if (this.state.id === "new") {
@@ -61,7 +72,8 @@ class AssetFormComponent extends Component {
     if (this.state.id === "new") {
       AssetDataService.createAsset(this.state.username, asset, this.state.token)
         .then(() => AssetControlDataService.createAssetCurrentValue(this.state.username, this.state.token)
-          .then(this.props.history.push('/assets')))
+          .then(this.props.history.push('/assets')));
+          this.setState({open: true})
     } else {
       asset.id = this.state.id
       if (asset.current_value !== this.state.old_current_value) {
@@ -72,8 +84,10 @@ class AssetFormComponent extends Component {
         AssetDataService.updateAsset(this.state.username, this.state.id, asset, this.state.token)
           .then(() => this.props.history.push('/assets'));
       }
+      this.setState({open: true})
     }
     event.preventDefault();
+    
   }
 
   onCancel() {
@@ -89,43 +103,76 @@ class AssetFormComponent extends Component {
   }
 
   render() {
-    return (
-      <form className="auth-wrapper" onSubmit={this.onSubmit}>
-        <div className="auth-inner">
-          <div className="form-group">
-            <label>Asset Name</label>
-            <input type="text" className="form-control" name="name" value={this.state.name} onChange={(event) => this.handleChange(event, "name")} required />
-            <label>Broker</label>
-            <input type="text" className="form-control" name="broker" value={this.state.company} onChange={(event) => this.handleChange(event, "company")} />
-            <label>Start Date</label>
-            <input type="date" className="form-control" name="date" value={moment(this.state.date).format('YYYY-MM-DD')} onChange={(event) => this.handleChange(event, "date")} required />
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" id="inlineCheckbox1" name="is_active"
-                value={this.state.is_active} onChange={(event) => this.handleChangeCheckboxes(event, "is_active")}
-                checked={this.state.is_active} />
-              <label className="form-check-label" htmlFor="inlineCheckbox1">Is Active?</label>
+    if(this.state.open === false) {
+      return (
+        <form className="auth-wrapper" onSubmit={this.onSubmit}>
+          <div className="auth-inner">
+            <div className="form-group">
+              <label>Asset Name</label>
+              <input type="text" className="form-control" name="name" value={this.state.name} onChange={(event) => this.handleChange(event, "name")} required />
+              <label>Broker</label>
+              <input type="text" className="form-control" name="broker" value={this.state.company} onChange={(event) => this.handleChange(event, "company")} />
+              <label>Start Date</label>
+              <input type="date" className="form-control" name="date" value={moment(this.state.date).format('YYYY-MM-DD')} onChange={(event) => this.handleChange(event, "date")} required />
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="checkbox" id="inlineCheckbox1" name="is_active"
+                  value={this.state.is_active} onChange={(event) => this.handleChangeCheckboxes(event, "is_active")}
+                  checked={this.state.is_active} />
+                <label className="form-check-label" htmlFor="inlineCheckbox1">Is Active?</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="checkbox" id="inlineCheckbox2" name="is_variable_income"
+                  value={this.state.is_variable_income} onChange={(event) => this.handleChangeCheckboxes(event, "is_variable_income")}
+                  checked={this.state.is_variable_income} />
+                <label className="form-check-label" htmlFor="inlineCheckbox2">Is Variable Income?</label>
+              </div>
+              <label>Initial Value</label>
+              <input type="number" className="form-control" name="initial_value" value={this.state.initial_value} onChange={(event) => this.handleChange(event, "initial_value")} required />
+              <label>Interest Rate</label>
+              <input type="text" className="form-control" name="interest_rate" value={this.state.interest_rate} onChange={(event) => this.handleChange(event, "interest_rate")} />
+              <label>Current Value</label>
+              <input type="number" className="form-control" name="current_value" value={this.state.current_value} onChange={(event) => this.handleChange(event, "current_value")} required />
+              <label>Expiry Date</label>
+              <input type="date" className="form-control" name="expiryDate" value={moment(this.state.expiryDate).format('YYYY-MM-DD')} onChange={(event) => this.handleChange(event, "expiryDate")} />
             </div>
-            <div className="form-check form-check-inline">
-              <input className="form-check-input" type="checkbox" id="inlineCheckbox2" name="is_variable_income"
-                value={this.state.is_variable_income} onChange={(event) => this.handleChangeCheckboxes(event, "is_variable_income")}
-                checked={this.state.is_variable_income} />
-              <label className="form-check-label" htmlFor="inlineCheckbox2">Is Variable Income?</label>
-            </div>
-            <label>Initial Value</label>
-            <input type="number" className="form-control" name="initial_value" value={this.state.initial_value} onChange={(event) => this.handleChange(event, "initial_value")} required />
-            <label>Interest Rate</label>
-            <input type="text" className="form-control" name="interest_rate" value={this.state.interest_rate} onChange={(event) => this.handleChange(event, "interest_rate")} />
-            <label>Current Value</label>
-            <input type="number" className="form-control" name="current_value" value={this.state.current_value} onChange={(event) => this.handleChange(event, "current_value")} required />
-            <label>Expiry Date</label>
-            <input type="date" className="form-control" name="expiryDate" value={moment(this.state.expiryDate).format('YYYY-MM-DD')} onChange={(event) => this.handleChange(event, "expiryDate")} />
+            <button className="btn btn-primary btn-block" type="submit" value="Submit" >Save</button>
+            <button className="btn btn-secondary btn-block" onClick={this.onCancel} type="button">Cancel</button>
           </div>
-          <button className="btn btn-primary btn-block" type="submit" value="Submit" >Save</button>
-          <button className="btn btn-secondary btn-block" onClick={this.onCancel} type="button">Cancel</button>
-        </div>
-      </form>
-    );
+        </form>
+      );
+    } else {
+        return(
+          <form>
+            { this.state.id !== 'new' ? (
+              <div>
+                <BasicSnackbar
+                    data-testid="add-asset-toast"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    severity="success"
+                    message={`Asset ${this.state.name} successfully added!`}
+                />
+              </div>
+            ) : (
+              <div>
+                <BasicSnackbar 
+                    data-testid="update-asset-toast"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    severity="success"
+                    message={`Asset ${this.state.name} successfully updated!`}
+                />
+              </div>
+            )
+            }
+          </form>
+        )
+    }
   }
 }
 
 export default AssetFormComponent;
+
+
+
+

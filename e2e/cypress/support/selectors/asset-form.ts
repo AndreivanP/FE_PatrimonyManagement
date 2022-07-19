@@ -11,4 +11,6 @@ export default {
     expiryDate: '[name="expiryDate"]',
     date: '[name="date"]',
     interestRate: '[name="interest_rate"]',
+    addAssetToast: '[data-testid=add-asset-toast]',
+    updateAssetToast: '[data-testid=update-asset-toast]'
 }

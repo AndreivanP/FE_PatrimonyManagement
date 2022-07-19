@@ -8,7 +8,8 @@ declare global {
         interface Chainable {
             handleAsset: typeof handleAsset,
             checkMandatoryMessage: typeof checkMandatoryMessage,
-            checkAssetList: typeof checkAssetList
+            checkAssetList: typeof checkAssetList,
+            deleteAssetByName: typeof deleteAssetByName
         }
     }
 }
@@ -17,47 +18,39 @@ export function handleAsset( {assetName = '', broker = '', startDate = '',
                               isActive = true, isVariableIncome = false, initialValue = '',
                               interestRate = '', currentValue = '', expiryDate = ''}): void {
     if (assetName != '') {
-        cy.wait(1000)
+        cy.get(selectors.assetName).should('be.visible');
         cy.get(selectors.assetName).clear().type(assetName);
     }
 
     if (broker != '') {
-        cy.wait(1000)
         cy.get(selectors.broker).click().clear().type(broker);
     }
 
     if (startDate != '') {
-        cy.wait(1000)
         cy.get(selectors.date).click().clear().type(startDate);
     }
 
     if (isActive === true) {
-        cy.wait(1000)
         cy.get(selectors.isActiveCheckBox).click();
     }
 
     if (isVariableIncome === true) {
-        cy.wait(1000)
         cy.get(selectors.variableIncomeCheckBox).click();
     }
 
     if (initialValue != '') {
-        cy.wait(1000)
         cy.get(selectors.initialValue).click().clear().type(initialValue);
     }
 
     if (interestRate != '') {
-        cy.wait(1000)
         cy.get(selectors.currentValue).click().clear().type(interestRate);
     }
 
     if (currentValue != '') {
-        cy.wait(1000)
         cy.get(selectors.currentValue).click().clear().type(currentValue);
     }
 
     if (expiryDate != '') {
-        cy.wait(1000)
         cy.get(selectors.expiryDate).click().clear().type(expiryDate);
     }
 
@@ -67,6 +60,7 @@ export function handleAsset( {assetName = '', broker = '', startDate = '',
 Cypress.Commands.add('handleAsset', handleAsset);
 
 export function checkAssetList(fieldToCheck: string, newValue: string): void {
+    cy.get('#mui-1').select('1000');
     switch(fieldToCheck) {
         case 'name':
             fieldToCheck = listSelectors.listAssetName
@@ -104,3 +98,36 @@ export function checkMandatoryMessage(selector: any, message: string): void {
 }
 
 Cypress.Commands.add('checkMandatoryMessage', checkMandatoryMessage);
+
+export function deleteAssetByName(assetName: string): void {
+    cy.get('#mui-1').select('1000');
+
+    cy.get(listSelectors.listAssetName).each(($elem) => {
+        if ($elem.text() === assetName) {
+            cy.wrap($elem)
+                .parent()
+                .parent()
+                .parent()
+                .siblings()
+                .find(listSelectors.iconDelete)
+                .click()
+        }
+    });
+
+    let count = 0;
+    cy.get('.MuiDialogContent-root').each(($elem) => {
+        console.log($elem.text())
+        if($elem.text().includes(assetName)){
+            cy.wrap($elem)
+                .next()
+                .find(listSelectors.btnYesDelete)
+                .click({force: true})
+                count += 1;
+        }
+        if(count === 1) {
+            return false;
+        }
+    });
+}
+
+Cypress.Commands.add('deleteAssetByName', deleteAssetByName);

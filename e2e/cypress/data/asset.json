@@ -37,5 +37,31 @@
         "current_value": 543.0,
         "is_variable_income": true,
         "expiryDate": null
+    },
+    {
+        "_id": {"$oid": "000000000000000000000004"},
+        "name": "Auto test Delete Fixed Income",
+        "date": {"$date" : "2022-10-30 00:00:00.000Z"},
+        "initial_value": 2331.69,
+        "company": "Broker ABC",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Juca",
+        "current_value": 22223.0,
+        "is_variable_income": false,
+        "expiryDate": {"$date" : "2026-10-30 00:00:00.000Z"}
+    },
+    {
+        "_id": {"$oid": "000000000000000000000005"},
+        "name": "Auto test Delete Variable",
+        "date": {"$date" : "2022-10-30 00:00:00.000Z"},
+        "initial_value": 3125.69,
+        "company": "Broker ABC",
+        "interest_rate": 0.0,
+        "is_active": true,
+        "username": "Juca",
+        "current_value": 12345.0,
+        "is_variable_income": false,
+        "expiryDate": null
     }
 ]

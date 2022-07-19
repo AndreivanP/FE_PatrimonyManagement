@@ -14,6 +14,7 @@ import AuthenticationService from '../../authentication/AuthenticationService';
 import AssetDataService from '../../api/AssetDataService';
 import AssetControlDataService from "../../api/AssetControlDataService"
 import ConfirmDialog from "./ConfirmDialog.component"
+import BasicSnackbar from "../patrimony_management/BasicSnackbar.component"
 import { useEffect, useState } from "react";
 import moment from 'moment';
 import Button from '@mui/material/Button';
@@ -21,8 +22,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useHistory } from "react-router"
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+// import Snackbar from '@mui/material/Snackbar';
+// import Alert from '@mui/material/Alert';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 20,
     margin: '10px 350px',
-    maxWidth: 1200
+    maxWidth: 1200,
+    flexGrow: 1
   },
   tableHeaderCell: {
     backgroundColor: theme.palette.primary.dark,
@@ -69,11 +71,11 @@ function ListAssetComponent() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const [assetID, setAssetID] = useState();
   const [assetName, setAssetName] = useState();
   const [asset, setAsset] = useState([]);
   const [search, setSearch] = useState("");
-  const [openDeleteToast, setOpenDeleteToast] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -84,16 +86,11 @@ function ListAssetComponent() {
     setPage(0);
   };
 
-  // const handleClick = () => {
-  //   setOpenDeleteToast(true);
-  //   setOpenUpdateToast(true);
-  // };
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpenDeleteToast(false);
+    setOpen(false);
   };
 
   const getAssetData = async () => {
@@ -122,15 +119,13 @@ function ListAssetComponent() {
             AssetControlDataService.createAssetCurrentValue(AuthenticationService.getLoggedInUserName(), AuthenticationService.getLoggedInToken());
             getAssetData();
         },
-        setOpenDeleteToast(true)
+        setOpen(true)
     )  
   }
 
   useEffect(() => {
     getAssetData();
   }, []);
-
-  let databaseDate = '';
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
@@ -204,19 +199,21 @@ function ListAssetComponent() {
               <TableCell>
                 <IconButton data-testid="icon-delete" aria-label="delete" onClick={ () => {setConfirmOpen(true); setAssetID(row.id); setAssetName(row.name)}}  > <DeleteIcon /></IconButton>
                 <ConfirmDialog
-                  data-testid="delete-dialog"
+                  data-testid="delete-asset-dialog"
                   title="Delete Asset?"
                   open={confirmOpen}
                   setOpen={setConfirmOpen}
                   onConfirm={ () => {deleteAsset(assetID)}}
                 >
-                  Are you sure you want to delete asset {assetName} ?
+                  Are you sure you want to delete asset {assetName}  
                 </ConfirmDialog>
-                <Snackbar data-testid="toast-msg" open={openDeleteToast} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
-                  <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Asset {assetName} successfully deleted!
-                  </Alert>
-                </Snackbar>
+                <BasicSnackbar
+                    data-testid="delete-asset-toast"
+                    open={open}
+                    onClose={handleClose}
+                    severity="success"
+                    message={`Asset ${assetName} successfully deleted!`}
+                />
               </TableCell>
             </TableRow>
           ))}

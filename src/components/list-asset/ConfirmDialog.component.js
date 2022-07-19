@@ -12,11 +12,13 @@ const ConfirmDialog = (props) => {
       open={open}
       onClose={() => setOpen(false)}
       aria-labelledby="confirm-dialog"
+      BackdropProps={{ style: { backgroundColor: "transparent" } }}
     >
       <DialogTitle id="confirm-dialog">{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button
+          data-testid="btn-no-delete"
           variant="contained"
           onClick={() => setOpen(false)}
           color="primary"
@@ -24,6 +26,7 @@ const ConfirmDialog = (props) => {
           No
         </Button>
         <Button
+          data-testid="btn-yes-delete"
           variant="contained"
           onClick={() => {
             setOpen(false);
