@@ -20,7 +20,7 @@
      },
     "env": {
             "auth_url": "http://asset-management:8080/authenticate",
-            "auth_username": "Juca",
+            "auth_username": "Staging",
             "auth_password": "123456",
             "scope": "openid",
             "filterLoad": "proxy/companies",
