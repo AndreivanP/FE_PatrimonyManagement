@@ -18,7 +18,7 @@ export function handleAsset( {assetName = '', broker = '', startDate = '',
                               isActive = true, isVariableIncome = false, initialValue = '',
                               interestRate = '', currentValue = '', expiryDate = ''}): void {
     if (assetName != '') {
-        cy.get(selectors.assetName).should('be.visible');
+        cy.get(selectors.assetName).invoke('val').should('not.be.empty');
         cy.get(selectors.assetName).clear().type(assetName);
     }
 
