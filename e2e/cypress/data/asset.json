@@ -46,7 +46,7 @@
         "company": "Broker ABC",
         "interest_rate": 0.0,
         "is_active": true,
-        "username": "Juca",
+        "username": "Staging",
         "current_value": 22223.0,
         "is_variable_income": false,
         "expiryDate": {"$date" : "2026-10-30 00:00:00.000Z"}
@@ -59,7 +59,7 @@
         "company": "Broker ABC",
         "interest_rate": 0.0,
         "is_active": true,
-        "username": "Juca",
+        "username": "Staging",
         "current_value": 12345.0,
         "is_variable_income": false,
         "expiryDate": null
