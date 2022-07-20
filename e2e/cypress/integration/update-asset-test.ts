@@ -35,6 +35,7 @@ describe('Asset Form Update Functionality', () => {
         cy.auth0Login('/users/Staging/assets/000000000000000000000002');
         let name = `NEW Asset auto ${faker.lorem.word()} ${faker.datatype.number()}`;
 
+        cy.get(selectors.assetName).invoke('val').should('not.be.empty');
         cy.handleAsset({assetName: name, broker: '', startDate: '', isActive: true, isVariableIncome: false, 
                         initialValue: '', interestRate: '', currentValue: '', expiryDate: ''});
 
