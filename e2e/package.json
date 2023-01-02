@@ -30,7 +30,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-cypress": "^2.11.2",
-    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-import": "^2.24.2",
     "faker": "^5.5.3",
     "mocha": "^8.4.0",
     "mochawesome": "^6.2.2",
