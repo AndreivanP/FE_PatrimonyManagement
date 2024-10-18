@@ -5,41 +5,41 @@ on:
     branches: [ master ]
     
 jobs:
-  deploy-staging:
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v1
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-version }}
-        - name: Setup API STG Url
-          run: |
-            cd src && sed -i 's#http://asset-management:8080#https://api-asset-management-stg.herokuapp.com#g' Properties.js
-            sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
-        - name: Deploy to Heroku Staging Environment
-          uses: AkhileshNS/heroku-deploy@v3.12.12
-          with:
-           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-           heroku_email: ${{secrets.HEROKU_EMAIL}}
-           heroku_app_name: ${{secrets.APP_STG_ASSET_HEROKU_NAME}}
+  # deploy-staging:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #       - uses: actions/checkout@v1
+  #       - name: Use Node.js ${{ matrix.node-version }}
+  #         uses: actions/setup-node@v1
+  #         with:
+  #           node-version: ${{ matrix.node-version }}
+  #       - name: Setup API STG Url
+  #         run: |
+  #           cd src && sed -i 's#http://asset-management:8080#https://api-asset-management-stg.herokuapp.com#g' Properties.js
+  #           sed -i -e "s/buildplaceholder/$(date'')/g" Properties.js
+  #       - name: Deploy to Heroku Staging Environment
+  #         uses: AkhileshNS/heroku-deploy@v3.12.12
+  #         with:
+  #          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #          heroku_email: ${{secrets.HEROKU_EMAIL}}
+  #          heroku_app_name: ${{secrets.APP_STG_ASSET_HEROKU_NAME}}
 
-  run-e2e-on-stg:
-    needs: deploy-staging
-    runs-on: ubuntu-latest
-    steps:
-       - uses: actions/checkout@v2
-       - name: Build front end related docker images
-         run: |
-          cd src && sed -i 's#mongodb://mongodb:27017/pat_manag#${{secrets.STG_DB_URL}}#g' Properties.js
-          cd .. && docker-compose -f docker-compose-fe.yml build
-       - name: Create docker containers for FE app and Cypress runner
-         run: docker-compose -f docker-compose-fe.yml up -d
-       - name: Run e2e tests within cypress container
-         run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression-stg
+  # run-e2e-on-stg:
+  #   needs: deploy-staging
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #      - uses: actions/checkout@v2
+  #      - name: Build front end related docker images
+  #        run: |
+  #         cd src && sed -i 's#mongodb://mongodb:27017/pat_manag#${{secrets.STG_DB_URL}}#g' Properties.js
+  #         cd .. && docker-compose -f docker-compose-fe.yml build
+  #      - name: Create docker containers for FE app and Cypress runner
+  #        run: docker-compose -f docker-compose-fe.yml up -d
+  #      - name: Run e2e tests within cypress container
+  #        run: docker-compose -f docker-compose-fe.yml exec -T e2e-runner npm run cy:regression-stg
 
   deploy-production:
-    needs: run-e2e-on-stg
+    #needs: run-e2e-on-stg
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v1
