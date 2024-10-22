@@ -76,7 +76,6 @@ function ListAssetComponent() {
   const [assetID, setAssetID] = useState();
   const [assetName, setAssetName] = useState();
   const [asset, setAsset] = useState([]);
-  const [search, setSearch] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
